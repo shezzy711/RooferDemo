@@ -681,11 +681,34 @@ function Home({ onNav }) {
         </div>
       </FadeIn>
 
+      {/* AI Activity Bar */}
+      <FadeIn delay={120}>
+        <div style={{
+          background: T.white, borderRadius: 16, padding: "18px 26px",
+          display: "flex", alignItems: "center", gap: 24, marginBottom: 16,
+          boxShadow: "0 0 0 0.5px rgba(0,0,0,0.04), 0 1px 3px rgba(0,0,0,0.03), 0 4px 12px rgba(0,0,0,0.025)",
+        }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 8, flexShrink: 0 }}>
+            <div style={{ width: 8, height: 8, borderRadius: 4, background: T.green, animation: "lifelinepulse 2s ease-in-out infinite" }} />
+            <span style={{ fontSize: 13, fontWeight: 600, color: T.green }}>AI Active</span>
+          </div>
+          <style>{`@keyframes lifelinepulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }`}</style>
+          <div style={{ height: 20, width: 1, background: T.div }} />
+          <div style={{ display: "flex", gap: 20, flex: 1, fontSize: 13, color: T.t2 }}>
+            <span><strong style={{ color: T.text }}>47</strong> follow-ups sent this week</span>
+            <span><strong style={{ color: T.text }}>12</strong> maintenance reminders queued for tomorrow</span>
+            <span><strong style={{ color: T.text }}>3</strong> appointments booked automatically</span>
+          </div>
+        </div>
+      </FadeIn>
+
       {/* Stats Row */}
       <FadeIn delay={160}>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 12, marginBottom: 28 }}>
           {stats.map((s, i) => (
-            <div key={i} style={{ background: T.white, borderRadius: 16, padding: "22px 20px" }}>
+            <div key={i} style={{ background: T.white, borderRadius: 16, padding: "22px 20px",
+              boxShadow: "0 0 0 0.5px rgba(0,0,0,0.04), 0 1px 3px rgba(0,0,0,0.03), 0 4px 12px rgba(0,0,0,0.025)",
+            }}>
               <div style={{ fontSize: 12, color: T.t3, fontWeight: 500, marginBottom: 14 }}>
                 {s.label}
               </div>
@@ -696,9 +719,54 @@ function Home({ onNav }) {
         </div>
       </FadeIn>
 
+      {/* Automated Follow-Up Queue */}
+      <FadeIn delay={200}>
+        <Card style={{ marginBottom: 20 }}>
+          <Narrator text="The AI monitors every contact in your CRM. When someone needs a follow-up, it either sends the message automatically or flags it for your team. No rep has to remember anything." />
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
+            <div style={{ fontSize: 17, fontWeight: 600, color: T.text }}>Automated Follow-Ups</div>
+            <Pill color={T.blue}>This Week</Pill>
+          </div>
+          {[
+            { name: "Tony Russo", action: "Auto-sending maintenance intro", reason: "No contact in 6+ months. Roof health declining.", time: "Sending today at 10:00 AM", status: "queued" },
+            { name: "David Chen", action: "Auto-sending 2-week check-in", reason: "Outreach sent 14 days ago, no response.", time: "Sending tomorrow at 9:00 AM", status: "queued" },
+            { name: "Charles Washington", action: "Flagged for rep call", reason: "High-value lead. 67% replacement probability. AI recommends a phone call over text.", time: "Assigned to Blake", status: "flagged" },
+            { name: "James Patterson", action: "Sent maintenance renewal reminder", reason: "Annual plan renewal due in 30 days.", time: "Sent Monday", status: "sent" },
+            { name: "Sandra Collins", action: "Auto-sending storm follow-up", reason: "3 hail events, never enrolled. Perfect timing after last week's weather.", time: "Sent Tuesday", status: "sent" },
+          ].map((item, i) => (
+            <div key={i} style={{
+              padding: "14px 0",
+              borderTop: i > 0 ? `1px solid ${T.div}` : "none",
+              display: "flex", alignItems: "flex-start", gap: 12,
+            }}>
+              <div style={{
+                width: 32, height: 32, borderRadius: 8, flexShrink: 0, marginTop: 2,
+                background: item.status === "sent" ? T.greenS : item.status === "flagged" ? T.orangeS : T.blueS,
+                display: "flex", alignItems: "center", justifyContent: "center",
+              }}>
+                {item.status === "sent" && <IconCheck size={14} color={T.green} />}
+                {item.status === "queued" && <div style={{ width: 6, height: 6, borderRadius: 3, background: T.blue }} />}
+                {item.status === "flagged" && <span style={{ fontSize: 12, fontWeight: 700, color: T.orange }}>!</span>}
+              </div>
+              <div style={{ flex: 1 }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                  <span style={{ fontSize: 14, fontWeight: 600, color: T.text }}>{item.name}</span>
+                  <span style={{ fontSize: 12, color: item.status === "sent" ? T.green : item.status === "flagged" ? T.orange : T.blue, fontWeight: 500 }}>
+                    {item.status === "sent" ? "Sent" : item.status === "flagged" ? "Needs rep" : "Queued"}
+                  </span>
+                </div>
+                <div style={{ fontSize: 13, color: T.t2, marginTop: 2 }}>{item.action}</div>
+                <div style={{ fontSize: 12, color: T.t3, marginTop: 2 }}>{item.reason}</div>
+              </div>
+              <div style={{ fontSize: 11, color: T.t3, whiteSpace: "nowrap", marginTop: 2 }}>{item.time}</div>
+            </div>
+          ))}
+        </Card>
+      </FadeIn>
+
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
         {/* Priority Queue */}
-        <FadeIn delay={240}>
+        <FadeIn delay={280}>
           <Card>
             <Narrator text="The AI scored every roof in your database by age, weather history, shingle type, and exposure. These contacts need attention first." />
             <div style={{ fontSize: 17, fontWeight: 600, color: T.text, marginBottom: 16 }}>Priority Queue</div>
@@ -727,7 +795,7 @@ function Home({ onNav }) {
         </FadeIn>
 
         {/* ROI Calculator */}
-        <FadeIn delay={320}>
+        <FadeIn delay={360}>
           <Card>
             <Narrator text="Drag the slider to model your revenue. These are your numbers, your 4,231 contacts." />
             <div style={{ fontSize: 17, fontWeight: 600, color: T.text, marginBottom: 4 }}>Revenue Calculator</div>
@@ -1445,7 +1513,7 @@ export default function App() {
           style={{ display: "flex", alignItems: "center", gap: 10, cursor: "pointer" }}
         >
           <img src="/logo.png" alt="Lifeline Roofing" style={{ height: 28, objectFit: "contain" }} />
-          <span style={{ fontSize: 12, color: T.t3, fontWeight: 500 }}>AI Roof Intelligence</span>
+          <span style={{ fontSize: 12, color: T.t3, fontWeight: 500 }}>Lifeline AI</span>
         </div>
 
         <div style={{ display: "flex", gap: 2 }}>
