@@ -1,5 +1,64 @@
 import { useState, useEffect, useRef } from "react";
 
+/* ─── Clean SVG Icons ─── */
+
+function IconStorm({ size = 20, color = "currentColor" }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">
+      <path d="M19 16.9A5 5 0 0 0 18 7h-1.26a8 8 0 1 0-11.62 9" />
+      <polyline points="13 11 9 17 15 17 11 23" />
+    </svg>
+  );
+}
+
+function IconSearch({ size = 20, color = "currentColor" }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="11" cy="11" r="8" />
+      <line x1="21" y1="21" x2="16.65" y2="16.65" />
+    </svg>
+  );
+}
+
+function IconHome({ size = 20, color = "currentColor" }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">
+      <rect x="3" y="3" width="7" height="7" rx="1" />
+      <rect x="14" y="3" width="7" height="7" rx="1" />
+      <rect x="3" y="14" width="7" height="7" rx="1" />
+      <rect x="14" y="14" width="7" height="7" rx="1" />
+    </svg>
+  );
+}
+
+function IconCamera({ size = 20, color = "currentColor" }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">
+      <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
+      <circle cx="12" cy="13" r="4" />
+    </svg>
+  );
+}
+
+function IconCalendar({ size = 16, color = "currentColor" }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round" style={{ verticalAlign: "middle", marginRight: 4 }}>
+      <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+      <line x1="16" y1="2" x2="16" y2="6" />
+      <line x1="8" y1="2" x2="8" y2="6" />
+      <line x1="3" y1="10" x2="21" y2="10" />
+    </svg>
+  );
+}
+
+function IconCheck({ size = 16, color = "currentColor" }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" style={{ verticalAlign: "middle", marginRight: 4 }}>
+      <polyline points="20 6 9 17 4 12" />
+    </svg>
+  );
+}
+
 const T = {
   bg: "#F5F5F7",
   white: "#FFFFFF",
@@ -195,6 +254,7 @@ function Card({ children, style: extraStyle, onClick }) {
   return (
     <div onClick={onClick} style={{
       background: T.white, borderRadius: 16, padding: 28,
+      boxShadow: "0 0 0 0.5px rgba(0,0,0,0.04), 0 1px 3px rgba(0,0,0,0.03), 0 4px 12px rgba(0,0,0,0.025)",
       ...extraStyle,
     }}>
       {children}
@@ -229,6 +289,15 @@ function Opener({ onStart }) {
           <div style={{ fontSize: 48, fontWeight: 700, color: T.t3, letterSpacing: -1.5, lineHeight: 1.2, marginTop: 8 }}>
             $0/month recurring.
           </div>
+          <div style={{ marginTop: 40 }}>
+            <button onClick={onStart} style={{
+              background: T.blue, color: "#fff", border: "none", borderRadius: 980,
+              padding: "14px 40px", fontSize: 17, fontWeight: 600, cursor: "pointer",
+              boxShadow: "0 2px 12px rgba(0,113,227,0.35)",
+            }}>
+              See How It Works
+            </button>
+          </div>
         </FadeIn>
       </div>
     );
@@ -250,6 +319,15 @@ function Opener({ onStart }) {
           <div style={{ fontSize: 48, fontWeight: 700, color: T.green, letterSpacing: -1.5, lineHeight: 1.2, marginTop: 8 }}>
             One button deploys 1,200 messages.
           </div>
+          <div style={{ marginTop: 40 }}>
+            <button onClick={onStart} style={{
+              background: T.blue, color: "#fff", border: "none", borderRadius: 980,
+              padding: "14px 40px", fontSize: 17, fontWeight: 600, cursor: "pointer",
+              boxShadow: "0 2px 12px rgba(0,113,227,0.35)",
+            }}>
+              See How It Works
+            </button>
+          </div>
         </FadeIn>
       </div>
     );
@@ -258,8 +336,8 @@ function Opener({ onStart }) {
   return (
     <div style={{ display: "flex", alignItems: "center", justifyContent: "center", minHeight: "80vh", textAlign: "center" }}>
       <FadeIn>
-        <div style={{ fontSize: 15, fontWeight: 600, color: T.t2, textTransform: "uppercase", letterSpacing: 2, marginBottom: 24 }}>
-          Lifeline AI
+        <div style={{ marginBottom: 24 }}>
+          <img src="/logo.png" alt="Lifeline Roofing" style={{ height: 40, objectFit: "contain" }} />
         </div>
         <div style={{ fontSize: 52, fontWeight: 700, color: T.text, letterSpacing: -1.5, lineHeight: 1.15 }}>
           Your roofs. Your customers.
@@ -612,9 +690,9 @@ function Home({ onNav }) {
         >
           <div style={{
             width: 42, height: 42, borderRadius: 12, background: T.orangeL,
-            display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20, flexShrink: 0,
+            display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0,
           }}>
-            {"⛈️"}
+            <IconStorm size={20} color={T.orange} />
           </div>
           <div style={{ flex: 1 }}>
             <div style={{ fontSize: 15, fontWeight: 600, color: T.text }}>Storm Watch — Montgomery and Walker Counties</div>
@@ -858,7 +936,7 @@ function Detail({ contact, onBack }) {
                 )}
                 {sent && (
                   <div style={{ padding: "14px 18px", background: T.greenL, borderRadius: T.rs, textAlign: "center" }}>
-                    <div style={{ color: T.green, fontWeight: 600, fontSize: 15 }}>{"✓"} Sent to {c.phone}</div>
+                    <div style={{ color: T.green, fontWeight: 600, fontSize: 15, display: "flex", alignItems: "center", justifyContent: "center", gap: 4 }}><IconCheck size={16} color={T.green} />Sent to {c.phone}</div>
                     <div style={{ color: T.t2, fontSize: 13, marginTop: 4 }}>
                       Customer will see this as a text from Lifeline Roofing. If they reply, your team gets notified instantly.
                     </div>
@@ -893,7 +971,7 @@ function Detail({ contact, onBack }) {
                       background: T.blue, color: "#fff", border: "none", borderRadius: 980,
                       padding: "10px 28px", fontSize: 14, fontWeight: 600, cursor: "pointer",
                     }}>
-                      {"📅"} Book Free Inspection
+                      <IconCalendar size={14} color="#fff" />Book Free Inspection
                     </button>
                   </div>
                 </div>
@@ -934,9 +1012,9 @@ function Weather({ onBack }) {
           <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
             <div style={{
               width: 52, height: 52, borderRadius: 16, background: T.orangeL,
-              display: "flex", alignItems: "center", justifyContent: "center", fontSize: 26,
+              display: "flex", alignItems: "center", justifyContent: "center",
             }}>
-              {"⛈️"}
+              <IconStorm size={24} color={T.orange} />
             </div>
             <div>
               <h2 style={{ fontSize: 24, fontWeight: 700, color: T.text, margin: 0 }}>Severe Storm Watch</h2>
@@ -993,7 +1071,7 @@ function Weather({ onBack }) {
           </button>
         ) : (
           <div style={{ padding: "20px 28px", background: T.greenL, borderRadius: T.r, textAlign: "center" }}>
-            <div style={{ fontSize: 20, fontWeight: 700, color: T.green }}>{"✓"} Storm Response Deployed</div>
+            <div style={{ fontSize: 20, fontWeight: 700, color: T.green, display: "flex", alignItems: "center", justifyContent: "center", gap: 6 }}><IconCheck size={20} color={T.green} />Storm Response Deployed</div>
             <div style={{ fontSize: 14, color: T.t2, marginTop: 6 }}>
               312 sent immediately · 935 queued for 8 AM · Each personalized to the customer's roof
             </div>
@@ -1068,7 +1146,7 @@ function InspectionPage({ onBack }) {
                   position: "absolute", inset: 0, display: "flex", flexDirection: "column",
                   alignItems: "center", justifyContent: "center",
                 }}>
-                  <div style={{ fontSize: 36, marginBottom: 8 }}>{"📸"}</div>
+                  <div style={{ marginBottom: 8 }}><IconCamera size={32} color="rgba(255,255,255,0.85)" /></div>
                   <div style={{ color: "rgba(255,255,255,.85)", fontSize: 14, fontWeight: 600 }}>Sandra Collins</div>
                   <div style={{ color: "rgba(255,255,255,.5)", fontSize: 12 }}>3301 Magnolia Bend</div>
                 </div>
@@ -1162,7 +1240,7 @@ function InspectionPage({ onBack }) {
                   </button>
                 ) : (
                   <div style={{ marginTop: 14, padding: "14px 18px", background: T.greenL, borderRadius: T.rs, textAlign: "center" }}>
-                    <div style={{ color: T.green, fontWeight: 600, fontSize: 15 }}>{"✓"} Report emailed to Sandra Collins</div>
+                    <div style={{ color: T.green, fontWeight: 600, fontSize: 15, display: "flex", alignItems: "center", justifyContent: "center", gap: 4 }}><IconCheck size={16} color={T.green} />Report emailed to Sandra Collins</div>
                     <div style={{ color: T.t2, fontSize: 13, marginTop: 4 }}>
                       Scroll down to see what Sandra received
                     </div>
@@ -1362,9 +1440,9 @@ export default function App() {
   }
 
   const tabs = [
-    { id: "home", label: "Home", icon: "⚡" },
-    { id: "weather", label: "Weather", icon: "🌦️" },
-    { id: "inspection", label: "Inspect", icon: "🔍" },
+    { id: "home", label: "Home", icon: <IconHome size={15} /> },
+    { id: "weather", label: "Weather", icon: <IconStorm size={15} /> },
+    { id: "inspection", label: "Inspect", icon: <IconSearch size={15} /> },
   ];
 
   function renderContent() {
@@ -1401,9 +1479,8 @@ export default function App() {
           onClick={goBack}
           style={{ display: "flex", alignItems: "center", gap: 10, cursor: "pointer" }}
         >
-          <span style={{ fontSize: 15 }}>{"⚡"}</span>
-          <span style={{ fontSize: 16, fontWeight: 700, color: T.text, letterSpacing: -0.3 }}>Lifeline</span>
-          <span style={{ fontSize: 12, color: T.t3 }}>AI Roof Intelligence</span>
+          <img src="/logo.png" alt="Lifeline Roofing" style={{ height: 28, objectFit: "contain" }} />
+          <span style={{ fontSize: 12, color: T.t3, fontWeight: 500 }}>AI Roof Intelligence</span>
         </div>
 
         <div style={{ display: "flex", gap: 2 }}>
@@ -1419,7 +1496,7 @@ export default function App() {
                 color: page === t.id && !detailContact ? T.text : T.t2,
               }}
             >
-              {t.icon} {t.label}
+              <span style={{ display: "flex", alignItems: "center" }}>{t.icon}</span> {t.label}
             </button>
           ))}
         </div>
