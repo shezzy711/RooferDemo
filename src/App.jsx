@@ -635,9 +635,6 @@ function Home({ onNav }) {
   const avgPlan = 45;
   const mrrCalc = members * avgPlan;
   const annual = mrrCalc * 12;
-  const leads = Math.round(members * 0.22);
-  const pipeline = leads * 18500;
-  const total = annual + pipeline;
 
   const stats = [
     { label: "Avg Health", content: <HealthRing score={avgH} size={50} />, sub: "4,231 roofs scored" },
@@ -783,7 +780,7 @@ function Home({ onNav }) {
                 <HealthRing score={c.health} size={40} />
                 <div style={{ flex: 1 }}>
                   <div style={{ fontSize: 15, fontWeight: 600, color: T.text }}>{c.name}</div>
-                  <div style={{ fontSize: 12, color: T.t3 }}>{c.shingle} · {c.hail} hail events</div>
+                  <div style={{ fontSize: 12, color: T.t3 }}>{c.addr.split(",")[0]} · {c.hail} hail events</div>
                 </div>
                 <Pill color={c.risk === "high" ? T.red : c.risk === "medium" ? T.orange : T.green}>
                   {c.risk === "high" ? "High" : c.risk === "medium" ? "Med" : "Low"}
@@ -831,23 +828,11 @@ function Home({ onNav }) {
               <span style={{ fontSize: 18, fontWeight: 700, color: T.blue }}>${(annual / 1000).toFixed(0)}K/yr</span>
             </div>
 
-            <div style={{ height: 1, background: T.div, margin: "12px 0" }} />
-            <div style={{ fontSize: 12, color: T.t3, marginBottom: 10 }}>Maintenance to Replacement Pipeline (22%)</div>
-
-            <div style={{ display: "flex", justifyContent: "space-between", padding: "8px 0" }}>
-              <span style={{ fontSize: 14, color: T.t2 }}>Replacement leads</span>
-              <span style={{ fontSize: 15, fontWeight: 600, color: T.text }}>{leads}/yr</span>
-            </div>
-            <div style={{ display: "flex", justifyContent: "space-between", padding: "8px 0", borderTop: `1px solid ${T.div}` }}>
-              <span style={{ fontSize: 14, color: T.t2 }}>Pipeline value</span>
-              <span style={{ fontSize: 20, fontWeight: 800, color: T.green }}>${(pipeline / 1e6).toFixed(1)}M/yr</span>
-            </div>
-
             <div style={{ marginTop: 18, padding: "16px 20px", background: T.greenL, borderRadius: T.rs, textAlign: "center" }}>
               <div style={{ fontSize: 26, fontWeight: 700, color: T.green, letterSpacing: -0.5 }}>
-                ${(total / 1e6).toFixed(1)}M
+                ${mrrCalc.toLocaleString()}/mo
               </div>
-              <div style={{ fontSize: 13, color: T.t2, marginTop: 4 }}>total annual revenue impact</div>
+              <div style={{ fontSize: 13, color: T.t2, marginTop: 4 }}>from customers currently generating $0</div>
             </div>
           </Card>
         </FadeIn>
