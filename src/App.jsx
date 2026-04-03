@@ -278,16 +278,16 @@ function Opener({ onStart }) {
       <div style={{ display: "flex", alignItems: "center", justifyContent: "center", minHeight: "80vh", textAlign: "center" }}>
         <FadeIn>
           <div style={{ fontSize: 14, fontWeight: 600, color: T.red, textTransform: "uppercase", letterSpacing: 2, marginBottom: 20 }}>
-            Today
+            The Problem
           </div>
           <div style={{ fontSize: 48, fontWeight: 700, color: T.text, letterSpacing: -1.5, lineHeight: 1.2 }}>
-            4,231 past customers.
+            Roofing is tight right now.
           </div>
           <div style={{ fontSize: 48, fontWeight: 700, color: T.t3, letterSpacing: -1.5, lineHeight: 1.2, marginTop: 8 }}>
-            Zero being contacted.
+            No storms. Insurance is tightening.
           </div>
           <div style={{ fontSize: 48, fontWeight: 700, color: T.t3, letterSpacing: -1.5, lineHeight: 1.2, marginTop: 8 }}>
-            $0/month recurring.
+            You need cash flow every day.
           </div>
           <div style={{ marginTop: 40 }}>
             <button onClick={onStart} style={{
@@ -307,17 +307,17 @@ function Opener({ onStart }) {
     return (
       <div style={{ display: "flex", alignItems: "center", justifyContent: "center", minHeight: "80vh", textAlign: "center" }}>
         <FadeIn>
-          <div style={{ fontSize: 14, fontWeight: 600, color: T.green, textTransform: "uppercase", letterSpacing: 2, marginBottom: 20 }}>
-            With Lifeline AI
+          <div style={{ fontSize: 14, fontWeight: 600, color: T.orange, textTransform: "uppercase", letterSpacing: 2, marginBottom: 20 }}>
+            Right Now
           </div>
           <div style={{ fontSize: 48, fontWeight: 700, color: T.text, letterSpacing: -1.5, lineHeight: 1.2 }}>
-            Every roof has a health score.
+            4,000+ past customers in your CRM.
           </div>
-          <div style={{ fontSize: 48, fontWeight: 700, color: T.blue, letterSpacing: -1.5, lineHeight: 1.2, marginTop: 8 }}>
-            $28K/month recurring.
+          <div style={{ fontSize: 48, fontWeight: 700, color: T.t3, letterSpacing: -1.5, lineHeight: 1.2, marginTop: 8 }}>
+            Nobody is following up.
           </div>
-          <div style={{ fontSize: 48, fontWeight: 700, color: T.green, letterSpacing: -1.5, lineHeight: 1.2, marginTop: 8 }}>
-            One button deploys 1,200 messages.
+          <div style={{ fontSize: 48, fontWeight: 700, color: T.t3, letterSpacing: -1.5, lineHeight: 1.2, marginTop: 8 }}>
+            That's money sitting on the table.
           </div>
           <div style={{ marginTop: 40 }}>
             <button onClick={onStart} style={{
@@ -340,10 +340,10 @@ function Opener({ onStart }) {
           <img src="/logo.png" alt="Lifeline Roofing" style={{ height: 40, objectFit: "contain" }} />
         </div>
         <div style={{ fontSize: 52, fontWeight: 700, color: T.text, letterSpacing: -1.5, lineHeight: 1.15 }}>
-          Your roofs. Your customers.
+          Turn maintenance into recurring revenue.
         </div>
         <div style={{ fontSize: 52, fontWeight: 700, color: T.blue, letterSpacing: -1.5, lineHeight: 1.15, marginTop: 4 }}>
-          Managed by AI.
+          Automated by AI.
         </div>
         <div style={{ marginTop: 40 }}>
           <button onClick={onStart} style={{
@@ -625,7 +625,6 @@ function NewContactModal({ onClose, onNav }) {
 
 function Home({ onNav }) {
   const [pct, setPct] = useState(15);
-  const [showNewContact, setShowNewContact] = useState(false);
   const avgH = Math.round(CONTACTS.reduce((a, c) => a + c.health, 0) / CONTACTS.length);
   const highR = CONTACTS.filter(c => c.risk === "high").length;
   const enrolled = CONTACTS.filter(c => c.status === "enrolled").length;
@@ -651,30 +650,10 @@ function Home({ onNav }) {
 
   return (
     <div style={{ maxWidth: 960, margin: "0 auto" }}>
-      {showNewContact && (
-        <NewContactModal
-          onClose={function () { setShowNewContact(false); }}
-          onNav={onNav}
-        />
-      )}
-
       <FadeIn>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 32 }}>
-          <div>
-            <h1 style={{ fontSize: 34, fontWeight: 700, color: T.text, margin: 0, letterSpacing: -0.8 }}>Command Center</h1>
-            <p style={{ fontSize: 16, color: T.t2, margin: "6px 0 0" }}>AI analyzed 4,231 roofs overnight. Here is what needs your attention.</p>
-          </div>
-          <button
-            onClick={function () { setShowNewContact(true); }}
-            style={{
-              background: "transparent", color: T.blue, border: "none", borderRadius: 980,
-              padding: "10px 0", fontSize: 15, fontWeight: 500, cursor: "pointer",
-              display: "flex", alignItems: "center", gap: 4, whiteSpace: "nowrap",
-              marginTop: 4,
-            }}
-          >
-            + Add Contact
-          </button>
+        <div style={{ marginBottom: 32 }}>
+          <h1 style={{ fontSize: 34, fontWeight: 700, color: T.text, margin: 0, letterSpacing: -0.8 }}>Command Center</h1>
+          <p style={{ fontSize: 16, color: T.t2, margin: "6px 0 0" }}>AI analyzed 4,000+ roofs from your CRM. Here is what needs your attention.</p>
         </div>
       </FadeIn>
 
@@ -1085,23 +1064,21 @@ function Weather({ onBack }) {
 /* ─── Inspection AI ─── */
 
 function InspectionPage({ onBack }) {
-  const [analyzing, setAnalyzing] = useState(false);
-  const [results, setResults] = useState(null);
+  const [step, setStep] = useState("input"); // input, generating, done
   const [reportSent, setReportSent] = useState(false);
 
-  function runAnalysis() {
-    setAnalyzing(true);
-    setTimeout(() => {
-      setAnalyzing(false);
-      setResults(PHOTO_FINDINGS);
-    }, 2200);
-  }
-
-  const bboxes = [
-    { x: "10%", y: "8%", w: "32%", h: "28%", color: T.red },
-    { x: "52%", y: "32%", w: "38%", h: "34%", color: T.orange },
-    { x: "36%", y: "58%", w: "18%", h: "24%", color: T.red },
+  const inspectionInputs = [
+    { label: "Flashing", question: "Condition of flashing at chimney, walls, and vents?", value: "Separation at chimney north side. Gap between step flashing and masonry. Water infiltration risk within 3 months." },
+    { label: "Shingles", question: "Shingle surface condition?", value: "UV-driven granule loss on south-facing slope, center section. Below replacement threshold but progressing." },
+    { label: "Pipe Boots", question: "Pipe boot and vent seal condition?", value: "Rubber boot seal on west plumbing vent showing UV cracks. Will leak within 6 months if not replaced." },
+    { label: "Gutters/Drip Edge", question: "Gutter and drip edge condition?", value: "Clean. No issues." },
+    { label: "Ridge/Hip Caps", question: "Ridge and hip cap condition?", value: "Minor seal strip fatigue starting. Monitor." },
   ];
+
+  function handleGenerate() {
+    setStep("generating");
+    setTimeout(() => setStep("done"), 2200);
+  }
 
   return (
     <div style={{ maxWidth: 960, margin: "0 auto" }}>
@@ -1114,104 +1091,92 @@ function InspectionPage({ onBack }) {
 
       <FadeIn>
         <div style={{ marginBottom: 24 }}>
-          <h2 style={{ fontSize: 28, fontWeight: 700, color: T.text, margin: 0, letterSpacing: -0.5 }}>Inspection AI</h2>
-          <p style={{ fontSize: 15, color: T.t2, margin: "6px 0 0" }}>Photo in. Analysis out. Homeowner report generated.</p>
+          <h2 style={{ fontSize: 28, fontWeight: 700, color: T.text, margin: 0, letterSpacing: -0.5 }}>Maintenance Report</h2>
+          <p style={{ fontSize: 15, color: T.t2, margin: "6px 0 0" }}>Tech fills it out on site. Customer gets a professional report.</p>
         </div>
       </FadeIn>
 
       <FadeIn delay={80}>
-        <Narrator text="Your tech snaps a photo during a maintenance visit. The AI identifies damage, estimates repair costs, and generates a professional report, all before the tech leaves the property." />
+        <Narrator text="Your tech completes the inspection checklist on site or it syncs from your existing software (GAF QuickMeasure, CompanyCam, EagleView). The system generates a branded report and sends it to the homeowner before the tech leaves the property." />
       </FadeIn>
 
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
         <FadeIn delay={160}>
           <Card>
-            <div style={{
-              width: "100%", aspectRatio: "4/3", borderRadius: T.rs, overflow: "hidden",
-              position: "relative",
-              background: "#4a4035",
-              marginBottom: 16,
-            }}>
-              <img
-                src="https://images.unsplash.com/photo-1632759145351-1d592919f522?w=800&q=80"
-                alt="Roof inspection"
-                style={{
-                  width: "100%", height: "100%", objectFit: "cover",
-                  position: "absolute", inset: 0,
-                }}
-              />
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 6 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                <div style={{ width: 8, height: 8, borderRadius: 4, background: T.blue }} />
+                <span style={{ fontSize: 13, fontWeight: 600, color: T.t2 }}>Inspection Checklist</span>
+              </div>
+              <Pill color={T.t3} bg="rgba(0,0,0,0.04)">Sandra Collins</Pill>
+            </div>
+            <div style={{ fontSize: 12, color: T.t3, marginBottom: 18 }}>3301 Magnolia Bend, Conroe · GAF Timberline HDZ</div>
 
-              {!results && !analyzing && (
+            {inspectionInputs.map((item, i) => (
+              <div key={i} style={{ marginBottom: i < inspectionInputs.length - 1 ? 16 : 0 }}>
+                <div style={{ fontSize: 12, fontWeight: 600, color: T.t2, textTransform: "uppercase", letterSpacing: 0.6, marginBottom: 6 }}>{item.label}</div>
+                <div style={{ fontSize: 12, color: T.t3, marginBottom: 6 }}>{item.question}</div>
                 <div style={{
-                  position: "absolute", inset: 0, display: "flex", flexDirection: "column",
-                  alignItems: "center", justifyContent: "center",
+                  padding: "10px 14px", borderRadius: 10, border: "1px solid " + T.div,
+                  background: T.bg, fontSize: 14, color: T.text, lineHeight: 1.5,
                 }}>
-                  <div style={{ marginBottom: 8 }}><IconCamera size={32} color="rgba(255,255,255,0.85)" /></div>
-                  <div style={{ color: "rgba(255,255,255,.85)", fontSize: 14, fontWeight: 600 }}>Sandra Collins</div>
-                  <div style={{ color: "rgba(255,255,255,.5)", fontSize: 12 }}>3301 Magnolia Bend</div>
+                  {item.value}
                 </div>
-              )}
+              </div>
+            ))}
 
-              {analyzing && (
-                <div style={{
-                  position: "absolute", inset: 0, display: "flex", flexDirection: "column",
-                  alignItems: "center", justifyContent: "center", background: "rgba(0,0,0,.35)",
-                }}>
-                  <div style={{
-                    width: 36, height: 36, border: "3px solid rgba(255,255,255,.2)",
-                    borderTopColor: "#fff", borderRadius: "50%",
-                    animation: "lifelinespin .8s linear infinite",
-                  }} />
-                  <div style={{ color: "#fff", fontSize: 14, fontWeight: 600, marginTop: 12 }}>Analyzing roof surface...</div>
-                  <style>{`@keyframes lifelinespin { to { transform: rotate(360deg); } }`}</style>
-                </div>
-              )}
-
-              {results && (
-                <>
-                  <div style={{
-                    position: "absolute", top: 10, left: 10,
-                    background: "rgba(0,0,0,.55)", color: "#fff",
-                    padding: "4px 10px", borderRadius: 6, fontSize: 11, fontWeight: 600,
-                  }}>
-                    3 issues found
-                  </div>
-                  {bboxes.map((b, i) => (
-                    <div key={i} style={{
-                      position: "absolute", left: b.x, top: b.y, width: b.w, height: b.h,
-                      border: `2px solid ${b.color}`, borderRadius: 8,
-                      background: b.color + "15",
-                    }} />
-                  ))}
-                </>
-              )}
+            <div style={{ marginTop: 18, padding: "12px 16px", background: T.blueS, borderRadius: 10, display: "flex", alignItems: "center", gap: 10 }}>
+              <IconCamera size={16} color={T.blue} />
+              <span style={{ fontSize: 13, color: T.blue, fontWeight: 500 }}>3 photos attached</span>
             </div>
 
-            {!results && !analyzing && (
-              <button onClick={runAnalysis} style={{
-                width: "100%", background: T.blue, color: "#fff", border: "none",
-                borderRadius: 980, padding: "13px 0", fontSize: 15, fontWeight: 600, cursor: "pointer",
-              }}>
-                Analyze Photo
-              </button>
-            )}
+            <div style={{ marginTop: 12, fontSize: 12, color: T.t3, textAlign: "center" }}>
+              Syncs with GAF QuickMeasure · CompanyCam · EagleView
+            </div>
           </Card>
         </FadeIn>
 
         <FadeIn delay={240}>
           <Card>
             <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 16 }}>
-              <div style={{ width: 8, height: 8, borderRadius: 4, background: T.blue,  }} />
-              <span style={{ fontSize: 13, fontWeight: 600, color: T.t2 }}>Findings</span>
+              <div style={{ width: 8, height: 8, borderRadius: 4, background: T.blue }} />
+              <span style={{ fontSize: 13, fontWeight: 600, color: T.t2 }}>AI Report Preview</span>
             </div>
 
-            {!results ? (
-              <div style={{ textAlign: "center", padding: "48px 0", color: T.t3, fontSize: 14 }}>
-                Run analysis to see results
-              </div>
-            ) : (
+            {step === "input" && (
               <div>
-                {results.map((r, i) => (
+                <div style={{ textAlign: "center", padding: "24px 0 20px" }}>
+                  <div style={{ fontSize: 15, color: T.t2, marginBottom: 20, lineHeight: 1.6 }}>
+                    The AI takes the tech's findings, estimates repair costs, calculates the health score, and generates a clean report the homeowner can read in 30 seconds.
+                  </div>
+                  <button onClick={handleGenerate} style={{
+                    width: "100%", background: T.blue, color: "#fff", border: "none",
+                    borderRadius: 980, padding: "13px 0", fontSize: 15, fontWeight: 600, cursor: "pointer",
+                    boxShadow: "0 2px 12px rgba(0,113,227,0.3)",
+                  }}>
+                    Generate Report
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {step === "generating" && (
+              <div style={{ textAlign: "center", padding: "48px 0" }}>
+                <div style={{
+                  width: 36, height: 36, border: "3px solid " + T.div,
+                  borderTopColor: T.blue, borderRadius: "50%",
+                  animation: "lifelinespin 0.8s linear infinite",
+                  margin: "0 auto 20px",
+                }} />
+                <style>{`@keyframes lifelinespin { to { transform: rotate(360deg); } }`}</style>
+                <div style={{ fontSize: 15, fontWeight: 600, color: T.text, marginBottom: 6 }}>Generating report...</div>
+                <div style={{ fontSize: 13, color: T.t3 }}>Calculating health score, estimating costs,<br />formatting for homeowner</div>
+              </div>
+            )}
+
+            {step === "done" && (
+              <div>
+                {PHOTO_FINDINGS.map((r, i) => (
                   <div key={i} style={{ padding: "14px 0", borderTop: i > 0 ? `1px solid ${T.div}` : "none" }}>
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 4 }}>
                       <span style={{ fontSize: 15, fontWeight: 600, color: T.text }}>{r.label}</span>
@@ -1236,7 +1201,7 @@ function InspectionPage({ onBack }) {
                     cursor: "pointer", marginTop: 14,
                     boxShadow: "0 2px 12px rgba(0,113,227,0.3)",
                   }}>
-                    Generate and Send Report
+                    Send Report to Sandra
                   </button>
                 ) : (
                   <div style={{ marginTop: 14, padding: "14px 18px", background: T.greenL, borderRadius: T.rs, textAlign: "center" }}>
