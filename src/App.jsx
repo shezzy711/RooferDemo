@@ -1286,12 +1286,15 @@ function InspectionPage({ onBack }) {
               {/* Clean white header */}
               <div style={{ padding: "36px 40px 28px" }}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
-                  <div>
-                    <div style={{ fontSize: 11, fontWeight: 600, color: T.t3, textTransform: "uppercase", letterSpacing: 1.5, marginBottom: 8 }}>
-                      Roof Inspection Report
-                    </div>
-                    <div style={{ fontSize: 26, fontWeight: 700, color: T.text, letterSpacing: -0.5 }}>
-                      Lifeline Roofing Systems
+                  <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+                    <img src="/logo.png" alt="Lifeline Roofing" style={{ height: 36, objectFit: "contain" }} />
+                    <div>
+                      <div style={{ fontSize: 11, fontWeight: 600, color: T.t3, textTransform: "uppercase", letterSpacing: 1.5, marginBottom: 2 }}>
+                        Roof Inspection Report
+                      </div>
+                      <div style={{ fontSize: 18, fontWeight: 700, color: T.text, letterSpacing: -0.3 }}>
+                        Lifeline Roofing Systems
+                      </div>
                     </div>
                   </div>
                   <div style={{ textAlign: "right" }}>
@@ -1315,7 +1318,7 @@ function InspectionPage({ onBack }) {
               <div style={{ height: 1, background: T.div, margin: "0 40px" }} />
 
               {/* Health Score - big and simple */}
-              <div style={{ padding: "32px 40px", textAlign: "center" }}>
+              <div style={{ padding: "32px 40px", textAlign: "center", display: "flex", flexDirection: "column", alignItems: "center" }}>
                 <HealthRing score={54} size={88} />
                 <div style={{ fontSize: 14, fontWeight: 600, color: T.text, marginTop: 14 }}>
                   Roof Health Score
