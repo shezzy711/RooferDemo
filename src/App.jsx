@@ -639,8 +639,8 @@ function Home({ onNav }) {
   const stats = [
     { label: "Avg Health", content: <HealthRing score={avgH} size={50} />, sub: "4,231 roofs scored" },
     { label: "High Risk", content: <span style={{ fontSize: 28, fontWeight: 700, color: T.red }}>312</span>, sub: "need attention now" },
-    { label: "Members", content: <span style={{ fontSize: 28, fontWeight: 700, color: T.blue }}>847</span>, sub: "enrolled in plans" },
-    { label: "Monthly Rev", content: <span style={{ fontSize: 28, fontWeight: 700, color: T.green }}>$38K</span>, sub: "+$4,200 this month" },
+    { label: "Members", content: <span style={{ fontSize: 28, fontWeight: 700, color: T.blue }}>223</span>, sub: "enrolled in plans" },
+    { label: "Monthly Rev", content: <span style={{ fontSize: 28, fontWeight: 700, color: T.green }}>$10K</span>, sub: "+$1,800 this month" },
   ];
 
   const priorityContacts = [...CONTACTS].sort((a, b) => a.health - b.health);
