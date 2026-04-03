@@ -90,29 +90,29 @@ const CONTACTS = [
     id: 1, name: "Tony Russo", addr: "2200 Post Oak Blvd, Conroe", phone: "(936) 555-0912",
     installed: "2019-12-01", shingle: "CertainTeed Landmark", sqft: 1800, hail: 2, health: 41,
     risk: "high", plan: null, mrr: 0, status: "not_contacted",
-    ai: "Oldest roof in portfolio at 6+ years with low slope and 2 hail events. Nearing the end of the optimal maintenance window — warranty-eligible repairs may expire within the year. Without intervention, this roof is heading for unplanned replacement. Strong candidate for immediate outreach and maintenance-to-replacement conversion.",
-    sms: "Tony, this is Lifeline Roofing. Your roof at Post Oak is coming up on 6 years and I want to make sure you're still covered. With the hail your area has seen, there might be warranty-eligible repairs we can catch before they expire. Free inspection, 30 minutes. Worth a look — can I schedule you this week?"
+    ai: "Oldest roof in portfolio at 6+ years with low slope and 2 hail events. Nearing the end of the optimal maintenance window. Warranty-eligible repairs may expire within the year. Without intervention, this roof is heading for unplanned replacement. Strong candidate for immediate outreach and maintenance-to-replacement conversion.",
+    sms: "Tony, this is Lifeline Roofing. Your roof at Post Oak is coming up on 6 years and I want to make sure you're still covered. With the hail your area has seen, there might be warranty-eligible repairs we can catch before they expire. Free inspection, 30 minutes. Worth a look. Can I schedule you this week?"
   },
   {
     id: 2, name: "Charles Washington", addr: "1122 Pecan Grove Rd, Conroe", phone: "(936) 555-0718",
     installed: "2020-04-20", shingle: "GAF Timberline Ultra HD", sqft: 2800, hail: 3, health: 48,
     risk: "high", plan: null, mrr: 0, status: "outreach_sent",
     ai: "5-year-old complex roof with 3 hail events and dominant south-facing exposure. Multiple compounding risk factors. Predictive model shows 67% probability of requiring full replacement within 18 months. PRIORITY: Highest revenue opportunity in current pipeline. Maintenance enrollment is the bridge to a projected $22K replacement project.",
-    sms: "Charles, your roof at Pecan Grove is one of our earlier installs and it's been through 3 hail events and five Texas summers on that south-facing slope. I want to be straight — there's a good chance we find something that needs attention. A quick inspection now could save you a big surprise later. No cost for the visit. Can I come take a look?"
+    sms: "Charles, your roof at Pecan Grove is one of our earlier installs and it's been through 3 hail events and five Texas summers on that south-facing slope. I want to be straight with you. There's a good chance we find something that needs attention. A quick inspection now could save you a big surprise later. No cost for the visit. Can I come take a look?"
   },
   {
     id: 3, name: "Sandra Collins", addr: "3301 Magnolia Bend, Conroe", phone: "(936) 555-0334",
     installed: "2020-11-05", shingle: "GAF Timberline HDZ", sqft: 2100, hail: 3, health: 54,
     risk: "high", plan: null, mrr: 0, status: "not_contacted",
-    ai: "Three hail events on a low-slope roof approaching 5 years. High probability of hidden damage at valley transitions and pipe boot seals. Granule displacement likely exceeding manufacturer thresholds. URGENT: Inspection recommended within 30 days. Strong maintenance-to-replacement pipeline candidate — 67% probability of full replacement within 18 months.",
-    sms: "Sandra, this is Blu from Lifeline Roofing. Your roof on Magnolia Bend has been through some rough weather — 3 hail events in under 5 years on a low slope. I'm not calling to sell you a new roof. I want to see if we can extend what you've got by 3-5 years with some preventative care. Can I send someone out for a free look?"
+    ai: "Three hail events on a low-slope roof approaching 5 years. High probability of hidden damage at valley transitions and pipe boot seals. Granule displacement likely exceeding manufacturer thresholds. URGENT: Inspection recommended within 30 days. Strong maintenance-to-replacement pipeline candidate with 67% probability of full replacement within 18 months.",
+    sms: "Sandra, this is Blu from Lifeline Roofing. Your roof on Magnolia Bend has been through some rough weather. 3 hail events in under 5 years on a low slope. I'm not calling to sell you a new roof. I want to see if we can extend what you've got by 3-5 years with some preventative care. Can I send someone out for a free look?"
   },
   {
     id: 4, name: "David Chen", addr: "4418 Willowbrook Ct, Huntsville", phone: "(936) 555-0523",
     installed: "2021-02-14", shingle: "Owens Corning TruDefinition", sqft: 2600, hail: 2, health: 63,
     risk: "medium", plan: null, mrr: 0, status: "outreach_sent",
-    ai: "West-facing primary exposure drives elevated thermal cycling — hot afternoon sun followed by rapid evening cooling causes expansion and contraction stress. Combined with 2 hail events, pipe boot seals and step flashing at sidewalls are likely degrading. A $200-$400 preventative repair now prevents a $3K-$5K emergency fix later.",
-    sms: "David, your Willowbrook roof takes a lot of afternoon sun on that west side, and with a couple of hail events since we installed, I'd like to check your pipe boots and flashing. Those are the first things to go and they're cheap to fix now. We have openings Thursday and Friday — want me to grab you a slot?"
+    ai: "West-facing primary exposure drives elevated thermal cycling. Hot afternoon sun followed by rapid evening cooling causes expansion and contraction stress. Combined with 2 hail events, pipe boot seals and step flashing at sidewalls are likely degrading. A $200-$400 preventative repair now prevents a $3K-$5K emergency fix later.",
+    sms: "David, your Willowbrook roof takes a lot of afternoon sun on that west side, and with a couple of hail events since we installed, I'd like to check your pipe boots and flashing. Those are the first things to go and they're cheap to fix now. We have openings Thursday and Friday. Want me to grab you a slot?"
   },
   {
     id: 5, name: "James Patterson", addr: "2841 Oak Ridge Dr, Conroe", phone: "(936) 555-0142",
@@ -125,7 +125,7 @@ const CONTACTS = [
     id: 6, name: "Robert Nguyen", addr: "9102 Pine Hollow Ct, Willis", phone: "(936) 555-0287",
     installed: "2021-08-22", shingle: "Owens Corning Duration", sqft: 1850, hail: 1, health: 81,
     risk: "low", plan: "Semi-Annual", mrr: 25, status: "enrolled",
-    ai: "Steep pitch provides excellent drainage and reduces standing water risk. One minor hail event — no visible impact expected on Duration-class shingles. Performing within normal range for age. Annual inspection is sufficient.",
+    ai: "Steep pitch provides excellent drainage and reduces standing water risk. One minor hail event with no visible impact expected on Duration-class shingles. Performing within normal range for age. Annual inspection is sufficient.",
     sms: "Robert, your Pine Hollow roof is looking solid at 3 years. One quick check-up to make sure the flashing and vents are sealed tight before storm season."
   },
   {
@@ -133,7 +133,7 @@ const CONTACTS = [
     installed: "2023-01-10", shingle: "CertainTeed Presidential", sqft: 3200, hail: 0, health: 94,
     risk: "low", plan: "Annual", mrr: 55, status: "enrolled",
     ai: "Premium Presidential shingle on complex multi-directional geometry. Zero weather events. Performing excellently. Focus monitoring on valley-to-hip transitions and chimney counter-flashing at the 18-month mark.",
-    sms: "Maria, your Presidential roof at Lakewood is performing beautifully. Coming up on 18 months — the perfect time for a quick valley and flashing check."
+    sms: "Maria, your Presidential roof at Lakewood is performing beautifully. Coming up on 18 months, the perfect time for a quick valley and flashing check."
   },
 ];
 
@@ -401,7 +401,7 @@ function NewContactModal({ onClose, onNav }) {
         smsText += " and your area has seen " + hailCount + " hail event" + (hailCount > 1 ? "s" : "") + " since install";
       }
       if (risk === "high") {
-        smsText += ". I want to be honest with you — there is a good chance we find something that needs attention. A quick inspection now could save you a big surprise later. Free visit, no pressure. Can I schedule you this week?";
+        smsText += ". I want to be honest with you. There is a good chance we find something that needs attention. A quick inspection now could save you a big surprise later. Free visit, no pressure. Can I schedule you this week?";
       } else if (risk === "medium") {
         smsText += ". Now is a great time for a quick check-up before the next storm season. Free inspection, 30 minutes. Want me to send a tech out?";
       } else {
@@ -695,7 +695,7 @@ function Home({ onNav }) {
             <IconStorm size={20} color={T.orange} />
           </div>
           <div style={{ flex: 1 }}>
-            <div style={{ fontSize: 15, fontWeight: 600, color: T.text }}>Storm Watch — Montgomery and Walker Counties</div>
+            <div style={{ fontSize: 15, fontWeight: 600, color: T.text }}>Storm Watch: Montgomery and Walker Counties</div>
             <div style={{ fontSize: 13, color: T.t3, marginTop: 3 }}>1,247 personalized messages ready to deploy</div>
           </div>
           <span style={{ color: T.blue, fontSize: 14, fontWeight: 500, whiteSpace: "nowrap" }}>Review {"›"}</span>
@@ -750,7 +750,7 @@ function Home({ onNav }) {
         {/* ROI Calculator */}
         <FadeIn delay={320}>
           <Card>
-            <Narrator text="Drag the slider to model your revenue. These are your numbers — your 4,231 contacts." />
+            <Narrator text="Drag the slider to model your revenue. These are your numbers, your 4,231 contacts." />
             <div style={{ fontSize: 17, fontWeight: 600, color: T.text, marginBottom: 4 }}>Revenue Calculator</div>
             <div style={{ fontSize: 13, color: T.t3, marginBottom: 24 }}>Based on your 4,231 contacts</div>
 
@@ -848,7 +848,7 @@ function Detail({ contact, onBack }) {
             <div style={{ display: "flex", gap: 8, marginTop: 10 }}>
               <Pill color={riskColor}>{riskLabel}</Pill>
               {c.plan ? (
-                <Pill color={T.blue}>{c.plan} Plan — ${c.mrr}/mo</Pill>
+                <Pill color={T.blue}>{c.plan} Plan · ${c.mrr}/mo</Pill>
               ) : (
                 <Pill color={T.t3} bg="rgba(0,0,0,0.04)">Not Enrolled</Pill>
               )}
@@ -1018,7 +1018,7 @@ function Weather({ onBack }) {
             </div>
             <div>
               <h2 style={{ fontSize: 24, fontWeight: 700, color: T.text, margin: 0 }}>Severe Storm Watch</h2>
-              <p style={{ fontSize: 15, color: T.t2, margin: "2px 0 0" }}>Montgomery and Walker Counties — Hail up to 1.5 inches — Tonight</p>
+              <p style={{ fontSize: 15, color: T.t2, margin: "2px 0 0" }}>Montgomery and Walker Counties · Hail up to 1.5 inches · Tonight</p>
             </div>
           </div>
         </Card>
@@ -1039,7 +1039,7 @@ function Weather({ onBack }) {
               background: T.bg, borderRadius: T.rs, padding: "14px 16px",
               fontSize: 14, color: T.t2, lineHeight: 1.65, fontStyle: "italic",
             }}>
-              "Storm alert for your area tonight. Your roof has wear from previous hail. If you notice anything after the storm — missing shingles, leaks, debris — call us at 936-701-2242 and you will be first in line."
+              "Storm alert for your area tonight. Your roof has wear from previous hail. If you notice anything after the storm like missing shingles, leaks, or debris, call us at 936-701-2242 and you will be first in line."
             </div>
           </Card>
 
@@ -1052,7 +1052,7 @@ function Weather({ onBack }) {
               background: T.bg, borderRadius: T.rs, padding: "14px 16px",
               fontSize: 14, color: T.t2, lineHeight: 1.65, fontStyle: "italic",
             }}>
-              "Heads up — storms last night in your area with possible hail. If your roof took a hit, Lifeline is here. Save our number: 936-701-2242."
+              "Heads up, storms last night in your area with possible hail. If your roof took a hit, Lifeline is here. Save our number: 936-701-2242."
             </div>
           </Card>
         </div>
@@ -1067,7 +1067,7 @@ function Weather({ onBack }) {
             cursor: deploying ? "wait" : "pointer",
             boxShadow: deploying ? "none" : "0 2px 14px rgba(0,113,227,0.3)",
           }}>
-            {deploying ? "Personalizing 1,247 messages..." : "Deploy Storm Response — 1,247 Contacts"}
+            {deploying ? "Personalizing 1,247 messages..." : "Deploy Storm Response · 1,247 Contacts"}
           </button>
         ) : (
           <div style={{ padding: "20px 28px", background: T.greenL, borderRadius: T.r, textAlign: "center" }}>
@@ -1120,7 +1120,7 @@ function InspectionPage({ onBack }) {
       </FadeIn>
 
       <FadeIn delay={80}>
-        <Narrator text="Your tech snaps a photo during a maintenance visit. The AI identifies damage, estimates repair costs, and generates a professional report — all before the tech leaves the property." />
+        <Narrator text="Your tech snaps a photo during a maintenance visit. The AI identifies damage, estimates repair costs, and generates a professional report, all before the tech leaves the property." />
       </FadeIn>
 
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
