@@ -638,9 +638,9 @@ function Home({ onNav }) {
 
   const stats = [
     { label: "Avg Health", content: <HealthRing score={avgH} size={50} />, sub: "4,231 roofs scored" },
-    { label: "High Risk", content: <span style={{ fontSize: 28, fontWeight: 700, color: T.red }}>{highR}</span>, sub: "need attention" },
-    { label: "Members", content: <span style={{ fontSize: 28, fontWeight: 700, color: T.blue }}>{enrolled}</span>, sub: "enrolled" },
-    { label: "Monthly Rev", content: <span style={{ fontSize: 28, fontWeight: 700, color: T.green }}>${mrr}</span>, sub: "+$1,035 this mo" },
+    { label: "High Risk", content: <span style={{ fontSize: 28, fontWeight: 700, color: T.red }}>312</span>, sub: "need attention now" },
+    { label: "Members", content: <span style={{ fontSize: 28, fontWeight: 700, color: T.blue }}>847</span>, sub: "enrolled in plans" },
+    { label: "Monthly Rev", content: <span style={{ fontSize: 28, fontWeight: 700, color: T.green }}>$38K</span>, sub: "+$4,200 this month" },
   ];
 
   const priorityContacts = [...CONTACTS].sort((a, b) => a.health - b.health);
@@ -824,7 +824,7 @@ function Home({ onNav }) {
               <span style={{ fontSize: 18, fontWeight: 700, color: T.blue }}>${mrrCalc.toLocaleString()}/mo</span>
             </div>
             <div style={{ display: "flex", justifyContent: "space-between", padding: "10px 0", borderTop: `1px solid ${T.div}` }}>
-              <span style={{ fontSize: 14, color: T.t2 }}>Annual recurring</span>
+              <span style={{ fontSize: 14, color: T.t2 }}>Annual recurring (ARR)</span>
               <span style={{ fontSize: 18, fontWeight: 700, color: T.blue }}>${(annual / 1000).toFixed(0)}K/yr</span>
             </div>
 
@@ -833,6 +833,11 @@ function Home({ onNav }) {
                 ${mrrCalc.toLocaleString()}/mo
               </div>
               <div style={{ fontSize: 13, color: T.t2, marginTop: 4 }}>from customers currently generating $0</div>
+            </div>
+            <div style={{ marginTop: 10, padding: "14px 20px", background: T.blueL, borderRadius: T.rs, textAlign: "center" }}>
+              <div style={{ fontSize: 22, fontWeight: 700, color: T.blue, letterSpacing: -0.5 }}>
+                ${(annual / 1000).toFixed(0)}K/yr ARR
+              </div>
             </div>
           </Card>
         </FadeIn>
