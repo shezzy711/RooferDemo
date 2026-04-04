@@ -51,6 +51,22 @@ function IconCalendar({ size = 16, color = "currentColor" }) {
   );
 }
 
+function IconChat({ size = 22, color = "currentColor" }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill={color} stroke="none">
+      <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
+    </svg>
+  );
+}
+
+function IconSend({ size = 16, color = "currentColor" }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill={color} stroke="none">
+      <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
+    </svg>
+  );
+}
+
 function IconMic({ size = 16, color = "currentColor" }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">
@@ -239,6 +255,48 @@ const PHOTO_FINDINGS = [
   { label: "Granule erosion", loc: "South slope, center", sev: "medium", cost: "Monitor", note: "UV-driven granule loss on south-facing shingles. Below replacement threshold but progressing." },
   { label: "Pipe boot cracking", loc: "Plumbing vent, west", sev: "high", cost: "$75-$150", note: "Rubber boot seal showing UV cracks. Will leak within 6 months if not replaced." },
 ];
+
+const ABBY_SCRIPTS = {
+  sandra: [
+    { text: "Sandra Collins at 3301 Magnolia Bend. Her roof scored a 54 out of 100. That's below where we want it.", delay: 800 },
+    { text: "She's had 3 hail events on a low-slope GAF Timberline HDZ, and she's approaching 5 years. I'm seeing elevated risk at the valley transitions and pipe boot seals.", delay: 600 },
+    { text: "She hasn't been contacted yet. I'd recommend scheduling an inspection within 30 days. Want me to draft an outreach message and queue it for tomorrow morning?", delay: 500 },
+  ],
+  priorities: [
+    { text: "Here's your morning rundown. You have 3 things that need attention today:", delay: 800 },
+    { text: "1. Catherine Whitfield (River Oaks). Highest urgency. Health score 44, three hail events, $34K replacement value. She needs a personal call, not a text. I'd call her before noon.", delay: 500 },
+    { text: "2. Tony Russo. I sent his maintenance intro yesterday but haven't gotten a response. I'll retry with a different angle mentioning his warranty window is closing.", delay: 500 },
+    { text: "3. James Patterson's annual plan renewal is due in 30 days. He's a happy customer. I'll send the renewal reminder this afternoon. No action needed from you unless you want to customize it.", delay: 500 },
+  ],
+  tony: [
+    { text: "Tony Russo at 2200 Post Oak Blvd. He's your oldest roof in the portfolio. 6+ years, health score 41, and 2 hail events. This one is heading for unplanned replacement if we don't step in.", delay: 800 },
+    { text: "I sent him a maintenance intro via SMS on March 31st but haven't gotten a response. I'll queue a follow-up for Thursday at 9 AM with a slightly different angle mentioning his warranty window is closing.", delay: 600 },
+    { text: "Done. Follow-up queued for Tony Russo, Thursday 9:00 AM. I'll let you know if he responds.", delay: 500 },
+  ],
+  storm: [
+    { text: "There's a severe storm watch for Montgomery and Walker counties tonight. Hail up to 1.5 inches expected.", delay: 800 },
+    { text: "I've already prepped the response. 312 high-risk customers will get an immediate heads-up, and 935 standard contacts will get a morning follow-up timed for when they're checking their property. All 1,247 messages are personalized.", delay: 600 },
+    { text: "Want me to pull up the full storm response screen so you can review and deploy?", delay: 500 },
+  ],
+  revenue: [
+    { text: "Right now you're at $10K monthly recurring from 223 enrolled members. That's up $1,800 from last month.", delay: 800 },
+    { text: "Your platinum pipeline has 4 properties worth $131K total in potential replacement jobs. Catherine Whitfield and Richard Thornton are the two biggest at $34K and $38K respectively. Both need personal outreach this week.", delay: 600 },
+    { text: "If we hit a 15% enrollment rate across your 4,231 contacts, you're looking at $28K/month in recurring revenue. That's $342K a year from customers currently generating zero.", delay: 500 },
+  ],
+  fallback: [
+    { text: "I'm not sure about that one, but I'm learning fast. Try asking me about a specific customer like Sandra or Tony, or ask \"What should I do today?\" and I'll pull up your priorities.", delay: 800 },
+  ],
+};
+
+function matchAbbyResponse(input) {
+  var lower = input.toLowerCase();
+  if (lower.includes("sandra") || lower.includes("collins")) return ABBY_SCRIPTS.sandra;
+  if (lower.includes("what should") || lower.includes("today") || lower.includes("next") || lower.includes("priority") || lower.includes("what do")) return ABBY_SCRIPTS.priorities;
+  if (lower.includes("tony") || lower.includes("russo") || lower.includes("follow")) return ABBY_SCRIPTS.tony;
+  if (lower.includes("storm") || lower.includes("weather") || lower.includes("hail") || lower.includes("forecast")) return ABBY_SCRIPTS.storm;
+  if (lower.includes("revenue") || lower.includes("mrr") || lower.includes("money") || lower.includes("pipeline") || lower.includes("earn")) return ABBY_SCRIPTS.revenue;
+  return ABBY_SCRIPTS.fallback;
+}
 
 /* ─── Utility Components ─── */
 
@@ -1676,6 +1734,255 @@ function InspectionPage({ onBack }) {
   );
 }
 
+/* ─── Abby Chat Assistant ─── */
+
+function AbbyTypingDots() {
+  return (
+    <div style={{ display: "flex", gap: 4, padding: "12px 16px" }}>
+      <style>{`@keyframes abbydots { 0%, 80% { opacity: 0.3; transform: translateY(0); } 40% { opacity: 1; transform: translateY(-3px); } }`}</style>
+      {[0, 1, 2].map(i => (
+        <div key={i} style={{
+          width: 6, height: 6, borderRadius: 3, background: T.t3,
+          animation: `abbydots 1.2s ease-in-out ${i * 0.15}s infinite`,
+        }} />
+      ))}
+    </div>
+  );
+}
+
+function AbbyChat() {
+  const [open, setOpen] = useState(false);
+  const [messages, setMessages] = useState([]);
+  const [inputVal, setInputVal] = useState("");
+  const [typing, setTyping] = useState(false);
+  const [showSuggestions, setShowSuggestions] = useState(true);
+  const [welcomed, setWelcomed] = useState(false);
+  const messagesEndRef = useRef(null);
+  const deliveryRef = useRef([]);
+
+  function scrollToBottom() {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }
+
+  useEffect(scrollToBottom, [messages, typing]);
+
+  function handleOpen() {
+    setOpen(true);
+    if (!welcomed) {
+      setWelcomed(true);
+      setMessages([{
+        role: "abby",
+        text: "Hey! I'm Abby, your AI assistant for Lifeline. I monitor your roofs, track follow-ups, and keep your pipeline moving. Ask me anything, like \"How is Sandra's roof?\" or \"What should I do today?\"",
+      }]);
+    }
+  }
+
+  function cancelDelivery() {
+    deliveryRef.current.forEach(function (t) { clearTimeout(t); });
+    deliveryRef.current = [];
+    setTyping(false);
+  }
+
+  function sendMessage(text) {
+    if (!text.trim()) return;
+    cancelDelivery();
+    setShowSuggestions(false);
+
+    var userMsg = { role: "user", text: text.trim() };
+    setMessages(function (prev) { return prev.concat([userMsg]); });
+    setInputVal("");
+
+    var script = matchAbbyResponse(text);
+    setTyping(true);
+
+    var cumulativeDelay = 800;
+    script.forEach(function (entry, i) {
+      var totalDelay = cumulativeDelay + (i > 0 ? entry.delay : 0);
+      if (i > 0) cumulativeDelay = totalDelay;
+
+      var tid = setTimeout(function () {
+        if (i === 0) setTyping(false);
+        setMessages(function (prev) {
+          return prev.concat([{ role: "abby", text: entry.text }]);
+        });
+      }, totalDelay);
+      deliveryRef.current.push(tid);
+    });
+
+    var lastDelay = cumulativeDelay;
+    var tidFinal = setTimeout(function () { setTyping(false); }, lastDelay + 100);
+    deliveryRef.current.push(tidFinal);
+  }
+
+  function handleKeyDown(e) {
+    if (e.key === "Enter") { e.preventDefault(); sendMessage(inputVal); }
+  }
+
+  var suggestions = [
+    "How is Sandra's roof?",
+    "What should I do today?",
+    "Tell me about the storm",
+  ];
+
+  return (
+    <>
+      {/* Floating Button */}
+      <div
+        onClick={function () { if (open) { setOpen(false); } else { handleOpen(); } }}
+        style={{
+          position: "fixed", bottom: 28, right: 28, zIndex: 150,
+          width: 56, height: 56, borderRadius: 28,
+          background: T.blue, cursor: "pointer",
+          display: "flex", alignItems: "center", justifyContent: "center",
+          boxShadow: "0 4px 20px rgba(0,113,227,0.4)",
+          transition: "transform 0.2s ease",
+        }}
+      >
+        {open ? (
+          <span style={{ color: "#fff", fontSize: 20, fontWeight: 300, lineHeight: 1 }}>x</span>
+        ) : (
+          <>
+            <IconChat size={22} color="#fff" />
+            {!open && (
+              <div style={{
+                position: "absolute", top: -2, right: -2, width: 12, height: 12, borderRadius: 6,
+                background: T.green, border: "2px solid #fff",
+                animation: "lifelinepulse 2s ease-in-out infinite",
+              }} />
+            )}
+          </>
+        )}
+      </div>
+
+      {/* Chat Panel */}
+      <div style={{
+        position: "fixed", bottom: 96, right: 28, zIndex: 150,
+        width: 380, maxHeight: "calc(100vh - 140px)",
+        background: T.white, borderRadius: 20,
+        boxShadow: "0 2px 8px rgba(0,0,0,0.04), 0 12px 28px rgba(0,0,0,0.08)",
+        border: "0.5px solid rgba(0,0,0,0.08)",
+        display: "flex", flexDirection: "column", overflow: "hidden",
+        opacity: open ? 1 : 0,
+        transform: open ? "translateY(0) scale(1)" : "translateY(8px) scale(0.97)",
+        transition: "all 0.25s cubic-bezier(0.16, 1, 0.3, 1)",
+        pointerEvents: open ? "auto" : "none",
+      }}>
+        {/* Header */}
+        <div style={{
+          padding: "16px 20px", borderBottom: "1px solid " + T.div,
+          display: "flex", alignItems: "center", gap: 12,
+        }}>
+          <div style={{
+            width: 36, height: 36, borderRadius: 18,
+            background: "linear-gradient(135deg, " + T.blue + ", #34C759)",
+            display: "flex", alignItems: "center", justifyContent: "center",
+            fontSize: 16, fontWeight: 700, color: "#fff", flexShrink: 0,
+          }}>A</div>
+          <div style={{ flex: 1 }}>
+            <div style={{ fontSize: 15, fontWeight: 700, color: T.text }}>Abby</div>
+            <div style={{ fontSize: 11, color: T.t3 }}>Lifeline AI Assistant</div>
+          </div>
+          <div style={{
+            display: "flex", alignItems: "center", gap: 5,
+          }}>
+            <div style={{ width: 6, height: 6, borderRadius: 3, background: T.green }} />
+            <span style={{ fontSize: 11, color: T.green, fontWeight: 600 }}>Online</span>
+          </div>
+        </div>
+
+        {/* Messages */}
+        <div style={{
+          flex: 1, overflowY: "auto", padding: "16px 16px 8px",
+          display: "flex", flexDirection: "column", gap: 8,
+        }}>
+          {messages.map(function (msg, i) {
+            if (msg.role === "abby") {
+              return (
+                <div key={i} style={{
+                  alignSelf: "flex-start", maxWidth: "85%",
+                  background: T.bg, borderRadius: 14, borderBottomLeftRadius: 4,
+                  padding: "10px 14px", fontSize: 14, color: T.text, lineHeight: 1.55,
+                }}>
+                  {msg.text}
+                </div>
+              );
+            }
+            return (
+              <div key={i} style={{
+                alignSelf: "flex-end", maxWidth: "85%",
+                background: T.blue, borderRadius: 14, borderBottomRightRadius: 4,
+                padding: "10px 14px", fontSize: 14, color: "#fff", lineHeight: 1.55,
+              }}>
+                {msg.text}
+              </div>
+            );
+          })}
+
+          {typing && (
+            <div style={{
+              alignSelf: "flex-start",
+              background: T.bg, borderRadius: 14, borderBottomLeftRadius: 4,
+            }}>
+              <AbbyTypingDots />
+            </div>
+          )}
+
+          {/* Suggestion Chips */}
+          {showSuggestions && messages.length > 0 && messages.length <= 1 && (
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginTop: 4 }}>
+              {suggestions.map(function (s, i) {
+                return (
+                  <button key={i} onClick={function () { sendMessage(s); }} style={{
+                    background: T.white, border: "1px solid " + T.div, borderRadius: 20,
+                    padding: "7px 14px", fontSize: 12, fontWeight: 500, color: T.blue,
+                    cursor: "pointer",
+                  }}>
+                    {s}
+                  </button>
+                );
+              })}
+            </div>
+          )}
+
+          <div ref={messagesEndRef} />
+        </div>
+
+        {/* Input */}
+        <div style={{
+          padding: "12px 16px", borderTop: "1px solid " + T.div,
+          display: "flex", gap: 10, alignItems: "center",
+        }}>
+          <input
+            value={inputVal}
+            onChange={function (e) { setInputVal(e.target.value); }}
+            onKeyDown={handleKeyDown}
+            placeholder="Ask Abby anything..."
+            style={{
+              flex: 1, background: T.bg, border: "none", borderRadius: 20,
+              padding: "10px 16px", fontSize: 14, color: T.text, outline: "none",
+              fontFamily: T.font,
+            }}
+          />
+          {inputVal.trim() && (
+            <div
+              onClick={function () { sendMessage(inputVal); }}
+              style={{
+                width: 32, height: 32, borderRadius: 16, background: T.blue,
+                display: "flex", alignItems: "center", justifyContent: "center",
+                cursor: "pointer", flexShrink: 0,
+              }}
+            >
+              <IconSend size={14} color="#fff" />
+            </div>
+          )}
+        </div>
+      </div>
+    </>
+  );
+}
+
 /* ─── App Shell ─── */
 
 export default function App() {
@@ -1780,6 +2087,9 @@ export default function App() {
       <div style={{ flex: 1, overflowY: "auto", padding: "32px 40px 60px" }}>
         {renderContent()}
       </div>
+
+      {/* Abby Chat Assistant */}
+      <AbbyChat />
     </div>
   );
 }
