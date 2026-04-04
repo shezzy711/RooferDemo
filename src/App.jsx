@@ -118,10 +118,10 @@ const CONTACTS = [
     installed: "2019-12-01", shingle: "CertainTeed Landmark", sqft: 1800, hail: 2, health: 41,
     risk: "high", plan: null, mrr: 0, status: "not_contacted", tier: null,
     timeline: [
-      { date: "Mar 31", type: "auto", text: "AI sent maintenance intro via SMS" },
-      { date: "Mar 15", type: "alert", text: "Flagged as high risk. Health score dropped to 41." },
-      { date: "Feb 02", type: "alert", text: "Hail event recorded in Conroe area" },
-      { date: "Dec 01", type: "inspection", text: "Original install date. No contact since." },
+      { date: "Mar 31", type: "auto", text: "Sent intro text" },
+      { date: "Mar 15", type: "alert", text: "Flagged high risk" },
+      { date: "Feb 02", type: "alert", text: "Hail event" },
+      { date: "Dec 01", type: "inspection", text: "Installed" },
     ],
     ai: "Oldest roof in portfolio at 6+ years with low slope and 2 hail events. Nearing the end of the optimal maintenance window. Warranty-eligible repairs may expire within the year. Without intervention, this roof is heading for unplanned re-roof. Strong candidate for immediate outreach and maintenance-to-re-roof conversion.",
     sms: "Tony, this is Lifeline Roofing. Your roof at Post Oak is coming up on 6 years and I want to make sure you're still covered. With the hail your area has seen, there might be warranty-eligible repairs we can catch before they expire. Free inspection, 30 minutes. Worth a look. Can I schedule you this week?"
@@ -131,10 +131,10 @@ const CONTACTS = [
     installed: "2020-04-20", shingle: "GAF Timberline Ultra HD", sqft: 2800, hail: 3, health: 48,
     risk: "high", plan: null, mrr: 0, status: "outreach_sent", tier: null,
     timeline: [
-      { date: "Mar 28", type: "auto", text: "Follow-up text sent. No response." },
-      { date: "Mar 14", type: "auto", text: "AI sent initial outreach via SMS" },
-      { date: "Mar 10", type: "alert", text: "Flagged as highest revenue opportunity" },
-      { date: "Jan 22", type: "alert", text: "Third hail event recorded. Health score updated." },
+      { date: "Mar 28", type: "auto", text: "Sent follow-up" },
+      { date: "Mar 14", type: "auto", text: "Sent first text" },
+      { date: "Mar 10", type: "alert", text: "Flagged top opportunity" },
+      { date: "Jan 22", type: "alert", text: "Third hail event" },
     ],
     ai: "5-year-old complex roof with 3 hail events and dominant south-facing exposure. Multiple compounding risk factors. Predictive model shows 67% probability of requiring full re-roof within 18 months. PRIORITY: Highest revenue opportunity in current pipeline. Maintenance enrollment is the bridge to a projected $22K job project.",
     sms: "Charles, your roof at Pecan Grove is one of our earlier installs and it's been through 3 hail events and five Texas summers on that south-facing slope. I want to be straight with you. There's a good chance we find something that needs attention. A quick inspection now could save you a big surprise later. No cost for the visit. Can I come take a look?"
@@ -144,9 +144,9 @@ const CONTACTS = [
     installed: "2020-11-05", shingle: "GAF Timberline HDZ", sqft: 2100, hail: 3, health: 54,
     risk: "high", plan: null, mrr: 0, status: "not_contacted", tier: null,
     timeline: [
-      { date: "Apr 01", type: "inspection", text: "Inspection due. No appointment scheduled." },
-      { date: "Mar 20", type: "alert", text: "Flagged as urgent. 3 hail events on low-slope roof." },
-      { date: "Feb 18", type: "alert", text: "Hail event recorded in Conroe area" },
+      { date: "Apr 01", type: "inspection", text: "Inspection due" },
+      { date: "Mar 20", type: "alert", text: "Flagged urgent" },
+      { date: "Feb 18", type: "alert", text: "Hail event" },
     ],
     ai: "Three hail events on a low-slope roof approaching 5 years. High probability of hidden damage at valley transitions and pipe boot seals. Granule displacement likely exceeding manufacturer thresholds. URGENT: Inspection recommended within 30 days. Strong maintenance-to-re-roof pipeline candidate with 67% probability of full re-roof within 18 months.",
     sms: "Sandra, this is Blu from Lifeline Roofing. Your roof on Magnolia Bend has been through some rough weather. 3 hail events in under 5 years on a low slope. I'm not calling to sell you a new roof. I want to see if we can extend what you've got by 3-5 years with some preventative care. Can I send someone out for a free look?"
@@ -156,9 +156,9 @@ const CONTACTS = [
     installed: "2021-02-14", shingle: "Owens Corning TruDefinition", sqft: 2600, hail: 2, health: 63,
     risk: "medium", plan: null, mrr: 0, status: "outreach_sent", tier: null,
     timeline: [
-      { date: "Mar 25", type: "auto", text: "Second outreach sent. Awaiting response." },
-      { date: "Mar 11", type: "auto", text: "AI sent initial outreach via SMS" },
-      { date: "Mar 01", type: "alert", text: "West-facing exposure flagged for thermal cycling risk" },
+      { date: "Mar 25", type: "auto", text: "Sent second text" },
+      { date: "Mar 11", type: "auto", text: "Sent first text" },
+      { date: "Mar 01", type: "alert", text: "Flagged sun exposure" },
     ],
     ai: "West-facing primary exposure drives elevated thermal cycling. Hot afternoon sun followed by rapid evening cooling causes expansion and contraction stress. Combined with 2 hail events, pipe boot seals and step flashing at sidewalls are likely degrading. A $200-$400 preventative repair now prevents a $3K-$5K emergency fix later.",
     sms: "David, your Willowbrook roof takes a lot of afternoon sun on that west side, and with a couple of hail events since we installed, I'd like to check your pipe boots and flashing. Those are the first things to go and they're cheap to fix now. We have openings Thursday and Friday. Want me to grab you a slot?"
@@ -168,10 +168,10 @@ const CONTACTS = [
     installed: "2022-03-15", shingle: "CertainTeed Landmark", sqft: 2400, hail: 2, health: 72,
     risk: "medium", plan: "Annual", mrr: 45, status: "enrolled", tier: null,
     timeline: [
-      { date: "Mar 30", type: "auto", text: "Renewal reminder sent. Plan expires in 30 days." },
-      { date: "Mar 15", type: "complete", text: "Annual inspection completed. Score updated." },
-      { date: "Jan 08", type: "auto", text: "Maintenance check-in sent via SMS" },
-      { date: "Mar 15", type: "complete", text: "Enrolled in Annual Plan at $45/mo" },
+      { date: "Mar 30", type: "auto", text: "Sent renewal reminder" },
+      { date: "Mar 15", type: "complete", text: "Inspection done" },
+      { date: "Jan 08", type: "auto", text: "Sent check-in" },
+      { date: "Mar 15", type: "complete", text: "Enrolled in plan" },
     ],
     ai: "South-facing primary slope with 2 recorded hail events since installation. UV exposure is accelerating granule loss on the south face. Ridge cap seal strips show early fatigue. Maintenance visit within 60 days will catch this before it becomes a $4K-$6K partial re-roof.",
     sms: "Hey James, it's been about 2 years since we put on your roof at Oak Ridge Dr. With the hail your area caught last fall, I'd like to get eyes on your south-facing slope before summer heat sets in. Free inspection, 30 minutes, no pressure. Want me to send a tech out this week?"
@@ -181,9 +181,9 @@ const CONTACTS = [
     installed: "2021-08-22", shingle: "Owens Corning Duration", sqft: 1850, hail: 1, health: 81,
     risk: "low", plan: "Semi-Annual", mrr: 25, status: "enrolled", tier: null,
     timeline: [
-      { date: "Mar 22", type: "complete", text: "Semi-annual inspection completed. All clear." },
-      { date: "Feb 10", type: "auto", text: "Inspection reminder sent. Appointment booked." },
-      { date: "Sep 14", type: "complete", text: "Enrolled in Semi-Annual Plan at $25/mo" },
+      { date: "Mar 22", type: "complete", text: "Inspection done" },
+      { date: "Feb 10", type: "auto", text: "Booked inspection" },
+      { date: "Sep 14", type: "complete", text: "Enrolled in plan" },
     ],
     ai: "Steep pitch provides excellent drainage and reduces standing water risk. One minor hail event with no visible impact expected on Duration-class shingles. Performing within normal range for age. Annual inspection is sufficient.",
     sms: "Robert, your Pine Hollow roof is looking solid at 3 years. One quick check-up to make sure the flashing and vents are sealed tight before storm season."
@@ -193,8 +193,8 @@ const CONTACTS = [
     installed: "2023-01-10", shingle: "CertainTeed Presidential", sqft: 3200, hail: 0, health: 94,
     risk: "low", plan: "Annual", mrr: 55, status: "enrolled", tier: null,
     timeline: [
-      { date: "Mar 18", type: "auto", text: "18-month check-in sent via SMS" },
-      { date: "Feb 01", type: "complete", text: "Annual inspection completed. Excellent condition." },
+      { date: "Mar 18", type: "auto", text: "Sent check-in" },
+      { date: "Feb 01", type: "complete", text: "Inspection done" },
       { date: "Jan 10", type: "complete", text: "Enrolled in Annual Plan at $55/mo" },
     ],
     ai: "Premium Presidential shingle on complex multi-directional geometry. Zero weather events. Performing excellently. Focus monitoring on valley-to-hip transitions and chimney counter-flashing at the 18-month mark.",
@@ -205,9 +205,9 @@ const CONTACTS = [
     installed: "2020-06-10", shingle: "CertainTeed Presidential TL", sqft: 5200, hail: 2, health: 52,
     risk: "high", plan: null, mrr: 0, status: "not_contacted", tier: "platinum",
     timeline: [
-      { date: "Apr 01", type: "alert", text: "Added to Platinum call list. Personal outreach recommended." },
-      { date: "Mar 20", type: "alert", text: "Health score dropped to 52 after hail event analysis" },
-      { date: "Feb 15", type: "alert", text: "Second hail event recorded in The Woodlands" },
+      { date: "Apr 01", type: "alert", text: "Added to call list" },
+      { date: "Mar 20", type: "alert", text: "Score dropped to 52" },
+      { date: "Feb 15", type: "alert", text: "Hail event" },
     ],
     ai: "5,200 sq ft premium roof in Carlton Woods. Two hail events on a complex multi-hip geometry with 14 penetrations. Presidential TL shingles are high-end but the roof complexity creates multiple failure points at valleys and transitions. Estimated job value $38K. This is the highest-dollar opportunity in the database. Personal outreach strongly recommended.",
     sms: "Mr. Thornton, this is Blu with Lifeline Roofing. We installed your roof at Carlton Woods about 5 years ago and I wanted to personally check in. With the hail your area has taken, I would like to come out and make sure everything is holding up. No charge, just want to take care of you. When works best?"
@@ -217,9 +217,9 @@ const CONTACTS = [
     installed: "2021-03-22", shingle: "GAF Grand Sequoia", sqft: 4800, hail: 3, health: 44,
     risk: "high", plan: null, mrr: 0, status: "not_contacted", tier: "platinum",
     timeline: [
-      { date: "Apr 02", type: "alert", text: "Highest urgency platinum contact. Schedule visit within 2 weeks." },
-      { date: "Mar 18", type: "alert", text: "Third hail event recorded in River Oaks area" },
-      { date: "Mar 01", type: "alert", text: "Health score dropped to 44. Multiple risk factors." },
+      { date: "Apr 02", type: "alert", text: "Urgent, schedule visit" },
+      { date: "Mar 18", type: "alert", text: "Hail event" },
+      { date: "Mar 01", type: "alert", text: "Score dropped to 44" },
     ],
     ai: "4,800 sq ft estate roof in River Oaks with premium Grand Sequoia shingles. Three hail events since installation. Complex roofline with dormers and copper flashing transitions. Estimated job value $34K. Multiple risk factors compounding. Highest urgency platinum contact. Schedule personal visit within 2 weeks.",
     sms: "Mrs. Whitfield, this is Blu from Lifeline Roofing. Your roof at River Oaks Blvd has been through some serious weather since we put it on. I would like to come by personally and take a look. With a home like yours, I want to make sure everything is right. Can I come out this week?"
@@ -229,9 +229,9 @@ const CONTACTS = [
     installed: "2021-09-14", shingle: "CertainTeed Presidential TL", sqft: 4200, hail: 2, health: 61,
     risk: "medium", plan: null, mrr: 0, status: "outreach_sent", tier: "platinum",
     timeline: [
-      { date: "Mar 30", type: "auto", text: "Follow-up text sent. No response." },
-      { date: "Mar 16", type: "auto", text: "AI sent initial outreach via SMS" },
-      { date: "Mar 10", type: "alert", text: "Added to Platinum call list. AI recommends phone call." },
+      { date: "Mar 30", type: "auto", text: "Sent follow-up" },
+      { date: "Mar 16", type: "auto", text: "Sent first text" },
+      { date: "Mar 10", type: "alert", text: "Added to call list" },
     ],
     ai: "4,200 sq ft roof in Carlton Woods with 2 hail events. Premium Presidential TL performing within range but approaching the maintenance window. Estimated job value $28K. Previous outreach sent with no response. AI recommends personal phone call as follow-up rather than another text.",
     sms: "Mr. Grant, this is Blu with Lifeline Roofing. I reached out a few weeks ago about your Carlton Woods roof. I know things get busy. Just wanted to follow up personally. Your roof is at the age where a quick check can save you real money down the road. Can I stop by?"
@@ -241,9 +241,9 @@ const CONTACTS = [
     installed: "2020-12-01", shingle: "GAF Grand Sequoia", sqft: 3800, hail: 2, health: 57,
     risk: "high", plan: null, mrr: 0, status: "not_contacted", tier: "platinum",
     timeline: [
-      { date: "Apr 01", type: "alert", text: "Added to Platinum call list. Personal outreach recommended." },
-      { date: "Mar 22", type: "alert", text: "South and west slopes showing accelerated wear" },
-      { date: "Feb 28", type: "alert", text: "Second hail event recorded in The Woodlands" },
+      { date: "Apr 01", type: "alert", text: "Added to call list" },
+      { date: "Mar 22", type: "alert", text: "Accelerated wear detected" },
+      { date: "Feb 28", type: "alert", text: "Hail event" },
     ],
     ai: "3,800 sq ft premium roof in The Woodlands with Grand Sequoia shingles. Two hail events and 5+ years of age. South and west facing slopes showing accelerated wear. Estimated job value $26K. Strong candidate for maintenance enrollment leading to future re-roof pipeline.",
     sms: "Mrs. Chen-Alvarez, this is Blu with Lifeline Roofing. Your roof on Greyton Lane has been through a lot of weather over the past five years. I would like to come out and give you an honest assessment. No cost, no pressure. Just want to make sure your home is protected. When works for you?"
@@ -754,7 +754,6 @@ function Home({ onNav }) {
       <FadeIn>
         <div style={{ marginBottom: 32 }}>
           <h1 style={{ fontSize: 28, fontWeight: 700, color: T.text, margin: 0, letterSpacing: -0.5 }}>Command Center</h1>
-          <p style={{ fontSize: 16, color: T.t2, margin: "6px 0 0" }}>AI analyzed 4,000+ roofs from AccuLynx. Here is what needs your attention.</p>
         </div>
       </FadeIn>
 
@@ -807,37 +806,25 @@ function Home({ onNav }) {
             <Pill color={T.blue}>This Week</Pill>
           </div>
           {[
-            { name: "Tony Russo", action: "Sending intro text", reason: "No contact in 6+ months. Roof health dropping.", time: "Today 10:00 AM", status: "queued" },
-            { name: "David Chen", action: "Sending follow-up text", reason: "First text sent 14 days ago, no response.", time: "Tomorrow 9:00 AM", status: "queued" },
-            { name: "Charles Washington", action: "Needs a phone call", reason: "Big job potential. AI says call him, don't text.", time: "Assigned to Blake", status: "flagged" },
-            { name: "James Patterson", action: "Sent renewal reminder", reason: "Plan renews in 30 days.", time: "Sent Monday", status: "sent" },
-            { name: "Sandra Collins", action: "Sent storm follow-up", reason: "3 hail events, not signed up yet. Good timing.", time: "Sent Tuesday", status: "sent" },
+            { name: "Tony Russo", phrase: "Sending intro", status: "queued" },
+            { name: "David Chen", phrase: "Sending follow-up", status: "queued" },
+            { name: "Charles Washington", phrase: "Call him", status: "flagged" },
+            { name: "James Patterson", phrase: "Sent renewal", status: "sent" },
+            { name: "Sandra Collins", phrase: "Sent storm text", status: "sent" },
           ].map((item, i) => (
             <div key={i} style={{
-              padding: "14px 0",
+              padding: "10px 0",
               borderTop: i > 0 ? `1px solid ${T.div}` : "none",
-              display: "flex", alignItems: "flex-start", gap: 12,
+              display: "flex", alignItems: "center", gap: 10,
             }}>
               <div style={{
-                width: 32, height: 32, borderRadius: 8, flexShrink: 0, marginTop: 2,
-                background: item.status === "sent" ? T.greenS : item.status === "flagged" ? T.orangeS : T.blueS,
-                display: "flex", alignItems: "center", justifyContent: "center",
-              }}>
-                {item.status === "sent" && <IconCheck size={14} color={T.green} />}
-                {item.status === "queued" && <div style={{ width: 6, height: 6, borderRadius: 3, background: T.blue }} />}
-                {item.status === "flagged" && <span style={{ fontSize: 12, fontWeight: 700, color: T.orange }}>!</span>}
-              </div>
-              <div style={{ flex: 1 }}>
-                <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                  <span style={{ fontSize: 14, fontWeight: 600, color: T.text }}>{item.name}</span>
-                  <span style={{ fontSize: 12, color: item.status === "sent" ? T.green : item.status === "flagged" ? T.orange : T.blue, fontWeight: 500 }}>
-                    {item.status === "sent" ? "Sent" : item.status === "flagged" ? "Needs you" : "Sending soon"}
-                  </span>
-                </div>
-                <div style={{ fontSize: 13, color: T.t2, marginTop: 2 }}>{item.action}</div>
-                <div style={{ fontSize: 12, color: T.t3, marginTop: 2 }}>{item.reason}</div>
-              </div>
-              <div style={{ fontSize: 11, color: T.t3, whiteSpace: "nowrap", marginTop: 2 }}>{item.time}</div>
+                width: 8, height: 8, borderRadius: 4, flexShrink: 0,
+                background: item.status === "sent" ? T.green : item.status === "flagged" ? T.orange : T.blue,
+              }} />
+              <span style={{ fontSize: 14, fontWeight: 600, color: T.text, flex: 1 }}>{item.name}</span>
+              <span style={{ fontSize: 12, color: item.status === "sent" ? T.green : item.status === "flagged" ? T.orange : T.blue, fontWeight: 500 }}>
+                {item.phrase}
+              </span>
             </div>
           ))}
         </Card>
@@ -946,10 +933,9 @@ function Home({ onNav }) {
         {/* ROI Calculator */}
         <FadeIn delay={360}>
           <Card>
-            <div style={{ fontSize: 17, fontWeight: 600, color: T.text, marginBottom: 4 }}>Revenue Calculator</div>
-            <div style={{ fontSize: 13, color: T.t3, marginBottom: 24 }}>Based on your 4,231 contacts</div>
+            <div style={{ fontSize: 16, fontWeight: 600, color: T.text, marginBottom: 20 }}>Revenue Calculator</div>
 
-            <div style={{ marginBottom: 28 }}>
+            <div style={{ marginBottom: 20 }}>
               <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 8 }}>
                 <span style={{ fontSize: 14, color: T.t2 }}>Sign-up rate</span>
                 <span style={{ fontSize: 18, fontWeight: 700, color: T.blue }}>{pct}%</span>
@@ -959,36 +945,13 @@ function Home({ onNav }) {
                 onChange={e => setPct(Number(e.target.value))}
                 style={{ width: "100%", accentColor: T.blue, height: 6 }}
               />
-              <div style={{ display: "flex", justifyContent: "space-between", fontSize: 11, color: T.t3, marginTop: 4 }}>
-                <span>5%</span>
-                <span>Conservative</span>
-                <span>40%</span>
-              </div>
             </div>
 
-            <div style={{ display: "flex", justifyContent: "space-between", padding: "10px 0" }}>
-              <span style={{ fontSize: 14, color: T.t2 }}>Members</span>
-              <span style={{ fontSize: 15, fontWeight: 600, color: T.text }}>{members.toLocaleString()} customers at ${avgPlan}/mo</span>
-            </div>
-            <div style={{ display: "flex", justifyContent: "space-between", padding: "10px 0", borderTop: `1px solid ${T.div}` }}>
-              <span style={{ fontSize: 14, color: T.t2 }}>Monthly revenue</span>
-              <span style={{ fontSize: 18, fontWeight: 700, color: T.blue }}>${mrrCalc.toLocaleString()}/mo</span>
-            </div>
-            <div style={{ display: "flex", justifyContent: "space-between", padding: "10px 0", borderTop: `1px solid ${T.div}` }}>
-              <span style={{ fontSize: 14, color: T.t2 }}>Yearly revenue</span>
-              <span style={{ fontSize: 18, fontWeight: 700, color: T.blue }}>${(annual / 1000).toFixed(0)}K/yr</span>
-            </div>
-
-            <div style={{ marginTop: 18, padding: "16px 20px", background: T.greenL, borderRadius: T.rs, textAlign: "center" }}>
-              <div style={{ fontSize: 26, fontWeight: 700, color: T.green, letterSpacing: -0.5 }}>
+            <div style={{ padding: "18px 20px", background: T.greenL, borderRadius: T.rs, textAlign: "center" }}>
+              <div style={{ fontSize: 28, fontWeight: 700, color: T.green, letterSpacing: -0.5 }}>
                 ${mrrCalc.toLocaleString()}/mo
               </div>
-              <div style={{ fontSize: 13, color: T.t2, marginTop: 4 }}>new revenue from existing customers</div>
-            </div>
-            <div style={{ marginTop: 10, padding: "14px 20px", background: T.blueL, borderRadius: T.rs, textAlign: "center" }}>
-              <div style={{ fontSize: 22, fontWeight: 700, color: T.blue, letterSpacing: -0.5 }}>
-                ${(annual / 1000).toFixed(0)}K/yr
-              </div>
+              <div style={{ fontSize: 13, color: T.t3, marginTop: 4 }}>{members.toLocaleString()} customers at ${avgPlan}/mo</div>
             </div>
           </Card>
         </FadeIn>
@@ -1048,8 +1011,10 @@ function Detail({ contact, onBack }) {
 
       {/* Detail Tiles */}
       <FadeIn delay={80}>
-        <div style={{ fontSize: 13, color: T.t3, marginBottom: 16, padding: "0 4px" }}>
-          Installed {new Date(c.installed).toLocaleDateString("en-US", { month: "short", year: "numeric" })} ({age} yrs) · {c.sqft.toLocaleString()} sq ft · {c.hail} hail event{c.hail !== 1 ? "s" : ""} · {c.shingle}
+        <div style={{ display: "flex", gap: 16, fontSize: 13, color: T.t3, marginBottom: 16, padding: "0 4px" }}>
+          <span><IconCalendar size={12} color={T.t3} />{age} yrs</span>
+          <span>{c.sqft.toLocaleString()} sq ft</span>
+          <span><IconStorm size={12} color={T.t3} />{c.hail} hail</span>
         </div>
       </FadeIn>
 
@@ -1155,7 +1120,7 @@ function Detail({ contact, onBack }) {
                   <div style={{ padding: "14px 18px", background: T.greenL, borderRadius: T.rs, textAlign: "center" }}>
                     <div style={{ color: T.green, fontWeight: 600, fontSize: 15, display: "flex", alignItems: "center", justifyContent: "center", gap: 4 }}><IconCheck size={16} color={T.green} />Sent to {c.phone}</div>
                     <div style={{ color: T.t2, fontSize: 13, marginTop: 4 }}>
-                      Customer will see this as a text from Lifeline Roofing. If they reply, your team gets notified instantly.
+                      Sent as text from Lifeline Roofing
                     </div>
                   </div>
                 )}
@@ -1245,26 +1210,26 @@ function Weather({ onBack }) {
           <Card style={{ borderLeft: `3px solid ${T.red}` }}>
             <Pill color={T.red}>Immediate · 312 contacts</Pill>
             <div style={{ fontSize: 13, color: T.t2, margin: "10px 0 14px" }}>
-              Roof health below 70. Most vulnerable to storm damage.
+              Highest risk roofs
             </div>
             <div style={{
               background: T.bg, borderRadius: T.rs, padding: "14px 16px",
               fontSize: 14, color: T.t2, lineHeight: 1.65, fontStyle: "italic",
             }}>
-              "Storm alert for your area tonight. Your roof has wear from previous hail. If you notice anything after the storm like missing shingles, leaks, or debris, call us at 936-701-2242 and you will be first in line."
+              "Storm alert tonight. Call us if you see damage: 936-701-2242"
             </div>
           </Card>
 
           <Card style={{ borderLeft: `3px solid ${T.orange}` }}>
             <Pill color={T.orange}>8:00 AM · 935 contacts</Pill>
             <div style={{ fontSize: 13, color: T.t2, margin: "10px 0 14px" }}>
-              Standard risk. Sent when homeowners are assessing damage.
+              All other customers
             </div>
             <div style={{
               background: T.bg, borderRadius: T.rs, padding: "14px 16px",
               fontSize: 14, color: T.t2, lineHeight: 1.65, fontStyle: "italic",
             }}>
-              "Heads up, storms last night in your area with possible hail. If your roof took a hit, Lifeline is here. Save our number: 936-701-2242."
+              "Storms last night. Lifeline is here if your roof took a hit."
             </div>
           </Card>
         </div>
@@ -1331,7 +1296,7 @@ function InspectionPage({ onBack }) {
       <FadeIn>
         <div style={{ marginBottom: 24 }}>
           <h2 style={{ fontSize: 28, fontWeight: 700, color: T.text, margin: 0, letterSpacing: -0.5 }}>Maintenance Report</h2>
-          <p style={{ fontSize: 15, color: T.t2, margin: "6px 0 0" }}>Tech fills it out on site. Customer gets a professional report.</p>
+          <p style={{ fontSize: 15, color: T.t2, margin: "6px 0 0" }}>Fill out on site. Send to customer.</p>
         </div>
       </FadeIn>
 
@@ -1407,9 +1372,6 @@ function InspectionPage({ onBack }) {
             {step === "input" && (
               <div>
                 <div style={{ textAlign: "center", padding: "24px 0 20px" }}>
-                  <div style={{ fontSize: 15, color: T.t2, marginBottom: 20, lineHeight: 1.6 }}>
-                    The AI takes the tech's findings, estimates repair costs, calculates the health score, and generates a clean report the homeowner can read in 30 seconds.
-                  </div>
                   <button onClick={handleGenerate} style={{
                     width: "100%", background: T.blue, color: "#fff", border: "none",
                     borderRadius: 980, padding: "13px 0", fontSize: 15, fontWeight: 600, cursor: "pointer",
