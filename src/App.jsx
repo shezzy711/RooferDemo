@@ -698,6 +698,15 @@ function NewContactModal({ onClose, onNav }) {
               </div>
             </div>
 
+            {/* AccuLynx Sync */}
+            <div style={{
+              display: "flex", alignItems: "center", justifyContent: "center", gap: 6,
+              padding: "10px 0", marginBottom: 10,
+            }}>
+              <IconCheck size={14} color={T.green} />
+              <span style={{ fontSize: 12, fontWeight: 600, color: T.green }}>Synced to AccuLynx</span>
+            </div>
+
             <div style={{ display: "flex", gap: 10 }}>
               <button
                 onClick={function () { onClose(); onNav("detail", generatedContact); }}
@@ -731,6 +740,7 @@ function NewContactModal({ onClose, onNav }) {
 function Home({ onNav }) {
   const [pct, setPct] = useState(15);
   const [queueTab, setQueueTab] = useState("risk");
+  const [showNewContact, setShowNewContact] = useState(false);
   const avgH = Math.round(CONTACTS.reduce((a, c) => a + c.health, 0) / CONTACTS.length);
   const highR = CONTACTS.filter(c => c.risk === "high").length;
   const enrolled = CONTACTS.filter(c => c.status === "enrolled").length;
@@ -751,9 +761,26 @@ function Home({ onNav }) {
 
   return (
     <div style={{ maxWidth: 960, margin: "0 auto" }}>
+      {showNewContact && (
+        <NewContactModal
+          onClose={function () { setShowNewContact(false); }}
+          onNav={onNav}
+        />
+      )}
+
       <FadeIn>
-        <div style={{ marginBottom: 32 }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 32 }}>
           <h1 style={{ fontSize: 28, fontWeight: 700, color: T.text, margin: 0, letterSpacing: -0.5 }}>Command Center</h1>
+          <button
+            onClick={function () { setShowNewContact(true); }}
+            style={{
+              background: T.blue, color: "#fff", border: "none", borderRadius: 980,
+              padding: "8px 20px", fontSize: 13, fontWeight: 600, cursor: "pointer",
+              display: "flex", alignItems: "center", gap: 4,
+            }}
+          >
+            + Add Contact
+          </button>
         </div>
       </FadeIn>
 
