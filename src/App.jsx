@@ -353,17 +353,7 @@ function Typer({ text, speed = 12, onDone }) {
   );
 }
 
-function Narrator({ text }) {
-  return (
-    <div style={{
-      padding: "0 0 18px",
-      marginBottom: 18,
-      borderBottom: "1px solid " + T.div,
-    }}>
-      <div style={{ fontSize: 14, color: T.t3, lineHeight: 1.6, fontStyle: "italic" }}>{text}</div>
-    </div>
-  );
-}
+
 
 function Card({ children, style: extraStyle, onClick }) {
   return (
@@ -765,7 +755,7 @@ function Home({ onNav }) {
     <div style={{ maxWidth: 960, margin: "0 auto" }}>
       <FadeIn>
         <div style={{ marginBottom: 32 }}>
-          <h1 style={{ fontSize: 34, fontWeight: 700, color: T.text, margin: 0, letterSpacing: -0.8 }}>Command Center</h1>
+          <h1 style={{ fontSize: 28, fontWeight: 700, color: T.text, margin: 0, letterSpacing: -0.5 }}>Command Center</h1>
           <p style={{ fontSize: 16, color: T.t2, margin: "6px 0 0" }}>AI analyzed 4,000+ roofs from AccuLynx. Here is what needs your attention.</p>
         </div>
       </FadeIn>
@@ -794,39 +784,18 @@ function Home({ onNav }) {
         </div>
       </FadeIn>
 
-      {/* AI Activity Bar */}
-      <FadeIn delay={120}>
-        <div style={{
-          background: T.white, borderRadius: 16, padding: "18px 26px",
-          display: "flex", alignItems: "center", gap: 24, marginBottom: 16,
-          boxShadow: "0 0 0 0.5px rgba(0,0,0,0.04), 0 1px 3px rgba(0,0,0,0.03), 0 4px 12px rgba(0,0,0,0.025)",
-        }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 8, flexShrink: 0 }}>
-            <div style={{ width: 8, height: 8, borderRadius: 4, background: T.green, animation: "lifelinepulse 2s ease-in-out infinite" }} />
-            <span style={{ fontSize: 13, fontWeight: 600, color: T.green }}>AI Active</span>
-          </div>
-          <style>{`@keyframes lifelinepulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }`}</style>
-          <div style={{ height: 20, width: 1, background: T.div }} />
-          <div style={{ display: "flex", gap: 20, flex: 1, fontSize: 13, color: T.t2 }}>
-            <span><strong style={{ color: T.text }}>47</strong> follow-ups sent this week</span>
-            <span><strong style={{ color: T.text }}>12</strong> maintenance reminders queued for tomorrow</span>
-            <span><strong style={{ color: T.text }}>3</strong> appointments booked automatically</span>
-          </div>
-        </div>
-      </FadeIn>
-
       {/* Stats Row */}
       <FadeIn delay={160}>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 12, marginBottom: 28 }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 10, marginBottom: 20 }}>
           {stats.map((s, i) => (
-            <div key={i} style={{ background: T.white, borderRadius: 16, padding: "22px 20px",
+            <div key={i} style={{ background: T.white, borderRadius: 14, padding: "16px 14px",
               boxShadow: "0 0 0 0.5px rgba(0,0,0,0.04), 0 1px 3px rgba(0,0,0,0.03), 0 4px 12px rgba(0,0,0,0.025)",
             }}>
-              <div style={{ fontSize: 12, color: T.t3, fontWeight: 500, marginBottom: 14 }}>
+              <div style={{ fontSize: 11, color: T.t3, fontWeight: 500, marginBottom: 10 }}>
                 {s.label}
               </div>
               {s.content}
-              <div style={{ fontSize: 12, color: T.t3, marginTop: 10 }}>{s.sub}</div>
+              <div style={{ fontSize: 11, color: T.t3, marginTop: 8 }}>{s.sub}</div>
             </div>
           ))}
         </div>
@@ -834,10 +803,9 @@ function Home({ onNav }) {
 
       {/* Automated Follow-Up Queue */}
       <FadeIn delay={200}>
-        <Card style={{ marginBottom: 20 }}>
-          <Narrator text="The AI monitors every contact in AccuLynx. When someone needs a follow-up, it either sends the message automatically or flags it for your team. No rep has to remember anything." />
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
-            <div style={{ fontSize: 17, fontWeight: 600, color: T.text }}>Automated Follow-Ups</div>
+        <Card style={{ marginBottom: 16, padding: 22 }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
+            <div style={{ fontSize: 16, fontWeight: 600, color: T.text }}>Automated Follow-Ups</div>
             <Pill color={T.blue}>This Week</Pill>
           </div>
           {[
@@ -881,10 +849,6 @@ function Home({ onNav }) {
         {/* Priority Queue with Segmented Toggle */}
         <FadeIn delay={280}>
           <Card>
-            <Narrator text={queueTab === "risk"
-              ? "The AI scored every roof in your database by age, weather history, shingle type, and exposure. These contacts need attention first."
-              : "These are your highest-value properties. The AI recommends a personal call over automated outreach. Higher close rate, higher revenue per job."
-            } />
 
             {/* Segmented Control */}
             <div style={{
@@ -984,7 +948,6 @@ function Home({ onNav }) {
         {/* ROI Calculator */}
         <FadeIn delay={360}>
           <Card>
-            <Narrator text="Drag the slider to model your revenue. These are your numbers, your 4,231 contacts." />
             <div style={{ fontSize: 17, fontWeight: 600, color: T.text, marginBottom: 4 }}>Revenue Calculator</div>
             <div style={{ fontSize: 13, color: T.t3, marginBottom: 24 }}>Based on your 4,231 contacts</div>
 
@@ -1089,7 +1052,7 @@ function Detail({ contact, onBack }) {
       <FadeIn delay={80}>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 12, marginBottom: 20 }}>
           {detailCards.map((d) => (
-            <Card key={d.label} style={{ padding: "14px 16px" }}>
+            <Card key={d.label} style={{ padding: "10px 12px" }}>
               <div style={{ fontSize: 10, color: T.t3, textTransform: "uppercase", letterSpacing: 0.6, marginBottom: 5 }}>{d.label}</div>
               <div style={{ fontSize: 17, fontWeight: 600, color: T.text }}>{d.value}</div>
             </Card>
@@ -1140,7 +1103,6 @@ function Detail({ contact, onBack }) {
               <div style={{ width: 8, height: 8, borderRadius: 4, background: T.blue,  }} />
               <span style={{ fontSize: 13, fontWeight: 600, color: T.t2 }}>AI Analysis</span>
             </div>
-            <Narrator text={"The AI looked at " + c.name.split(" ")[0] + "'s install date, shingle type, local weather events, slope, and UV exposure to generate this assessment."} />
             {!showAI ? (
               <div style={{ textAlign: "center", padding: "16px 0" }}>
                 <button onClick={() => setShowAI(true)} style={{
@@ -1164,7 +1126,6 @@ function Detail({ contact, onBack }) {
               <div style={{ width: 8, height: 8, borderRadius: 4, background: T.green,  }} />
               <span style={{ fontSize: 13, fontWeight: 600, color: T.t2 }}>AI Outreach</span>
             </div>
-            <Narrator text="This is not a template. The AI wrote this message specifically for this customer based on their roof data, risk factors, and the right tone for Lifeline." />
             {!showSms ? (
               <div style={{ textAlign: "center", padding: "16px 0" }}>
                 <button onClick={() => setShowSms(true)} style={{
@@ -1215,7 +1176,6 @@ function Detail({ contact, onBack }) {
       {sent && (
         <FadeIn delay={200}>
           <Card style={{ marginTop: 20 }}>
-            <Narrator text={"This is what " + c.name.split(" ")[0] + " sees on their phone. When they tap Book, they see available times and confirm in 10 seconds."} />
             <div style={{ fontSize: 17, fontWeight: 600, color: T.text, marginBottom: 16 }}>
               What {c.name.split(" ")[0]} sees on their phone
             </div>
@@ -1288,10 +1248,6 @@ function Weather({ onBack }) {
       </FadeIn>
 
       <FadeIn delay={80}>
-        <Narrator text="The AI cross-referenced the storm path with every customer address, then ranked them by roof vulnerability. High-risk roofs get an immediate heads-up. Everyone else gets a morning follow-up timed for when they are inspecting their property." />
-      </FadeIn>
-
-      <FadeIn delay={160}>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20, marginBottom: 24 }}>
           <Card style={{ borderLeft: `3px solid ${T.red}` }}>
             <Pill color={T.red}>Immediate · 312 contacts</Pill>
@@ -1321,31 +1277,7 @@ function Weather({ onBack }) {
         </div>
       </FadeIn>
 
-      {/* Attach Content */}
-      <FadeIn delay={220}>
-        <div style={{
-          background: T.white, borderRadius: 16, padding: "16px 22px", marginBottom: 16,
-          display: "flex", alignItems: "center", gap: 14,
-          boxShadow: "0 0 0 0.5px rgba(0,0,0,0.04), 0 1px 3px rgba(0,0,0,0.03)",
-        }}>
-          <span style={{ fontSize: 13, fontWeight: 600, color: T.t2, flexShrink: 0 }}>Attach content</span>
-          <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-            {["Storm prep video", "Maintenance tips", "Insurance FAQ"].map((label, i) => (
-              <span key={i} style={{
-                padding: "5px 12px", borderRadius: 20, fontSize: 12, fontWeight: 500, cursor: "pointer",
-                background: i === 0 ? T.blueS : T.bg,
-                color: i === 0 ? T.blue : T.t3,
-                border: i === 0 ? "1px solid " + T.blue + "30" : "1px solid " + T.div,
-              }}>
-                {i === 0 && <span style={{ marginRight: 4 }}>+</span>}{label}
-              </span>
-            ))}
-          </div>
-          <span style={{ fontSize: 11, color: T.t3, marginLeft: "auto", flexShrink: 0 }}>1 selected</span>
-        </div>
-      </FadeIn>
-
-      <FadeIn delay={280}>
+      <FadeIn delay={160}>
         {!deployed ? (
           <button onClick={handleDeploy} disabled={deploying} style={{
             width: "100%", padding: "16px 0",
@@ -1374,6 +1306,7 @@ function Weather({ onBack }) {
 function InspectionPage({ onBack }) {
   const [step, setStep] = useState("input"); // input, generating, done
   const [reportSent, setReportSent] = useState(false);
+  const [expandedItem, setExpandedItem] = useState(null);
 
   const inspectionInputs = [
     { label: "1. Shingles", question: "Shingle surface condition?", value: "UV-driven granule loss on south-facing slope, center section. Below replacement threshold but progressing." },
@@ -1409,10 +1342,6 @@ function InspectionPage({ onBack }) {
         </div>
       </FadeIn>
 
-      <FadeIn delay={80}>
-        <Narrator text="Your tech completes the inspection checklist on site or it syncs from AccuLynx, GAF QuickMeasure, CompanyCam, or EagleView. The system generates a branded report and sends it to the homeowner before the tech leaves the property." />
-      </FadeIn>
-
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
         <FadeIn delay={160}>
           <Card>
@@ -1436,15 +1365,31 @@ function InspectionPage({ onBack }) {
             </div>
 
             {inspectionInputs.map((item, i) => (
-              <div key={i} style={{ marginBottom: i < inspectionInputs.length - 1 ? 16 : 0 }}>
-                <div style={{ fontSize: 12, fontWeight: 600, color: T.t2, textTransform: "uppercase", letterSpacing: 0.6, marginBottom: 6 }}>{item.label}</div>
-                <div style={{ fontSize: 12, color: T.t3, marginBottom: 6 }}>{item.question}</div>
-                <div style={{
-                  padding: "10px 14px", borderRadius: 10, border: "1px solid " + T.div,
-                  background: T.bg, fontSize: 14, color: T.text, lineHeight: 1.5,
-                }}>
-                  {item.value}
+              <div key={i} style={{
+                borderTop: i > 0 ? "1px solid " + T.div : "none",
+              }}>
+                <div
+                  onClick={function () { setExpandedItem(expandedItem === i ? null : i); }}
+                  style={{
+                    display: "flex", alignItems: "center", gap: 10, padding: "10px 0",
+                    cursor: "pointer",
+                  }}
+                >
+                  <IconCheck size={14} color={T.green} />
+                  <span style={{ fontSize: 13, fontWeight: 600, color: T.text, flex: 1 }}>{item.label}</span>
+                  <span style={{ fontSize: 12, color: T.t3 }}>{expandedItem === i ? "−" : "+"}</span>
                 </div>
+                {expandedItem === i && (
+                  <div style={{ paddingBottom: 12, paddingLeft: 24 }}>
+                    <div style={{ fontSize: 11, color: T.t3, marginBottom: 4 }}>{item.question}</div>
+                    <div style={{
+                      padding: "8px 12px", borderRadius: 8, background: T.bg,
+                      fontSize: 13, color: T.text, lineHeight: 1.5,
+                    }}>
+                      {item.value}
+                    </div>
+                  </div>
+                )}
               </div>
             ))}
 
@@ -1544,8 +1489,6 @@ function InspectionPage({ onBack }) {
       {reportSent && (
         <FadeIn delay={200}>
           <div style={{ marginTop: 28 }}>
-            <Narrator text="This is what Sandra just received. A clean, branded report she can understand in 30 seconds. The maintenance offer is at the bottom." />
-
             <Card style={{ padding: 0, overflow: "hidden", boxShadow: T.shL }}>
 
               {/* Clean white header */}
