@@ -1191,8 +1191,9 @@ function Detail({ contact, onBack }) {
                     <button style={{
                       padding: "12px 20px", background: "transparent", color: T.t2,
                       border: `1px solid ${T.div}`, borderRadius: 980, fontSize: 14, fontWeight: 500, cursor: "pointer",
+                      display: "flex", alignItems: "center", gap: 6,
                     }}>
-                      Edit
+                      <IconMic size={12} color={T.t2} />Edit
                     </button>
                   </div>
                 )}
@@ -2060,9 +2061,8 @@ function AbbyChat() {
           padding: "12px 16px", borderTop: "1px solid " + T.div,
           display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
         }}>
-          <IconMic size={14} color={T.t3} />
-          <span style={{ fontSize: 12, color: T.t3 }}>Voice input</span>
-          <span style={{ fontSize: 11, color: T.t3, opacity: 0.6 }}>(coming soon)</span>
+          <IconMic size={14} color={T.green} />
+          <span style={{ fontSize: 12, color: T.green, fontWeight: 500 }}>Voice input</span>
         </div>
       </div>
     </>
@@ -2146,6 +2146,10 @@ export default function App() {
         >
           <img src="/logo.png" alt="Lifeline Roofing" style={{ height: 28, objectFit: "contain" }} />
           <span style={{ fontSize: 12, color: T.t3, fontWeight: 500 }}>Lifeline AI</span>
+          <div style={{ display: "flex", alignItems: "center", gap: 4, marginLeft: 6, padding: "3px 8px", background: T.greenS, borderRadius: 6 }}>
+            <IconMic size={10} color={T.green} />
+            <span style={{ fontSize: 10, fontWeight: 600, color: T.green }}>Voice</span>
+          </div>
         </div>
 
         <div style={{ display: "flex", gap: 2 }}>
