@@ -89,51 +89,79 @@ const CONTACTS = [
   {
     id: 1, name: "Tony Russo", addr: "2200 Post Oak Blvd, Conroe", phone: "(936) 555-0912",
     installed: "2019-12-01", shingle: "CertainTeed Landmark", sqft: 1800, hail: 2, health: 41,
-    risk: "high", plan: null, mrr: 0, status: "not_contacted",
+    risk: "high", plan: null, mrr: 0, status: "not_contacted", tier: null,
     ai: "Oldest roof in portfolio at 6+ years with low slope and 2 hail events. Nearing the end of the optimal maintenance window. Warranty-eligible repairs may expire within the year. Without intervention, this roof is heading for unplanned replacement. Strong candidate for immediate outreach and maintenance-to-replacement conversion.",
     sms: "Tony, this is Lifeline Roofing. Your roof at Post Oak is coming up on 6 years and I want to make sure you're still covered. With the hail your area has seen, there might be warranty-eligible repairs we can catch before they expire. Free inspection, 30 minutes. Worth a look. Can I schedule you this week?"
   },
   {
     id: 2, name: "Charles Washington", addr: "1122 Pecan Grove Rd, Conroe", phone: "(936) 555-0718",
     installed: "2020-04-20", shingle: "GAF Timberline Ultra HD", sqft: 2800, hail: 3, health: 48,
-    risk: "high", plan: null, mrr: 0, status: "outreach_sent",
+    risk: "high", plan: null, mrr: 0, status: "outreach_sent", tier: null,
     ai: "5-year-old complex roof with 3 hail events and dominant south-facing exposure. Multiple compounding risk factors. Predictive model shows 67% probability of requiring full replacement within 18 months. PRIORITY: Highest revenue opportunity in current pipeline. Maintenance enrollment is the bridge to a projected $22K replacement project.",
     sms: "Charles, your roof at Pecan Grove is one of our earlier installs and it's been through 3 hail events and five Texas summers on that south-facing slope. I want to be straight with you. There's a good chance we find something that needs attention. A quick inspection now could save you a big surprise later. No cost for the visit. Can I come take a look?"
   },
   {
     id: 3, name: "Sandra Collins", addr: "3301 Magnolia Bend, Conroe", phone: "(936) 555-0334",
     installed: "2020-11-05", shingle: "GAF Timberline HDZ", sqft: 2100, hail: 3, health: 54,
-    risk: "high", plan: null, mrr: 0, status: "not_contacted",
+    risk: "high", plan: null, mrr: 0, status: "not_contacted", tier: null,
     ai: "Three hail events on a low-slope roof approaching 5 years. High probability of hidden damage at valley transitions and pipe boot seals. Granule displacement likely exceeding manufacturer thresholds. URGENT: Inspection recommended within 30 days. Strong maintenance-to-replacement pipeline candidate with 67% probability of full replacement within 18 months.",
     sms: "Sandra, this is Blu from Lifeline Roofing. Your roof on Magnolia Bend has been through some rough weather. 3 hail events in under 5 years on a low slope. I'm not calling to sell you a new roof. I want to see if we can extend what you've got by 3-5 years with some preventative care. Can I send someone out for a free look?"
   },
   {
     id: 4, name: "David Chen", addr: "4418 Willowbrook Ct, Huntsville", phone: "(936) 555-0523",
     installed: "2021-02-14", shingle: "Owens Corning TruDefinition", sqft: 2600, hail: 2, health: 63,
-    risk: "medium", plan: null, mrr: 0, status: "outreach_sent",
+    risk: "medium", plan: null, mrr: 0, status: "outreach_sent", tier: null,
     ai: "West-facing primary exposure drives elevated thermal cycling. Hot afternoon sun followed by rapid evening cooling causes expansion and contraction stress. Combined with 2 hail events, pipe boot seals and step flashing at sidewalls are likely degrading. A $200-$400 preventative repair now prevents a $3K-$5K emergency fix later.",
     sms: "David, your Willowbrook roof takes a lot of afternoon sun on that west side, and with a couple of hail events since we installed, I'd like to check your pipe boots and flashing. Those are the first things to go and they're cheap to fix now. We have openings Thursday and Friday. Want me to grab you a slot?"
   },
   {
     id: 5, name: "James Patterson", addr: "2841 Oak Ridge Dr, Conroe", phone: "(936) 555-0142",
     installed: "2022-03-15", shingle: "CertainTeed Landmark", sqft: 2400, hail: 2, health: 72,
-    risk: "medium", plan: "Annual", mrr: 45, status: "enrolled",
+    risk: "medium", plan: "Annual", mrr: 45, status: "enrolled", tier: null,
     ai: "South-facing primary slope with 2 recorded hail events since installation. UV exposure is accelerating granule loss on the south face. Ridge cap seal strips show early fatigue. Maintenance visit within 60 days will catch this before it becomes a $4K-$6K partial re-roof.",
     sms: "Hey James, it's been about 2 years since we put on your roof at Oak Ridge Dr. With the hail your area caught last fall, I'd like to get eyes on your south-facing slope before summer heat sets in. Free inspection, 30 minutes, no pressure. Want me to send a tech out this week?"
   },
   {
     id: 6, name: "Robert Nguyen", addr: "9102 Pine Hollow Ct, Willis", phone: "(936) 555-0287",
     installed: "2021-08-22", shingle: "Owens Corning Duration", sqft: 1850, hail: 1, health: 81,
-    risk: "low", plan: "Semi-Annual", mrr: 25, status: "enrolled",
+    risk: "low", plan: "Semi-Annual", mrr: 25, status: "enrolled", tier: null,
     ai: "Steep pitch provides excellent drainage and reduces standing water risk. One minor hail event with no visible impact expected on Duration-class shingles. Performing within normal range for age. Annual inspection is sufficient.",
     sms: "Robert, your Pine Hollow roof is looking solid at 3 years. One quick check-up to make sure the flashing and vents are sealed tight before storm season."
   },
   {
     id: 7, name: "Maria Davis", addr: "1547 Lakewood Ln, Spring", phone: "(281) 555-0198",
     installed: "2023-01-10", shingle: "CertainTeed Presidential", sqft: 3200, hail: 0, health: 94,
-    risk: "low", plan: "Annual", mrr: 55, status: "enrolled",
+    risk: "low", plan: "Annual", mrr: 55, status: "enrolled", tier: null,
     ai: "Premium Presidential shingle on complex multi-directional geometry. Zero weather events. Performing excellently. Focus monitoring on valley-to-hip transitions and chimney counter-flashing at the 18-month mark.",
     sms: "Maria, your Presidential roof at Lakewood is performing beautifully. Coming up on 18 months, the perfect time for a quick valley and flashing check."
+  },
+  {
+    id: 8, name: "Richard Thornton", addr: "14 Carlton Woods Dr, The Woodlands", phone: "(281) 555-0461",
+    installed: "2020-06-10", shingle: "CertainTeed Presidential TL", sqft: 5200, hail: 2, health: 52,
+    risk: "high", plan: null, mrr: 0, status: "not_contacted", tier: "platinum",
+    ai: "5,200 sq ft premium roof in Carlton Woods. Two hail events on a complex multi-hip geometry with 14 penetrations. Presidential TL shingles are high-end but the roof complexity creates multiple failure points at valleys and transitions. Estimated replacement value $38K. This is the highest-dollar opportunity in the database. Personal outreach strongly recommended.",
+    sms: "Mr. Thornton, this is Blu with Lifeline Roofing. We installed your roof at Carlton Woods about 5 years ago and I wanted to personally check in. With the hail your area has taken, I would like to come out and make sure everything is holding up. No charge, just want to take care of you. When works best?"
+  },
+  {
+    id: 9, name: "Catherine Whitfield", addr: "3827 River Oaks Blvd, Houston", phone: "(713) 555-0339",
+    installed: "2021-03-22", shingle: "GAF Grand Sequoia", sqft: 4800, hail: 3, health: 44,
+    risk: "high", plan: null, mrr: 0, status: "not_contacted", tier: "platinum",
+    ai: "4,800 sq ft estate roof in River Oaks with premium Grand Sequoia shingles. Three hail events since installation. Complex roofline with dormers and copper flashing transitions. Estimated replacement value $34K. Multiple risk factors compounding. Highest urgency platinum contact. Schedule personal visit within 2 weeks.",
+    sms: "Mrs. Whitfield, this is Blu from Lifeline Roofing. Your roof at River Oaks Blvd has been through some serious weather since we put it on. I would like to come by personally and take a look. With a home like yours, I want to make sure everything is right. Can I come out this week?"
+  },
+  {
+    id: 10, name: "William Grant III", addr: "221 Fazio Ct, Carlton Woods", phone: "(281) 555-0517",
+    installed: "2021-09-14", shingle: "CertainTeed Presidential TL", sqft: 4200, hail: 2, health: 61,
+    risk: "medium", plan: null, mrr: 0, status: "outreach_sent", tier: "platinum",
+    ai: "4,200 sq ft roof in Carlton Woods with 2 hail events. Premium Presidential TL performing within range but approaching the maintenance window. Estimated replacement value $28K. Previous outreach sent with no response. AI recommends personal phone call as follow-up rather than another text.",
+    sms: "Mr. Grant, this is Blu with Lifeline Roofing. I reached out a few weeks ago about your Carlton Woods roof. I know things get busy. Just wanted to follow up personally. Your roof is at the age where a quick check can save you real money down the road. Can I stop by?"
+  },
+  {
+    id: 11, name: "Margaret Chen-Alvarez", addr: "8 Greyton Ln, The Woodlands", phone: "(281) 555-0624",
+    installed: "2020-12-01", shingle: "GAF Grand Sequoia", sqft: 3800, hail: 2, health: 57,
+    risk: "high", plan: null, mrr: 0, status: "not_contacted", tier: "platinum",
+    ai: "3,800 sq ft premium roof in The Woodlands with Grand Sequoia shingles. Two hail events and 5+ years of age. South and west facing slopes showing accelerated wear. Estimated replacement value $26K. Strong candidate for maintenance enrollment leading to replacement pipeline.",
+    sms: "Mrs. Chen-Alvarez, this is Blu with Lifeline Roofing. Your roof on Greyton Lane has been through a lot of weather over the past five years. I would like to come out and give you an honest assessment. No cost, no pressure. Just want to make sure your home is protected. When works for you?"
   },
 ];
 
@@ -625,6 +653,7 @@ function NewContactModal({ onClose, onNav }) {
 
 function Home({ onNav }) {
   const [pct, setPct] = useState(15);
+  const [queueTab, setQueueTab] = useState("risk");
   const avgH = Math.round(CONTACTS.reduce((a, c) => a + c.health, 0) / CONTACTS.length);
   const highR = CONTACTS.filter(c => c.risk === "high").length;
   const enrolled = CONTACTS.filter(c => c.status === "enrolled").length;
@@ -762,12 +791,41 @@ function Home({ onNav }) {
       </FadeIn>
 
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
-        {/* Priority Queue */}
+        {/* Priority Queue with Segmented Toggle */}
         <FadeIn delay={280}>
           <Card>
-            <Narrator text="The AI scored every roof in your database by age, weather history, shingle type, and exposure. These contacts need attention first." />
-            <div style={{ fontSize: 17, fontWeight: 600, color: T.text, marginBottom: 16 }}>Priority Queue</div>
-            {priorityContacts.map((c, i) => (
+            <Narrator text={queueTab === "risk"
+              ? "The AI scored every roof in your database by age, weather history, shingle type, and exposure. These contacts need attention first."
+              : "These are your highest-value properties. The AI recommends a personal call over automated outreach. Higher close rate, higher revenue per job."
+            } />
+
+            {/* Segmented Control */}
+            <div style={{
+              display: "inline-flex", background: T.bg, borderRadius: 10, padding: 3, marginBottom: 16,
+            }}>
+              {[
+                { id: "risk", label: "At Risk" },
+                { id: "platinum", label: "Platinum" },
+              ].map(tab => (
+                <button
+                  key={tab.id}
+                  onClick={() => setQueueTab(tab.id)}
+                  style={{
+                    padding: "7px 18px", borderRadius: 8, border: "none", cursor: "pointer",
+                    fontSize: 13, fontWeight: 600,
+                    background: queueTab === tab.id ? T.white : "transparent",
+                    color: queueTab === tab.id ? (tab.id === "risk" ? T.red : T.blue) : T.t3,
+                    boxShadow: queueTab === tab.id ? "0 1px 3px rgba(0,0,0,0.08)" : "none",
+                    transition: "all 0.2s ease",
+                  }}
+                >
+                  {tab.label}
+                </button>
+              ))}
+            </div>
+
+            {/* At Risk List */}
+            {queueTab === "risk" && priorityContacts.filter(c => !c.tier).map((c, i) => (
               <div
                 key={c.id}
                 onClick={() => onNav("detail", c)}
@@ -785,6 +843,27 @@ function Home({ onNav }) {
                 <Pill color={c.risk === "high" ? T.red : c.risk === "medium" ? T.orange : T.green}>
                   {c.risk === "high" ? "High" : c.risk === "medium" ? "Med" : "Low"}
                 </Pill>
+                <span style={{ color: T.t3, fontSize: 16 }}>{"›"}</span>
+              </div>
+            ))}
+
+            {/* Platinum List */}
+            {queueTab === "platinum" && [...CONTACTS].filter(c => c.tier === "platinum").sort((a, b) => b.sqft - a.sqft).map((c, i) => (
+              <div
+                key={c.id}
+                onClick={() => onNav("detail", c)}
+                style={{
+                  display: "flex", alignItems: "center", gap: 14,
+                  padding: "13px 0", cursor: "pointer",
+                  borderTop: i > 0 ? `1px solid ${T.div}` : "none",
+                }}
+              >
+                <HealthRing score={c.health} size={40} />
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontSize: 15, fontWeight: 600, color: T.text }}>{c.name}</div>
+                  <div style={{ fontSize: 12, color: T.t3 }}>{c.addr.split(",")[0]} · {c.sqft.toLocaleString()} sq ft · est. ${Math.round(c.sqft * 7.2 / 1000)}K replacement</div>
+                </div>
+                <Pill color={T.blue}>Call</Pill>
                 <span style={{ color: T.t3, fontSize: 16 }}>{"›"}</span>
               </div>
             ))}
