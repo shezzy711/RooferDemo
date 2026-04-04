@@ -848,25 +848,49 @@ function Home({ onNav }) {
             ))}
 
             {/* Platinum List */}
-            {queueTab === "platinum" && [...CONTACTS].filter(c => c.tier === "platinum").sort((a, b) => b.sqft - a.sqft).map((c, i) => (
-              <div
-                key={c.id}
-                onClick={() => onNav("detail", c)}
-                style={{
-                  display: "flex", alignItems: "center", gap: 14,
-                  padding: "13px 0", cursor: "pointer",
-                  borderTop: i > 0 ? `1px solid ${T.div}` : "none",
-                }}
-              >
-                <HealthRing score={c.health} size={40} />
-                <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: 15, fontWeight: 600, color: T.text }}>{c.name}</div>
-                  <div style={{ fontSize: 12, color: T.t3 }}>{c.addr.split(",")[0]} · {c.sqft.toLocaleString()} sq ft · est. ${Math.round(c.sqft * 7.2 / 1000)}K replacement</div>
+            {queueTab === "platinum" && (
+              <div>
+                {/* Platinum summary bar */}
+                <div style={{
+                  display: "flex", justifyContent: "space-between", alignItems: "center",
+                  padding: "12px 16px", background: "linear-gradient(135deg, rgba(0,113,227,0.06), rgba(52,199,89,0.06))",
+                  borderRadius: 12, marginBottom: 14,
+                }}>
+                  <div style={{ fontSize: 12, color: T.t2 }}>4 properties · <strong style={{ color: T.text }}>avg $32K</strong> replacement value</div>
+                  <div style={{ fontSize: 12, fontWeight: 600, color: T.green }}>$131K total pipeline</div>
                 </div>
-                <Pill color={T.blue}>Call</Pill>
-                <span style={{ color: T.t3, fontSize: 16 }}>{"›"}</span>
+
+                {[...CONTACTS].filter(c => c.tier === "platinum").sort((a, b) => b.sqft - a.sqft).map((c, i) => {
+                  const estValue = Math.round(c.sqft * 7.2 / 1000);
+                  return (
+                    <div
+                      key={c.id}
+                      onClick={() => onNav("detail", c)}
+                      style={{
+                        display: "flex", alignItems: "center", gap: 14,
+                        padding: "14px 0", cursor: "pointer",
+                        borderTop: i > 0 ? `1px solid ${T.div}` : "none",
+                      }}
+                    >
+                      <div style={{
+                        width: 40, height: 40, borderRadius: 10, flexShrink: 0,
+                        background: "linear-gradient(135deg, " + T.blueS + ", " + T.greenS + ")",
+                        display: "flex", alignItems: "center", justifyContent: "center",
+                        fontSize: 14, fontWeight: 700, color: T.blue,
+                      }}>
+                        ${estValue}K
+                      </div>
+                      <div style={{ flex: 1 }}>
+                        <div style={{ fontSize: 15, fontWeight: 600, color: T.text }}>{c.name}</div>
+                        <div style={{ fontSize: 12, color: T.t3 }}>{c.addr.split(",")[0]} · {c.sqft.toLocaleString()} sq ft</div>
+                      </div>
+                      <Pill color={T.blue} bg="rgba(0,113,227,0.08)">Call</Pill>
+                      <span style={{ color: T.t3, fontSize: 16 }}>{"›"}</span>
+                    </div>
+                  );
+                })}
               </div>
-            ))}
+            )}
           </Card>
         </FadeIn>
 
