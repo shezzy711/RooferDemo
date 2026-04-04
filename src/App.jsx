@@ -123,7 +123,7 @@ const CONTACTS = [
       { date: "Feb 02", type: "alert", text: "Hail event recorded in Conroe area" },
       { date: "Dec 01", type: "inspection", text: "Original install date. No contact since." },
     ],
-    ai: "Oldest roof in portfolio at 6+ years with low slope and 2 hail events. Nearing the end of the optimal maintenance window. Warranty-eligible repairs may expire within the year. Without intervention, this roof is heading for unplanned replacement. Strong candidate for immediate outreach and maintenance-to-replacement conversion.",
+    ai: "Oldest roof in portfolio at 6+ years with low slope and 2 hail events. Nearing the end of the optimal maintenance window. Warranty-eligible repairs may expire within the year. Without intervention, this roof is heading for unplanned re-roof. Strong candidate for immediate outreach and maintenance-to-re-roof conversion.",
     sms: "Tony, this is Lifeline Roofing. Your roof at Post Oak is coming up on 6 years and I want to make sure you're still covered. With the hail your area has seen, there might be warranty-eligible repairs we can catch before they expire. Free inspection, 30 minutes. Worth a look. Can I schedule you this week?"
   },
   {
@@ -133,10 +133,10 @@ const CONTACTS = [
     timeline: [
       { date: "Mar 28", type: "auto", text: "Follow-up text sent. No response." },
       { date: "Mar 14", type: "auto", text: "AI sent initial outreach via SMS" },
-      { date: "Mar 10", type: "alert", text: "Flagged as highest revenue opportunity in pipeline" },
+      { date: "Mar 10", type: "alert", text: "Flagged as highest revenue opportunity" },
       { date: "Jan 22", type: "alert", text: "Third hail event recorded. Health score updated." },
     ],
-    ai: "5-year-old complex roof with 3 hail events and dominant south-facing exposure. Multiple compounding risk factors. Predictive model shows 67% probability of requiring full replacement within 18 months. PRIORITY: Highest revenue opportunity in current pipeline. Maintenance enrollment is the bridge to a projected $22K replacement project.",
+    ai: "5-year-old complex roof with 3 hail events and dominant south-facing exposure. Multiple compounding risk factors. Predictive model shows 67% probability of requiring full re-roof within 18 months. PRIORITY: Highest revenue opportunity in current pipeline. Maintenance enrollment is the bridge to a projected $22K job project.",
     sms: "Charles, your roof at Pecan Grove is one of our earlier installs and it's been through 3 hail events and five Texas summers on that south-facing slope. I want to be straight with you. There's a good chance we find something that needs attention. A quick inspection now could save you a big surprise later. No cost for the visit. Can I come take a look?"
   },
   {
@@ -148,7 +148,7 @@ const CONTACTS = [
       { date: "Mar 20", type: "alert", text: "Flagged as urgent. 3 hail events on low-slope roof." },
       { date: "Feb 18", type: "alert", text: "Hail event recorded in Conroe area" },
     ],
-    ai: "Three hail events on a low-slope roof approaching 5 years. High probability of hidden damage at valley transitions and pipe boot seals. Granule displacement likely exceeding manufacturer thresholds. URGENT: Inspection recommended within 30 days. Strong maintenance-to-replacement pipeline candidate with 67% probability of full replacement within 18 months.",
+    ai: "Three hail events on a low-slope roof approaching 5 years. High probability of hidden damage at valley transitions and pipe boot seals. Granule displacement likely exceeding manufacturer thresholds. URGENT: Inspection recommended within 30 days. Strong maintenance-to-re-roof pipeline candidate with 67% probability of full re-roof within 18 months.",
     sms: "Sandra, this is Blu from Lifeline Roofing. Your roof on Magnolia Bend has been through some rough weather. 3 hail events in under 5 years on a low slope. I'm not calling to sell you a new roof. I want to see if we can extend what you've got by 3-5 years with some preventative care. Can I send someone out for a free look?"
   },
   {
@@ -209,7 +209,7 @@ const CONTACTS = [
       { date: "Mar 20", type: "alert", text: "Health score dropped to 52 after hail event analysis" },
       { date: "Feb 15", type: "alert", text: "Second hail event recorded in The Woodlands" },
     ],
-    ai: "5,200 sq ft premium roof in Carlton Woods. Two hail events on a complex multi-hip geometry with 14 penetrations. Presidential TL shingles are high-end but the roof complexity creates multiple failure points at valleys and transitions. Estimated replacement value $38K. This is the highest-dollar opportunity in the database. Personal outreach strongly recommended.",
+    ai: "5,200 sq ft premium roof in Carlton Woods. Two hail events on a complex multi-hip geometry with 14 penetrations. Presidential TL shingles are high-end but the roof complexity creates multiple failure points at valleys and transitions. Estimated job value $38K. This is the highest-dollar opportunity in the database. Personal outreach strongly recommended.",
     sms: "Mr. Thornton, this is Blu with Lifeline Roofing. We installed your roof at Carlton Woods about 5 years ago and I wanted to personally check in. With the hail your area has taken, I would like to come out and make sure everything is holding up. No charge, just want to take care of you. When works best?"
   },
   {
@@ -221,7 +221,7 @@ const CONTACTS = [
       { date: "Mar 18", type: "alert", text: "Third hail event recorded in River Oaks area" },
       { date: "Mar 01", type: "alert", text: "Health score dropped to 44. Multiple risk factors." },
     ],
-    ai: "4,800 sq ft estate roof in River Oaks with premium Grand Sequoia shingles. Three hail events since installation. Complex roofline with dormers and copper flashing transitions. Estimated replacement value $34K. Multiple risk factors compounding. Highest urgency platinum contact. Schedule personal visit within 2 weeks.",
+    ai: "4,800 sq ft estate roof in River Oaks with premium Grand Sequoia shingles. Three hail events since installation. Complex roofline with dormers and copper flashing transitions. Estimated job value $34K. Multiple risk factors compounding. Highest urgency platinum contact. Schedule personal visit within 2 weeks.",
     sms: "Mrs. Whitfield, this is Blu from Lifeline Roofing. Your roof at River Oaks Blvd has been through some serious weather since we put it on. I would like to come by personally and take a look. With a home like yours, I want to make sure everything is right. Can I come out this week?"
   },
   {
@@ -233,7 +233,7 @@ const CONTACTS = [
       { date: "Mar 16", type: "auto", text: "AI sent initial outreach via SMS" },
       { date: "Mar 10", type: "alert", text: "Added to Platinum call list. AI recommends phone call." },
     ],
-    ai: "4,200 sq ft roof in Carlton Woods with 2 hail events. Premium Presidential TL performing within range but approaching the maintenance window. Estimated replacement value $28K. Previous outreach sent with no response. AI recommends personal phone call as follow-up rather than another text.",
+    ai: "4,200 sq ft roof in Carlton Woods with 2 hail events. Premium Presidential TL performing within range but approaching the maintenance window. Estimated job value $28K. Previous outreach sent with no response. AI recommends personal phone call as follow-up rather than another text.",
     sms: "Mr. Grant, this is Blu with Lifeline Roofing. I reached out a few weeks ago about your Carlton Woods roof. I know things get busy. Just wanted to follow up personally. Your roof is at the age where a quick check can save you real money down the road. Can I stop by?"
   },
   {
@@ -245,14 +245,14 @@ const CONTACTS = [
       { date: "Mar 22", type: "alert", text: "South and west slopes showing accelerated wear" },
       { date: "Feb 28", type: "alert", text: "Second hail event recorded in The Woodlands" },
     ],
-    ai: "3,800 sq ft premium roof in The Woodlands with Grand Sequoia shingles. Two hail events and 5+ years of age. South and west facing slopes showing accelerated wear. Estimated replacement value $26K. Strong candidate for maintenance enrollment leading to replacement pipeline.",
+    ai: "3,800 sq ft premium roof in The Woodlands with Grand Sequoia shingles. Two hail events and 5+ years of age. South and west facing slopes showing accelerated wear. Estimated job value $26K. Strong candidate for maintenance enrollment leading to future re-roof pipeline.",
     sms: "Mrs. Chen-Alvarez, this is Blu with Lifeline Roofing. Your roof on Greyton Lane has been through a lot of weather over the past five years. I would like to come out and give you an honest assessment. No cost, no pressure. Just want to make sure your home is protected. When works for you?"
   },
 ];
 
 const PHOTO_FINDINGS = [
   { label: "Flashing separation", loc: "Chimney, north side", sev: "high", cost: "$200-$400", note: "Gap between step flashing and chimney masonry. Water infiltration risk within 3 months." },
-  { label: "Granule erosion", loc: "South slope, center", sev: "medium", cost: "Monitor", note: "UV-driven granule loss on south-facing shingles. Below replacement threshold but progressing." },
+  { label: "Granule erosion", loc: "South slope, center", sev: "medium", cost: "Monitor", note: "UV-driven granule loss on south-facing shingles. Below critical threshold but progressing." },
   { label: "Pipe boot cracking", loc: "Plumbing vent, west", sev: "high", cost: "$75-$150", note: "Rubber boot seal showing UV cracks. Will leak within 6 months if not replaced." },
 ];
 
@@ -494,7 +494,7 @@ function NewContactModal({ onClose, onNav }) {
 
       var aiText = "";
       if (risk === "high") {
-        aiText = ageYears.toFixed(1) + "-year-old " + formData.shingle + " roof with " + hailCount + " recorded hail events. Age and weather exposure are compounding. Granule loss and flashing degradation are likely progressing beyond safe thresholds. Recommend urgent inspection within 30 days. Strong candidate for maintenance enrollment and potential replacement pipeline within 12-18 months.";
+        aiText = ageYears.toFixed(1) + "-year-old " + formData.shingle + " roof with " + hailCount + " recorded hail events. Age and weather exposure are compounding. Granule loss and flashing degradation are likely progressing beyond safe thresholds. Recommend urgent inspection within 30 days. Strong candidate for maintenance enrollment and potential future re-roof pipeline within 12-18 months.";
       } else if (risk === "medium") {
         aiText = formData.shingle + " roof at " + ageYears.toFixed(1) + " years with " + hailCount + " hail event" + (hailCount > 1 ? "s" : "") + " on record. Performance is within expected range but approaching the window where proactive maintenance pays off significantly. Recommend scheduling an inspection within 60 days to catch early-stage wear before it becomes costly.";
       } else {
@@ -743,10 +743,8 @@ function Home({ onNav }) {
   const annual = mrrCalc * 12;
 
   const stats = [
-    { label: "Avg Health", content: <HealthRing score={avgH} size={50} />, sub: "4,231 roofs scored" },
-    { label: "High Risk", content: <span style={{ fontSize: 28, fontWeight: 700, color: T.red }}>312</span>, sub: "need attention now" },
-    { label: "Members", content: <span style={{ fontSize: 28, fontWeight: 700, color: T.blue }}>223</span>, sub: "enrolled in plans" },
-    { label: "Monthly Rev", content: <span style={{ fontSize: 28, fontWeight: 700, color: T.green }}>$10K</span>, sub: "+$1,800 this month" },
+    { label: "Need Attention", content: <span style={{ fontSize: 28, fontWeight: 700, color: T.red }}>312</span>, sub: "roofs flagged by AI" },
+    { label: "Plan Revenue", content: <span style={{ fontSize: 28, fontWeight: 700, color: T.green }}>$10K/mo</span>, sub: "up $1,800 this month" },
   ];
 
   const priorityContacts = [...CONTACTS].sort((a, b) => a.health - b.health);
@@ -786,7 +784,7 @@ function Home({ onNav }) {
 
       {/* Stats Row */}
       <FadeIn delay={160}>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 10, marginBottom: 20 }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 10, marginBottom: 20 }}>
           {stats.map((s, i) => (
             <div key={i} style={{ background: T.white, borderRadius: 14, padding: "16px 14px",
               boxShadow: "0 0 0 0.5px rgba(0,0,0,0.04), 0 1px 3px rgba(0,0,0,0.03), 0 4px 12px rgba(0,0,0,0.025)",
@@ -805,15 +803,15 @@ function Home({ onNav }) {
       <FadeIn delay={200}>
         <Card style={{ marginBottom: 16, padding: 22 }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
-            <div style={{ fontSize: 16, fontWeight: 600, color: T.text }}>Automated Follow-Ups</div>
+            <div style={{ fontSize: 16, fontWeight: 600, color: T.text }}>Follow-Ups</div>
             <Pill color={T.blue}>This Week</Pill>
           </div>
           {[
-            { name: "Tony Russo", action: "Auto-sending maintenance intro", reason: "No contact in 6+ months. Roof health declining.", time: "Sending today at 10:00 AM", status: "queued" },
-            { name: "David Chen", action: "Auto-sending 2-week check-in", reason: "Outreach sent 14 days ago, no response.", time: "Sending tomorrow at 9:00 AM", status: "queued" },
-            { name: "Charles Washington", action: "Flagged for rep call", reason: "High-value lead. 67% replacement probability. AI recommends a phone call over text.", time: "Assigned to Blake", status: "flagged" },
-            { name: "James Patterson", action: "Sent maintenance renewal reminder", reason: "Annual plan renewal due in 30 days.", time: "Sent Monday", status: "sent" },
-            { name: "Sandra Collins", action: "Auto-sending storm follow-up", reason: "3 hail events, never enrolled. Perfect timing after last week's weather.", time: "Sent Tuesday", status: "sent" },
+            { name: "Tony Russo", action: "Sending intro text", reason: "No contact in 6+ months. Roof health dropping.", time: "Today 10:00 AM", status: "queued" },
+            { name: "David Chen", action: "Sending follow-up text", reason: "First text sent 14 days ago, no response.", time: "Tomorrow 9:00 AM", status: "queued" },
+            { name: "Charles Washington", action: "Needs a phone call", reason: "Big job potential. AI says call him, don't text.", time: "Assigned to Blake", status: "flagged" },
+            { name: "James Patterson", action: "Sent renewal reminder", reason: "Plan renews in 30 days.", time: "Sent Monday", status: "sent" },
+            { name: "Sandra Collins", action: "Sent storm follow-up", reason: "3 hail events, not signed up yet. Good timing.", time: "Sent Tuesday", status: "sent" },
           ].map((item, i) => (
             <div key={i} style={{
               padding: "14px 0",
@@ -833,7 +831,7 @@ function Home({ onNav }) {
                 <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                   <span style={{ fontSize: 14, fontWeight: 600, color: T.text }}>{item.name}</span>
                   <span style={{ fontSize: 12, color: item.status === "sent" ? T.green : item.status === "flagged" ? T.orange : T.blue, fontWeight: 500 }}>
-                    {item.status === "sent" ? "Sent" : item.status === "flagged" ? "Needs rep" : "Queued"}
+                    {item.status === "sent" ? "Sent" : item.status === "flagged" ? "Needs you" : "Sending soon"}
                   </span>
                 </div>
                 <div style={{ fontSize: 13, color: T.t2, marginTop: 2 }}>{item.action}</div>
@@ -907,8 +905,8 @@ function Home({ onNav }) {
                   padding: "12px 16px", background: "linear-gradient(135deg, rgba(0,113,227,0.06), rgba(52,199,89,0.06))",
                   borderRadius: 12, marginBottom: 14,
                 }}>
-                  <div style={{ fontSize: 12, color: T.t2 }}>4 properties · <strong style={{ color: T.text }}>avg $32K</strong> replacement value</div>
-                  <div style={{ fontSize: 12, fontWeight: 600, color: T.green }}>$131K total pipeline</div>
+                  <div style={{ fontSize: 12, color: T.t2 }}>4 properties · <strong style={{ color: T.text }}>avg $32K</strong> per job</div>
+                  <div style={{ fontSize: 12, fontWeight: 600, color: T.green }}>$131K in potential jobs</div>
                 </div>
 
                 {[...CONTACTS].filter(c => c.tier === "platinum").sort((a, b) => b.sqft - a.sqft).map((c, i) => {
@@ -953,7 +951,7 @@ function Home({ onNav }) {
 
             <div style={{ marginBottom: 28 }}>
               <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 8 }}>
-                <span style={{ fontSize: 14, color: T.t2 }}>Enrollment rate</span>
+                <span style={{ fontSize: 14, color: T.t2 }}>Sign-up rate</span>
                 <span style={{ fontSize: 18, fontWeight: 700, color: T.blue }}>{pct}%</span>
               </div>
               <input
@@ -970,14 +968,14 @@ function Home({ onNav }) {
 
             <div style={{ display: "flex", justifyContent: "space-between", padding: "10px 0" }}>
               <span style={{ fontSize: 14, color: T.t2 }}>Members</span>
-              <span style={{ fontSize: 15, fontWeight: 600, color: T.text }}>{members.toLocaleString()} at ${avgPlan}/mo</span>
+              <span style={{ fontSize: 15, fontWeight: 600, color: T.text }}>{members.toLocaleString()} customers at ${avgPlan}/mo</span>
             </div>
             <div style={{ display: "flex", justifyContent: "space-between", padding: "10px 0", borderTop: `1px solid ${T.div}` }}>
-              <span style={{ fontSize: 14, color: T.t2 }}>Monthly recurring</span>
+              <span style={{ fontSize: 14, color: T.t2 }}>Monthly revenue</span>
               <span style={{ fontSize: 18, fontWeight: 700, color: T.blue }}>${mrrCalc.toLocaleString()}/mo</span>
             </div>
             <div style={{ display: "flex", justifyContent: "space-between", padding: "10px 0", borderTop: `1px solid ${T.div}` }}>
-              <span style={{ fontSize: 14, color: T.t2 }}>Annual recurring (ARR)</span>
+              <span style={{ fontSize: 14, color: T.t2 }}>Yearly revenue</span>
               <span style={{ fontSize: 18, fontWeight: 700, color: T.blue }}>${(annual / 1000).toFixed(0)}K/yr</span>
             </div>
 
@@ -985,11 +983,11 @@ function Home({ onNav }) {
               <div style={{ fontSize: 26, fontWeight: 700, color: T.green, letterSpacing: -0.5 }}>
                 ${mrrCalc.toLocaleString()}/mo
               </div>
-              <div style={{ fontSize: 13, color: T.t2, marginTop: 4 }}>from customers currently generating $0</div>
+              <div style={{ fontSize: 13, color: T.t2, marginTop: 4 }}>new revenue from existing customers</div>
             </div>
             <div style={{ marginTop: 10, padding: "14px 20px", background: T.blueL, borderRadius: T.rs, textAlign: "center" }}>
               <div style={{ fontSize: 22, fontWeight: 700, color: T.blue, letterSpacing: -0.5 }}>
-                ${(annual / 1000).toFixed(0)}K/yr ARR
+                ${(annual / 1000).toFixed(0)}K/yr
               </div>
             </div>
           </Card>
@@ -1050,13 +1048,8 @@ function Detail({ contact, onBack }) {
 
       {/* Detail Tiles */}
       <FadeIn delay={80}>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 12, marginBottom: 20 }}>
-          {detailCards.map((d) => (
-            <Card key={d.label} style={{ padding: "10px 12px" }}>
-              <div style={{ fontSize: 10, color: T.t3, textTransform: "uppercase", letterSpacing: 0.6, marginBottom: 5 }}>{d.label}</div>
-              <div style={{ fontSize: 17, fontWeight: 600, color: T.text }}>{d.value}</div>
-            </Card>
-          ))}
+        <div style={{ fontSize: 13, color: T.t3, marginBottom: 16, padding: "0 4px" }}>
+          Installed {new Date(c.installed).toLocaleDateString("en-US", { month: "short", year: "numeric" })} ({age} yrs) · {c.sqft.toLocaleString()} sq ft · {c.hail} hail event{c.hail !== 1 ? "s" : ""} · {c.shingle}
         </div>
       </FadeIn>
 
@@ -1286,7 +1279,7 @@ function Weather({ onBack }) {
             cursor: deploying ? "wait" : "pointer",
             boxShadow: deploying ? "none" : "0 2px 14px rgba(0,113,227,0.3)",
           }}>
-            {deploying ? "Personalizing 1,247 messages..." : "Deploy Storm Response · 1,247 Contacts"}
+            {deploying ? "Sending 1,247 texts..." : "Send Storm Alerts · 1,247 Customers"}
           </button>
         ) : (
           <div style={{ padding: "20px 28px", background: T.greenL, borderRadius: T.r, textAlign: "center" }}>
@@ -1309,7 +1302,7 @@ function InspectionPage({ onBack }) {
   const [expandedItem, setExpandedItem] = useState(null);
 
   const inspectionInputs = [
-    { label: "1. Shingles", question: "Shingle surface condition?", value: "UV-driven granule loss on south-facing slope, center section. Below replacement threshold but progressing." },
+    { label: "1. Shingles", question: "Shingle surface condition?", value: "UV-driven granule loss on south-facing slope, center section. Below critical threshold but progressing." },
     { label: "2. Flashing", question: "Condition of flashing at chimney, walls, and vents?", value: "Separation at chimney north side. Gap between step flashing and masonry. Water infiltration risk within 3 months." },
     { label: "3. Pipe Boots", question: "Pipe boot and vent seal condition?", value: "Rubber boot seal on west plumbing vent showing UV cracks. Will leak within 6 months if not replaced." },
     { label: "4. Ridge/Hip Caps", question: "Ridge and hip cap condition?", value: "Minor seal strip fatigue starting. Monitor." },
@@ -1458,7 +1451,7 @@ function InspectionPage({ onBack }) {
                 <div style={{ marginTop: 14, padding: "14px 18px", background: T.blueL, borderRadius: T.rs }}>
                   <div style={{ fontSize: 13, fontWeight: 600, color: T.blue, marginBottom: 4 }}>AI Summary</div>
                   <div style={{ fontSize: 14, color: T.t2, lineHeight: 1.6 }}>
-                    Total repair: $275-$550. Fix now and the roof lasts 3-5 more years. Skip it and you are looking at $15K-$20K replacement within 18 months.
+                    Total repair: $275-$550. Fix now and the roof lasts 3-5 more years. Skip it and you are looking at $15K-$20K job within 18 months.
                   </div>
                 </div>
 
@@ -1573,7 +1566,7 @@ function InspectionPage({ onBack }) {
                     Bottom Line
                   </div>
                   <div style={{ fontSize: 14, color: T.t2, lineHeight: 1.65 }}>
-                    Total estimated repair: $275-$550. Fix these now and your roof stays healthy for another 3-5 years. Leave them, and you are looking at a full replacement ($15K-$20K) within 18 months.
+                    Total estimated repair: $275-$550. Fix these now and your roof stays healthy for another 3-5 years. Leave them, and you are looking at a full re-roof ($15K-$20K) within 18 months.
                   </div>
                 </div>
               </div>
@@ -1676,7 +1669,7 @@ function AbbyChat() {
   function handleOpen() {
     setOpen(true);
     if (messages.length === 0) {
-      setMessages([{ role: "abby", text: "Hey! I'm Abby, your Lifeline AI assistant. I monitor your roofs, manage follow-ups, and keep your pipeline moving. What can I help with?" }]);
+      setMessages([{ role: "abby", text: "Hey! I'm Abby, your Lifeline AI assistant. I monitor your roofs, manage follow-ups, and keep things moving. What can I help with?" }]);
     }
   }
 
@@ -1733,8 +1726,8 @@ function AbbyChat() {
       deliverMessages([
         { text: "Here's your current numbers:", delay: 800 },
         { text: "$10K monthly recurring from 223 enrolled members. Up $1,800 from last month.", delay: 500 },
-        { text: "Platinum pipeline: 4 properties worth $131K in replacement jobs. Catherine Whitfield ($34K) and Richard Thornton ($38K) are the top two.", delay: 500 },
-        { text: "At 15% enrollment across your 4,231 contacts, you're looking at $28K/month. That's $342K a year from customers currently generating zero.", delay: 500 },
+        { text: "Your top 4 properties are worth $131K in potential jobs. Catherine Whitfield ($34K) and Richard Thornton ($38K) are the biggest. Both need personal outreach this week.", delay: 500 },
+        { text: "If 15% of your 4,231 contacts sign up, you're looking at $28K/month. That's $342K a year from customers currently bringing in zero.", delay: 500 },
       ], function () { setFlowStep(99); });
     } else if (flowName === "inspect") {
       setMessages(function (prev) { return prev.concat([
@@ -1799,7 +1792,7 @@ function AbbyChat() {
   var menuItems = [
     { id: "lookup", label: "Look Up a Roof", sub: "Check a customer's roof health and risk", icon: <IconSearch size={16} color={T.blue} /> },
     { id: "draft", label: "Draft a Message", sub: "Write and send a personalized outreach", icon: <IconSend size={16} color={T.blue} /> },
-    { id: "revenue", label: "Revenue Report", sub: "See your MRR, ARR, and pipeline", icon: <IconHome size={16} color={T.blue} /> },
+    { id: "revenue", label: "Revenue Report", sub: "See your monthly and yearly revenue", icon: <IconHome size={16} color={T.blue} /> },
     { id: "inspect", label: "Schedule Inspection", sub: "Book a maintenance visit for a customer", icon: <IconCalendar size={16} color={T.blue} /> },
   ];
 
