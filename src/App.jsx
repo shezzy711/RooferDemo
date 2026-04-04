@@ -51,6 +51,17 @@ function IconCalendar({ size = 16, color = "currentColor" }) {
   );
 }
 
+function IconMic({ size = 16, color = "currentColor" }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">
+      <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" />
+      <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+      <line x1="12" y1="19" x2="12" y2="23" />
+      <line x1="8" y1="23" x2="16" y2="23" />
+    </svg>
+  );
+}
+
 function IconCheck({ size = 16, color = "currentColor" }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" style={{ verticalAlign: "middle", marginRight: 4 }}>
@@ -1291,7 +1302,31 @@ function Weather({ onBack }) {
         </div>
       </FadeIn>
 
-      <FadeIn delay={240}>
+      {/* Attach Content */}
+      <FadeIn delay={220}>
+        <div style={{
+          background: T.white, borderRadius: 16, padding: "16px 22px", marginBottom: 16,
+          display: "flex", alignItems: "center", gap: 14,
+          boxShadow: "0 0 0 0.5px rgba(0,0,0,0.04), 0 1px 3px rgba(0,0,0,0.03)",
+        }}>
+          <span style={{ fontSize: 13, fontWeight: 600, color: T.t2, flexShrink: 0 }}>Attach content</span>
+          <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+            {["Storm prep video", "Maintenance tips", "Insurance FAQ"].map((label, i) => (
+              <span key={i} style={{
+                padding: "5px 12px", borderRadius: 20, fontSize: 12, fontWeight: 500, cursor: "pointer",
+                background: i === 0 ? T.blueS : T.bg,
+                color: i === 0 ? T.blue : T.t3,
+                border: i === 0 ? "1px solid " + T.blue + "30" : "1px solid " + T.div,
+              }}>
+                {i === 0 && <span style={{ marginRight: 4 }}>+</span>}{label}
+              </span>
+            ))}
+          </div>
+          <span style={{ fontSize: 11, color: T.t3, marginLeft: "auto", flexShrink: 0 }}>1 selected</span>
+        </div>
+      </FadeIn>
+
+      <FadeIn delay={280}>
         {!deployed ? (
           <button onClick={handleDeploy} disabled={deploying} style={{
             width: "100%", padding: "16px 0",
@@ -1322,11 +1357,16 @@ function InspectionPage({ onBack }) {
   const [reportSent, setReportSent] = useState(false);
 
   const inspectionInputs = [
-    { label: "Flashing", question: "Condition of flashing at chimney, walls, and vents?", value: "Separation at chimney north side. Gap between step flashing and masonry. Water infiltration risk within 3 months." },
-    { label: "Shingles", question: "Shingle surface condition?", value: "UV-driven granule loss on south-facing slope, center section. Below replacement threshold but progressing." },
-    { label: "Pipe Boots", question: "Pipe boot and vent seal condition?", value: "Rubber boot seal on west plumbing vent showing UV cracks. Will leak within 6 months if not replaced." },
-    { label: "Gutters/Drip Edge", question: "Gutter and drip edge condition?", value: "Clean. No issues." },
-    { label: "Ridge/Hip Caps", question: "Ridge and hip cap condition?", value: "Minor seal strip fatigue starting. Monitor." },
+    { label: "1. Shingles", question: "Shingle surface condition?", value: "UV-driven granule loss on south-facing slope, center section. Below replacement threshold but progressing." },
+    { label: "2. Flashing", question: "Condition of flashing at chimney, walls, and vents?", value: "Separation at chimney north side. Gap between step flashing and masonry. Water infiltration risk within 3 months." },
+    { label: "3. Pipe Boots", question: "Pipe boot and vent seal condition?", value: "Rubber boot seal on west plumbing vent showing UV cracks. Will leak within 6 months if not replaced." },
+    { label: "4. Ridge/Hip Caps", question: "Ridge and hip cap condition?", value: "Minor seal strip fatigue starting. Monitor." },
+    { label: "5. Valleys", question: "Valley condition and debris accumulation?", value: "Leaf buildup in north valley. Cleared during visit. No underlying damage." },
+    { label: "6. Gutters/Drip Edge", question: "Gutter and drip edge condition?", value: "Clean. No issues. Drip edge secure." },
+    { label: "7. Ventilation", question: "Ridge vents and soffit vents functioning?", value: "Ridge vent intact. Soffit vents clear. Attic airflow adequate." },
+    { label: "8. Skylights/Penetrations", question: "Skylight seals and roof penetrations?", value: "No skylights. Satellite dish mount sealed. No issues." },
+    { label: "9. Chimney/Masonry", question: "Chimney cap, crown, and masonry condition?", value: "Cap present. Minor mortar cracking on north side. Monitor next visit." },
+    { label: "10. Drainage/Debris", question: "Overall drainage and debris condition?", value: "Adequate slope. No ponding observed. Minor debris cleared from valleys." },
   ];
 
   function handleGenerate() {
@@ -1364,7 +1404,17 @@ function InspectionPage({ onBack }) {
               </div>
               <Pill color={T.t3} bg="rgba(0,0,0,0.04)">Sandra Collins</Pill>
             </div>
-            <div style={{ fontSize: 12, color: T.t3, marginBottom: 18 }}>3301 Magnolia Bend, Conroe · GAF Timberline HDZ</div>
+            <div style={{ fontSize: 12, color: T.t3, marginBottom: 12 }}>3301 Magnolia Bend, Conroe · GAF Timberline HDZ</div>
+
+            {/* Voice indicator */}
+            <div style={{
+              display: "flex", alignItems: "center", gap: 8,
+              padding: "8px 14px", background: T.greenS, borderRadius: 10, marginBottom: 18,
+            }}>
+              <IconMic size={14} color={T.green} />
+              <span style={{ fontSize: 12, fontWeight: 600, color: T.green }}>Voice enabled</span>
+              <span style={{ fontSize: 11, color: T.t3 }}>Tap to dictate instead of type</span>
+            </div>
 
             {inspectionInputs.map((item, i) => (
               <div key={i} style={{ marginBottom: i < inspectionInputs.length - 1 ? 16 : 0 }}>
@@ -1381,7 +1431,7 @@ function InspectionPage({ onBack }) {
 
             <div style={{ marginTop: 18, padding: "12px 16px", background: T.blueS, borderRadius: 10, display: "flex", alignItems: "center", gap: 10 }}>
               <IconCamera size={16} color={T.blue} />
-              <span style={{ fontSize: 13, color: T.blue, fontWeight: 500 }}>3 photos attached</span>
+              <span style={{ fontSize: 13, color: T.blue, fontWeight: 500 }}>6 photos attached</span>
             </div>
 
             <div style={{ marginTop: 12, fontSize: 12, color: T.t3, textAlign: "center" }}>
