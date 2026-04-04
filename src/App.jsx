@@ -90,6 +90,12 @@ const CONTACTS = [
     id: 1, name: "Tony Russo", addr: "2200 Post Oak Blvd, Conroe", phone: "(936) 555-0912",
     installed: "2019-12-01", shingle: "CertainTeed Landmark", sqft: 1800, hail: 2, health: 41,
     risk: "high", plan: null, mrr: 0, status: "not_contacted", tier: null,
+    timeline: [
+      { date: "Mar 31", type: "auto", text: "AI sent maintenance intro via SMS" },
+      { date: "Mar 15", type: "alert", text: "Flagged as high risk. Health score dropped to 41." },
+      { date: "Feb 02", type: "alert", text: "Hail event recorded in Conroe area" },
+      { date: "Dec 01", type: "inspection", text: "Original install date. No contact since." },
+    ],
     ai: "Oldest roof in portfolio at 6+ years with low slope and 2 hail events. Nearing the end of the optimal maintenance window. Warranty-eligible repairs may expire within the year. Without intervention, this roof is heading for unplanned replacement. Strong candidate for immediate outreach and maintenance-to-replacement conversion.",
     sms: "Tony, this is Lifeline Roofing. Your roof at Post Oak is coming up on 6 years and I want to make sure you're still covered. With the hail your area has seen, there might be warranty-eligible repairs we can catch before they expire. Free inspection, 30 minutes. Worth a look. Can I schedule you this week?"
   },
@@ -97,6 +103,12 @@ const CONTACTS = [
     id: 2, name: "Charles Washington", addr: "1122 Pecan Grove Rd, Conroe", phone: "(936) 555-0718",
     installed: "2020-04-20", shingle: "GAF Timberline Ultra HD", sqft: 2800, hail: 3, health: 48,
     risk: "high", plan: null, mrr: 0, status: "outreach_sent", tier: null,
+    timeline: [
+      { date: "Mar 28", type: "auto", text: "Follow-up text sent. No response." },
+      { date: "Mar 14", type: "auto", text: "AI sent initial outreach via SMS" },
+      { date: "Mar 10", type: "alert", text: "Flagged as highest revenue opportunity in pipeline" },
+      { date: "Jan 22", type: "alert", text: "Third hail event recorded. Health score updated." },
+    ],
     ai: "5-year-old complex roof with 3 hail events and dominant south-facing exposure. Multiple compounding risk factors. Predictive model shows 67% probability of requiring full replacement within 18 months. PRIORITY: Highest revenue opportunity in current pipeline. Maintenance enrollment is the bridge to a projected $22K replacement project.",
     sms: "Charles, your roof at Pecan Grove is one of our earlier installs and it's been through 3 hail events and five Texas summers on that south-facing slope. I want to be straight with you. There's a good chance we find something that needs attention. A quick inspection now could save you a big surprise later. No cost for the visit. Can I come take a look?"
   },
@@ -104,6 +116,11 @@ const CONTACTS = [
     id: 3, name: "Sandra Collins", addr: "3301 Magnolia Bend, Conroe", phone: "(936) 555-0334",
     installed: "2020-11-05", shingle: "GAF Timberline HDZ", sqft: 2100, hail: 3, health: 54,
     risk: "high", plan: null, mrr: 0, status: "not_contacted", tier: null,
+    timeline: [
+      { date: "Apr 01", type: "inspection", text: "Inspection due. No appointment scheduled." },
+      { date: "Mar 20", type: "alert", text: "Flagged as urgent. 3 hail events on low-slope roof." },
+      { date: "Feb 18", type: "alert", text: "Hail event recorded in Conroe area" },
+    ],
     ai: "Three hail events on a low-slope roof approaching 5 years. High probability of hidden damage at valley transitions and pipe boot seals. Granule displacement likely exceeding manufacturer thresholds. URGENT: Inspection recommended within 30 days. Strong maintenance-to-replacement pipeline candidate with 67% probability of full replacement within 18 months.",
     sms: "Sandra, this is Blu from Lifeline Roofing. Your roof on Magnolia Bend has been through some rough weather. 3 hail events in under 5 years on a low slope. I'm not calling to sell you a new roof. I want to see if we can extend what you've got by 3-5 years with some preventative care. Can I send someone out for a free look?"
   },
@@ -111,6 +128,11 @@ const CONTACTS = [
     id: 4, name: "David Chen", addr: "4418 Willowbrook Ct, Huntsville", phone: "(936) 555-0523",
     installed: "2021-02-14", shingle: "Owens Corning TruDefinition", sqft: 2600, hail: 2, health: 63,
     risk: "medium", plan: null, mrr: 0, status: "outreach_sent", tier: null,
+    timeline: [
+      { date: "Mar 25", type: "auto", text: "Second outreach sent. Awaiting response." },
+      { date: "Mar 11", type: "auto", text: "AI sent initial outreach via SMS" },
+      { date: "Mar 01", type: "alert", text: "West-facing exposure flagged for thermal cycling risk" },
+    ],
     ai: "West-facing primary exposure drives elevated thermal cycling. Hot afternoon sun followed by rapid evening cooling causes expansion and contraction stress. Combined with 2 hail events, pipe boot seals and step flashing at sidewalls are likely degrading. A $200-$400 preventative repair now prevents a $3K-$5K emergency fix later.",
     sms: "David, your Willowbrook roof takes a lot of afternoon sun on that west side, and with a couple of hail events since we installed, I'd like to check your pipe boots and flashing. Those are the first things to go and they're cheap to fix now. We have openings Thursday and Friday. Want me to grab you a slot?"
   },
@@ -118,6 +140,12 @@ const CONTACTS = [
     id: 5, name: "James Patterson", addr: "2841 Oak Ridge Dr, Conroe", phone: "(936) 555-0142",
     installed: "2022-03-15", shingle: "CertainTeed Landmark", sqft: 2400, hail: 2, health: 72,
     risk: "medium", plan: "Annual", mrr: 45, status: "enrolled", tier: null,
+    timeline: [
+      { date: "Mar 30", type: "auto", text: "Renewal reminder sent. Plan expires in 30 days." },
+      { date: "Mar 15", type: "complete", text: "Annual inspection completed. Score updated." },
+      { date: "Jan 08", type: "auto", text: "Maintenance check-in sent via SMS" },
+      { date: "Mar 15", type: "complete", text: "Enrolled in Annual Plan at $45/mo" },
+    ],
     ai: "South-facing primary slope with 2 recorded hail events since installation. UV exposure is accelerating granule loss on the south face. Ridge cap seal strips show early fatigue. Maintenance visit within 60 days will catch this before it becomes a $4K-$6K partial re-roof.",
     sms: "Hey James, it's been about 2 years since we put on your roof at Oak Ridge Dr. With the hail your area caught last fall, I'd like to get eyes on your south-facing slope before summer heat sets in. Free inspection, 30 minutes, no pressure. Want me to send a tech out this week?"
   },
@@ -125,6 +153,11 @@ const CONTACTS = [
     id: 6, name: "Robert Nguyen", addr: "9102 Pine Hollow Ct, Willis", phone: "(936) 555-0287",
     installed: "2021-08-22", shingle: "Owens Corning Duration", sqft: 1850, hail: 1, health: 81,
     risk: "low", plan: "Semi-Annual", mrr: 25, status: "enrolled", tier: null,
+    timeline: [
+      { date: "Mar 22", type: "complete", text: "Semi-annual inspection completed. All clear." },
+      { date: "Feb 10", type: "auto", text: "Inspection reminder sent. Appointment booked." },
+      { date: "Sep 14", type: "complete", text: "Enrolled in Semi-Annual Plan at $25/mo" },
+    ],
     ai: "Steep pitch provides excellent drainage and reduces standing water risk. One minor hail event with no visible impact expected on Duration-class shingles. Performing within normal range for age. Annual inspection is sufficient.",
     sms: "Robert, your Pine Hollow roof is looking solid at 3 years. One quick check-up to make sure the flashing and vents are sealed tight before storm season."
   },
@@ -132,6 +165,11 @@ const CONTACTS = [
     id: 7, name: "Maria Davis", addr: "1547 Lakewood Ln, Spring", phone: "(281) 555-0198",
     installed: "2023-01-10", shingle: "CertainTeed Presidential", sqft: 3200, hail: 0, health: 94,
     risk: "low", plan: "Annual", mrr: 55, status: "enrolled", tier: null,
+    timeline: [
+      { date: "Mar 18", type: "auto", text: "18-month check-in sent via SMS" },
+      { date: "Feb 01", type: "complete", text: "Annual inspection completed. Excellent condition." },
+      { date: "Jan 10", type: "complete", text: "Enrolled in Annual Plan at $55/mo" },
+    ],
     ai: "Premium Presidential shingle on complex multi-directional geometry. Zero weather events. Performing excellently. Focus monitoring on valley-to-hip transitions and chimney counter-flashing at the 18-month mark.",
     sms: "Maria, your Presidential roof at Lakewood is performing beautifully. Coming up on 18 months, the perfect time for a quick valley and flashing check."
   },
@@ -139,6 +177,11 @@ const CONTACTS = [
     id: 8, name: "Richard Thornton", addr: "14 Carlton Woods Dr, The Woodlands", phone: "(281) 555-0461",
     installed: "2020-06-10", shingle: "CertainTeed Presidential TL", sqft: 5200, hail: 2, health: 52,
     risk: "high", plan: null, mrr: 0, status: "not_contacted", tier: "platinum",
+    timeline: [
+      { date: "Apr 01", type: "alert", text: "Added to Platinum call list. Personal outreach recommended." },
+      { date: "Mar 20", type: "alert", text: "Health score dropped to 52 after hail event analysis" },
+      { date: "Feb 15", type: "alert", text: "Second hail event recorded in The Woodlands" },
+    ],
     ai: "5,200 sq ft premium roof in Carlton Woods. Two hail events on a complex multi-hip geometry with 14 penetrations. Presidential TL shingles are high-end but the roof complexity creates multiple failure points at valleys and transitions. Estimated replacement value $38K. This is the highest-dollar opportunity in the database. Personal outreach strongly recommended.",
     sms: "Mr. Thornton, this is Blu with Lifeline Roofing. We installed your roof at Carlton Woods about 5 years ago and I wanted to personally check in. With the hail your area has taken, I would like to come out and make sure everything is holding up. No charge, just want to take care of you. When works best?"
   },
@@ -146,6 +189,11 @@ const CONTACTS = [
     id: 9, name: "Catherine Whitfield", addr: "3827 River Oaks Blvd, Houston", phone: "(713) 555-0339",
     installed: "2021-03-22", shingle: "GAF Grand Sequoia", sqft: 4800, hail: 3, health: 44,
     risk: "high", plan: null, mrr: 0, status: "not_contacted", tier: "platinum",
+    timeline: [
+      { date: "Apr 02", type: "alert", text: "Highest urgency platinum contact. Schedule visit within 2 weeks." },
+      { date: "Mar 18", type: "alert", text: "Third hail event recorded in River Oaks area" },
+      { date: "Mar 01", type: "alert", text: "Health score dropped to 44. Multiple risk factors." },
+    ],
     ai: "4,800 sq ft estate roof in River Oaks with premium Grand Sequoia shingles. Three hail events since installation. Complex roofline with dormers and copper flashing transitions. Estimated replacement value $34K. Multiple risk factors compounding. Highest urgency platinum contact. Schedule personal visit within 2 weeks.",
     sms: "Mrs. Whitfield, this is Blu from Lifeline Roofing. Your roof at River Oaks Blvd has been through some serious weather since we put it on. I would like to come by personally and take a look. With a home like yours, I want to make sure everything is right. Can I come out this week?"
   },
@@ -153,6 +201,11 @@ const CONTACTS = [
     id: 10, name: "William Grant III", addr: "221 Fazio Ct, Carlton Woods", phone: "(281) 555-0517",
     installed: "2021-09-14", shingle: "CertainTeed Presidential TL", sqft: 4200, hail: 2, health: 61,
     risk: "medium", plan: null, mrr: 0, status: "outreach_sent", tier: "platinum",
+    timeline: [
+      { date: "Mar 30", type: "auto", text: "Follow-up text sent. No response." },
+      { date: "Mar 16", type: "auto", text: "AI sent initial outreach via SMS" },
+      { date: "Mar 10", type: "alert", text: "Added to Platinum call list. AI recommends phone call." },
+    ],
     ai: "4,200 sq ft roof in Carlton Woods with 2 hail events. Premium Presidential TL performing within range but approaching the maintenance window. Estimated replacement value $28K. Previous outreach sent with no response. AI recommends personal phone call as follow-up rather than another text.",
     sms: "Mr. Grant, this is Blu with Lifeline Roofing. I reached out a few weeks ago about your Carlton Woods roof. I know things get busy. Just wanted to follow up personally. Your roof is at the age where a quick check can save you real money down the road. Can I stop by?"
   },
@@ -160,6 +213,11 @@ const CONTACTS = [
     id: 11, name: "Margaret Chen-Alvarez", addr: "8 Greyton Ln, The Woodlands", phone: "(281) 555-0624",
     installed: "2020-12-01", shingle: "GAF Grand Sequoia", sqft: 3800, hail: 2, health: 57,
     risk: "high", plan: null, mrr: 0, status: "not_contacted", tier: "platinum",
+    timeline: [
+      { date: "Apr 01", type: "alert", text: "Added to Platinum call list. Personal outreach recommended." },
+      { date: "Mar 22", type: "alert", text: "South and west slopes showing accelerated wear" },
+      { date: "Feb 28", type: "alert", text: "Second hail event recorded in The Woodlands" },
+    ],
     ai: "3,800 sq ft premium roof in The Woodlands with Grand Sequoia shingles. Two hail events and 5+ years of age. South and west facing slopes showing accelerated wear. Estimated replacement value $26K. Strong candidate for maintenance enrollment leading to replacement pipeline.",
     sms: "Mrs. Chen-Alvarez, this is Blu with Lifeline Roofing. Your roof on Greyton Lane has been through a lot of weather over the past five years. I would like to come out and give you an honest assessment. No cost, no pressure. Just want to make sure your home is protected. When works for you?"
   },
@@ -339,7 +397,7 @@ function Opener({ onStart }) {
             Right Now
           </div>
           <div style={{ fontSize: 48, fontWeight: 700, color: T.text, letterSpacing: -1.5, lineHeight: 1.2 }}>
-            4,000+ past customers in your CRM.
+            4,000+ past customers in AccuLynx.
           </div>
           <div style={{ fontSize: 48, fontWeight: 700, color: T.t3, letterSpacing: -1.5, lineHeight: 1.2, marginTop: 8 }}>
             Nobody is following up.
@@ -679,7 +737,7 @@ function Home({ onNav }) {
       <FadeIn>
         <div style={{ marginBottom: 32 }}>
           <h1 style={{ fontSize: 34, fontWeight: 700, color: T.text, margin: 0, letterSpacing: -0.8 }}>Command Center</h1>
-          <p style={{ fontSize: 16, color: T.t2, margin: "6px 0 0" }}>AI analyzed 4,000+ roofs from your CRM. Here is what needs your attention.</p>
+          <p style={{ fontSize: 16, color: T.t2, margin: "6px 0 0" }}>AI analyzed 4,000+ roofs from AccuLynx. Here is what needs your attention.</p>
         </div>
       </FadeIn>
 
@@ -748,7 +806,7 @@ function Home({ onNav }) {
       {/* Automated Follow-Up Queue */}
       <FadeIn delay={200}>
         <Card style={{ marginBottom: 20 }}>
-          <Narrator text="The AI monitors every contact in your CRM. When someone needs a follow-up, it either sends the message automatically or flags it for your team. No rep has to remember anything." />
+          <Narrator text="The AI monitors every contact in AccuLynx. When someone needs a follow-up, it either sends the message automatically or flags it for your team. No rep has to remember anything." />
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
             <div style={{ fontSize: 17, fontWeight: 600, color: T.text }}>Automated Follow-Ups</div>
             <Pill color={T.blue}>This Week</Pill>
@@ -1010,6 +1068,41 @@ function Detail({ contact, onBack }) {
         </div>
       </FadeIn>
 
+      {/* Activity Timeline */}
+      {c.timeline && c.timeline.length > 0 && (
+        <FadeIn delay={120}>
+          <Card style={{ marginBottom: 20, padding: "22px 28px" }}>
+            <div style={{ fontSize: 15, fontWeight: 600, color: T.text, marginBottom: 14 }}>Activity</div>
+            <div style={{ position: "relative", paddingLeft: 20 }}>
+              {/* Vertical line */}
+              <div style={{
+                position: "absolute", left: 5, top: 6, bottom: 6, width: 1,
+                background: T.div,
+              }} />
+              {c.timeline.map((entry, i) => {
+                const dotColor = entry.type === "alert" ? T.orange : entry.type === "complete" || entry.type === "inspection" ? T.green : T.blue;
+                return (
+                  <div key={i} style={{
+                    display: "flex", alignItems: "flex-start", gap: 14,
+                    paddingBottom: i < c.timeline.length - 1 ? 14 : 0,
+                    position: "relative",
+                  }}>
+                    {/* Dot */}
+                    <div style={{
+                      width: 11, height: 11, borderRadius: 6, background: dotColor,
+                      flexShrink: 0, marginTop: 2, position: "absolute", left: -20,
+                      border: "2px solid " + T.white,
+                    }} />
+                    <div style={{ fontSize: 12, color: T.t3, fontWeight: 500, width: 50, flexShrink: 0 }}>{entry.date}</div>
+                    <div style={{ fontSize: 13, color: T.t2, lineHeight: 1.4 }}>{entry.text}</div>
+                  </div>
+                );
+              })}
+            </div>
+          </Card>
+        </FadeIn>
+      )}
+
       {/* AI Analysis + Outreach */}
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
         <FadeIn delay={160}>
@@ -1258,7 +1351,7 @@ function InspectionPage({ onBack }) {
       </FadeIn>
 
       <FadeIn delay={80}>
-        <Narrator text="Your tech completes the inspection checklist on site or it syncs from your existing software (GAF QuickMeasure, CompanyCam, EagleView). The system generates a branded report and sends it to the homeowner before the tech leaves the property." />
+        <Narrator text="Your tech completes the inspection checklist on site or it syncs from AccuLynx, GAF QuickMeasure, CompanyCam, or EagleView. The system generates a branded report and sends it to the homeowner before the tech leaves the property." />
       </FadeIn>
 
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
