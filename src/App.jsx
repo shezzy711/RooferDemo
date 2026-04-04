@@ -256,47 +256,7 @@ const PHOTO_FINDINGS = [
   { label: "Pipe boot cracking", loc: "Plumbing vent, west", sev: "high", cost: "$75-$150", note: "Rubber boot seal showing UV cracks. Will leak within 6 months if not replaced." },
 ];
 
-const ABBY_SCRIPTS = {
-  sandra: [
-    { text: "Sandra Collins at 3301 Magnolia Bend. Her roof scored a 54 out of 100. That's below where we want it.", delay: 800 },
-    { text: "She's had 3 hail events on a low-slope GAF Timberline HDZ, and she's approaching 5 years. I'm seeing elevated risk at the valley transitions and pipe boot seals.", delay: 600 },
-    { text: "She hasn't been contacted yet. I'd recommend scheduling an inspection within 30 days. Want me to draft an outreach message and queue it for tomorrow morning?", delay: 500 },
-  ],
-  priorities: [
-    { text: "Here's your morning rundown. You have 3 things that need attention today:", delay: 800 },
-    { text: "1. Catherine Whitfield (River Oaks). Highest urgency. Health score 44, three hail events, $34K replacement value. She needs a personal call, not a text. I'd call her before noon.", delay: 500 },
-    { text: "2. Tony Russo. I sent his maintenance intro yesterday but haven't gotten a response. I'll retry with a different angle mentioning his warranty window is closing.", delay: 500 },
-    { text: "3. James Patterson's annual plan renewal is due in 30 days. He's a happy customer. I'll send the renewal reminder this afternoon. No action needed from you unless you want to customize it.", delay: 500 },
-  ],
-  tony: [
-    { text: "Tony Russo at 2200 Post Oak Blvd. He's your oldest roof in the portfolio. 6+ years, health score 41, and 2 hail events. This one is heading for unplanned replacement if we don't step in.", delay: 800 },
-    { text: "I sent him a maintenance intro via SMS on March 31st but haven't gotten a response. I'll queue a follow-up for Thursday at 9 AM with a slightly different angle mentioning his warranty window is closing.", delay: 600 },
-    { text: "Done. Follow-up queued for Tony Russo, Thursday 9:00 AM. I'll let you know if he responds.", delay: 500 },
-  ],
-  storm: [
-    { text: "There's a severe storm watch for Montgomery and Walker counties tonight. Hail up to 1.5 inches expected.", delay: 800 },
-    { text: "I've already prepped the response. 312 high-risk customers will get an immediate heads-up, and 935 standard contacts will get a morning follow-up timed for when they're checking their property. All 1,247 messages are personalized.", delay: 600 },
-    { text: "Want me to pull up the full storm response screen so you can review and deploy?", delay: 500 },
-  ],
-  revenue: [
-    { text: "Right now you're at $10K monthly recurring from 223 enrolled members. That's up $1,800 from last month.", delay: 800 },
-    { text: "Your platinum pipeline has 4 properties worth $131K total in potential replacement jobs. Catherine Whitfield and Richard Thornton are the two biggest at $34K and $38K respectively. Both need personal outreach this week.", delay: 600 },
-    { text: "If we hit a 15% enrollment rate across your 4,231 contacts, you're looking at $28K/month in recurring revenue. That's $342K a year from customers currently generating zero.", delay: 500 },
-  ],
-  fallback: [
-    { text: "I'm not sure about that one, but I'm learning fast. Try asking me about a specific customer like Sandra or Tony, or ask \"What should I do today?\" and I'll pull up your priorities.", delay: 800 },
-  ],
-};
-
-function matchAbbyResponse(input) {
-  var lower = input.toLowerCase();
-  if (lower.includes("sandra") || lower.includes("collins")) return ABBY_SCRIPTS.sandra;
-  if (lower.includes("what should") || lower.includes("today") || lower.includes("next") || lower.includes("priority") || lower.includes("what do")) return ABBY_SCRIPTS.priorities;
-  if (lower.includes("tony") || lower.includes("russo") || lower.includes("follow")) return ABBY_SCRIPTS.tony;
-  if (lower.includes("storm") || lower.includes("weather") || lower.includes("hail") || lower.includes("forecast")) return ABBY_SCRIPTS.storm;
-  if (lower.includes("revenue") || lower.includes("mrr") || lower.includes("money") || lower.includes("pipeline") || lower.includes("earn")) return ABBY_SCRIPTS.revenue;
-  return ABBY_SCRIPTS.fallback;
-}
+/* Abby flow data removed - flows are now inline in AbbyChat component */
 
 /* ─── Utility Components ─── */
 
@@ -1736,7 +1696,7 @@ function InspectionPage({ onBack }) {
 
 /* ─── Abby Chat Assistant ─── */
 
-function AbbyTypingDots() {
+function AbbyDots() {
   return (
     <div style={{ display: "flex", gap: 4, padding: "12px 16px" }}>
       <style>{`@keyframes abbydots { 0%, 80% { opacity: 0.3; transform: translateY(0); } 40% { opacity: 1; transform: translateY(-3px); } }`}</style>
@@ -1753,29 +1713,26 @@ function AbbyTypingDots() {
 function AbbyChat() {
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState([]);
-  const [inputVal, setInputVal] = useState("");
   const [typing, setTyping] = useState(false);
-  const [showSuggestions, setShowSuggestions] = useState(true);
-  const [welcomed, setWelcomed] = useState(false);
+  const [flow, setFlow] = useState(null); // null = menu, "lookup" | "draft" | "revenue" | "inspect"
+  const [flowStep, setFlowStep] = useState(0); // step within a flow
   const messagesEndRef = useRef(null);
   const deliveryRef = useRef([]);
 
   function scrollToBottom() {
     if (messagesEndRef.current) {
-      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+      setTimeout(function () {
+        messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+      }, 50);
     }
   }
 
-  useEffect(scrollToBottom, [messages, typing]);
+  useEffect(scrollToBottom, [messages, typing, flowStep]);
 
   function handleOpen() {
     setOpen(true);
-    if (!welcomed) {
-      setWelcomed(true);
-      setMessages([{
-        role: "abby",
-        text: "Hey! I'm Abby, your AI assistant for Lifeline. I monitor your roofs, track follow-ups, and keep your pipeline moving. Ask me anything, like \"How is Sandra's roof?\" or \"What should I do today?\"",
-      }]);
+    if (messages.length === 0) {
+      setMessages([{ role: "abby", text: "Hey! I'm Abby, your Lifeline AI assistant. I monitor your roofs, manage follow-ups, and keep your pipeline moving. What can I help with?" }]);
     }
   }
 
@@ -1785,46 +1742,127 @@ function AbbyChat() {
     setTyping(false);
   }
 
-  function sendMessage(text) {
-    if (!text.trim()) return;
+  function deliverMessages(msgs, onDone) {
     cancelDelivery();
-    setShowSuggestions(false);
-
-    var userMsg = { role: "user", text: text.trim() };
-    setMessages(function (prev) { return prev.concat([userMsg]); });
-    setInputVal("");
-
-    var script = matchAbbyResponse(text);
     setTyping(true);
-
     var cumulativeDelay = 800;
-    script.forEach(function (entry, i) {
-      var totalDelay = cumulativeDelay + (i > 0 ? entry.delay : 0);
-      if (i > 0) cumulativeDelay = totalDelay;
-
+    msgs.forEach(function (entry, i) {
+      if (i > 0) cumulativeDelay += (entry.delay || 500);
       var tid = setTimeout(function () {
         if (i === 0) setTyping(false);
-        setMessages(function (prev) {
-          return prev.concat([{ role: "abby", text: entry.text }]);
-        });
-      }, totalDelay);
+        setMessages(function (prev) { return prev.concat([{ role: "abby", text: entry.text }]); });
+        if (i === msgs.length - 1 && onDone) {
+          setTimeout(onDone, 100);
+        }
+      }, cumulativeDelay);
       deliveryRef.current.push(tid);
     });
-
-    var lastDelay = cumulativeDelay;
-    var tidFinal = setTimeout(function () { setTyping(false); }, lastDelay + 100);
+    var tidFinal = setTimeout(function () { setTyping(false); }, cumulativeDelay + 200);
     deliveryRef.current.push(tidFinal);
   }
 
-  function handleKeyDown(e) {
-    if (e.key === "Enter") { e.preventDefault(); sendMessage(inputVal); }
+  function resetToMenu() {
+    cancelDelivery();
+    setMessages([{ role: "abby", text: "What else can I help with?" }]);
+    setFlow(null);
+    setFlowStep(0);
   }
 
-  var suggestions = [
-    "How is Sandra's roof?",
-    "What should I do today?",
-    "Tell me about the storm",
+  // Flow handlers
+  function startFlow(flowName) {
+    setFlow(flowName);
+    setFlowStep(1);
+    if (flowName === "lookup") {
+      setMessages(function (prev) { return prev.concat([
+        { role: "user", text: "Look up a roof" },
+        { role: "abby", text: "Which customer do you want to check on?" },
+      ]); });
+    } else if (flowName === "draft") {
+      setMessages(function (prev) { return prev.concat([
+        { role: "user", text: "Draft a message" },
+        { role: "abby", text: "Who should I write to?" },
+      ]); });
+    } else if (flowName === "revenue") {
+      setMessages(function (prev) { return prev.concat([
+        { role: "user", text: "Revenue report" },
+      ]); });
+      deliverMessages([
+        { text: "Here's your current numbers:", delay: 800 },
+        { text: "$10K monthly recurring from 223 enrolled members. Up $1,800 from last month.", delay: 500 },
+        { text: "Platinum pipeline: 4 properties worth $131K in replacement jobs. Catherine Whitfield ($34K) and Richard Thornton ($38K) are the top two.", delay: 500 },
+        { text: "At 15% enrollment across your 4,231 contacts, you're looking at $28K/month. That's $342K a year from customers currently generating zero.", delay: 500 },
+      ], function () { setFlowStep(99); });
+    } else if (flowName === "inspect") {
+      setMessages(function (prev) { return prev.concat([
+        { role: "user", text: "Schedule an inspection" },
+        { role: "abby", text: "Who needs an inspection?" },
+      ]); });
+    }
+  }
+
+  function selectContact(name, flowName) {
+    var c = CONTACTS.find(function (x) { return x.name === name; });
+    if (!c) return;
+
+    if (flowName === "lookup") {
+      setMessages(function (prev) { return prev.concat([{ role: "user", text: name }]); });
+      var age = ((Date.now() - new Date(c.installed).getTime()) / (365.25 * 24 * 3600000)).toFixed(1);
+      deliverMessages([
+        { text: c.name + " at " + c.addr.split(",")[0] + ". Health score " + c.health + " out of 100.", delay: 800 },
+        { text: c.hail + " hail event" + (c.hail !== 1 ? "s" : "") + " on a " + c.shingle + " roof, " + age + " years old. " + (c.risk === "high" ? "Elevated risk. Multiple factors compounding." : c.risk === "medium" ? "Moderate risk. Approaching maintenance window." : "Low risk. Performing within normal range."), delay: 500 },
+        { text: c.status === "not_contacted" ? "Not contacted yet. I'd recommend outreach within the next 2 weeks." : c.status === "outreach_sent" ? "Outreach was sent but no response yet. A follow-up call might be worth it." : "Currently enrolled in " + c.plan + " plan at $" + c.mrr + "/mo.", delay: 500 },
+      ], function () { setFlowStep(99); });
+    } else if (flowName === "draft") {
+      setMessages(function (prev) { return prev.concat([{ role: "user", text: name }]); });
+      deliverMessages([
+        { text: "Here's what I'd send " + c.name.split(" ")[0] + ":", delay: 800 },
+      ], function () { setFlowStep(2); });
+      // Store selected contact for send step
+      deliveryRef.current.selectedContact = c;
+    } else if (flowName === "inspect") {
+      setMessages(function (prev) { return prev.concat([{ role: "user", text: name }]); });
+      var lastInspection = c.status === "enrolled" ? "Last inspection completed" : "Never inspected";
+      deliverMessages([
+        { text: c.name + ", " + c.addr.split(",")[0] + ". Health score " + c.health + ". " + lastInspection + ".", delay: 800 },
+        { text: "Next available slot: Thursday, April 10 at 10:00 AM. Should I book it?", delay: 500 },
+      ], function () { setFlowStep(2); });
+      deliveryRef.current.selectedContact = c;
+    }
+  }
+
+  function handleSendMessage() {
+    var c = deliveryRef.current.selectedContact;
+    if (!c) return;
+    setMessages(function (prev) { return prev.concat([{ role: "user", text: "Send it" }]); });
+    deliverMessages([
+      { text: "Sent to " + c.name + " at " + c.phone + ". They'll see it as a text from Lifeline Roofing. I'll let you know if they respond.", delay: 800 },
+    ], function () { setFlowStep(99); });
+  }
+
+  function handleBookInspection() {
+    var c = deliveryRef.current.selectedContact;
+    if (!c) return;
+    setMessages(function (prev) { return prev.concat([{ role: "user", text: "Book it" }]); });
+    deliverMessages([
+      { text: "Done. Inspection booked for " + c.name + ", Thursday April 10 at 10:00 AM. I'll send them a confirmation text and add it to AccuLynx.", delay: 800 },
+    ], function () { setFlowStep(99); });
+  }
+
+  var lookupContacts = ["Tony Russo", "Sandra Collins", "Catherine Whitfield", "David Chen"];
+  var draftContacts = ["Tony Russo", "Sandra Collins", "Charles Washington"];
+  var inspectContacts = ["Sandra Collins", "Tony Russo", "Catherine Whitfield"];
+
+  var menuItems = [
+    { id: "lookup", label: "Look Up a Roof", sub: "Check a customer's roof health and risk", icon: <IconSearch size={16} color={T.blue} /> },
+    { id: "draft", label: "Draft a Message", sub: "Write and send a personalized outreach", icon: <IconSend size={16} color={T.blue} /> },
+    { id: "revenue", label: "Revenue Report", sub: "See your MRR, ARR, and pipeline", icon: <IconHome size={16} color={T.blue} /> },
+    { id: "inspect", label: "Schedule Inspection", sub: "Book a maintenance visit for a customer", icon: <IconCalendar size={16} color={T.blue} /> },
   ];
+
+  // Which contact buttons to show based on flow
+  var contactButtons = flow === "lookup" ? lookupContacts : flow === "draft" ? draftContacts : flow === "inspect" ? inspectContacts : [];
+  // For draft flow step 2, get the selected contact's SMS
+  var draftContact = deliveryRef.current.selectedContact;
 
   return (
     <>
@@ -1845,13 +1883,11 @@ function AbbyChat() {
         ) : (
           <>
             <IconChat size={22} color="#fff" />
-            {!open && (
-              <div style={{
-                position: "absolute", top: -2, right: -2, width: 12, height: 12, borderRadius: 6,
-                background: T.green, border: "2px solid #fff",
-                animation: "lifelinepulse 2s ease-in-out infinite",
-              }} />
-            )}
+            <div style={{
+              position: "absolute", top: -2, right: -2, width: 12, height: 12, borderRadius: 6,
+              background: T.green, border: "2px solid #fff",
+              animation: "lifelinepulse 2s ease-in-out infinite",
+            }} />
           </>
         )}
       </div>
@@ -1884,9 +1920,7 @@ function AbbyChat() {
             <div style={{ fontSize: 15, fontWeight: 700, color: T.text }}>Abby</div>
             <div style={{ fontSize: 11, color: T.t3 }}>Lifeline AI Assistant</div>
           </div>
-          <div style={{
-            display: "flex", alignItems: "center", gap: 5,
-          }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
             <div style={{ width: 6, height: 6, borderRadius: 3, background: T.green }} />
             <span style={{ fontSize: 11, color: T.green, fontWeight: 600 }}>Online</span>
           </div>
@@ -1925,58 +1959,110 @@ function AbbyChat() {
               alignSelf: "flex-start",
               background: T.bg, borderRadius: 14, borderBottomLeftRadius: 4,
             }}>
-              <AbbyTypingDots />
+              <AbbyDots />
             </div>
           )}
 
-          {/* Suggestion Chips */}
-          {showSuggestions && messages.length > 0 && messages.length <= 1 && (
-            <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginTop: 4 }}>
-              {suggestions.map(function (s, i) {
+          {/* Menu Buttons (shown when no flow is active) */}
+          {!flow && !typing && messages.length > 0 && (
+            <div style={{ display: "flex", flexDirection: "column", gap: 6, marginTop: 4 }}>
+              {menuItems.map(function (item) {
                 return (
-                  <button key={i} onClick={function () { sendMessage(s); }} style={{
-                    background: T.white, border: "1px solid " + T.div, borderRadius: 20,
-                    padding: "7px 14px", fontSize: 12, fontWeight: 500, color: T.blue,
-                    cursor: "pointer",
+                  <button key={item.id} onClick={function () { startFlow(item.id); }} style={{
+                    display: "flex", alignItems: "center", gap: 12,
+                    background: T.white, border: "1px solid " + T.div, borderRadius: 12,
+                    padding: "12px 14px", cursor: "pointer", textAlign: "left", width: "100%",
                   }}>
-                    {s}
+                    <div style={{
+                      width: 32, height: 32, borderRadius: 8, background: T.blueS,
+                      display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0,
+                    }}>{item.icon}</div>
+                    <div>
+                      <div style={{ fontSize: 13, fontWeight: 600, color: T.text }}>{item.label}</div>
+                      <div style={{ fontSize: 11, color: T.t3 }}>{item.sub}</div>
+                    </div>
                   </button>
                 );
               })}
             </div>
           )}
 
+          {/* Contact Selection Buttons */}
+          {(flow === "lookup" || flow === "draft" || flow === "inspect") && flowStep === 1 && !typing && (
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginTop: 4 }}>
+              {contactButtons.map(function (name) {
+                return (
+                  <button key={name} onClick={function () { selectContact(name, flow); }} style={{
+                    background: T.white, border: "1px solid " + T.div, borderRadius: 20,
+                    padding: "8px 16px", fontSize: 13, fontWeight: 500, color: T.blue,
+                    cursor: "pointer",
+                  }}>
+                    {name}
+                  </button>
+                );
+              })}
+            </div>
+          )}
+
+          {/* Draft Message Preview + Send Button */}
+          {flow === "draft" && flowStep === 2 && draftContact && !typing && (
+            <div>
+              <div style={{
+                background: T.bg, borderRadius: 12, padding: "12px 14px",
+                fontSize: 13, color: T.t2, lineHeight: 1.55, marginBottom: 8,
+                borderLeft: "3px solid " + T.blue,
+              }}>
+                {draftContact.sms}
+              </div>
+              <div style={{ display: "flex", gap: 8 }}>
+                <button onClick={handleSendMessage} style={{
+                  flex: 1, background: T.blue, color: "#fff", border: "none", borderRadius: 20,
+                  padding: "9px 0", fontSize: 13, fontWeight: 600, cursor: "pointer",
+                }}>Send Now</button>
+                <button onClick={resetToMenu} style={{
+                  padding: "9px 16px", background: "transparent", color: T.t2,
+                  border: "1px solid " + T.div, borderRadius: 20, fontSize: 13, cursor: "pointer",
+                }}>Back</button>
+              </div>
+            </div>
+          )}
+
+          {/* Inspection Book Button */}
+          {flow === "inspect" && flowStep === 2 && !typing && (
+            <div style={{ display: "flex", gap: 8, marginTop: 4 }}>
+              <button onClick={handleBookInspection} style={{
+                flex: 1, background: T.green, color: "#fff", border: "none", borderRadius: 20,
+                padding: "9px 0", fontSize: 13, fontWeight: 600, cursor: "pointer",
+              }}>Book It</button>
+              <button onClick={resetToMenu} style={{
+                padding: "9px 16px", background: "transparent", color: T.t2,
+                border: "1px solid " + T.div, borderRadius: 20, fontSize: 13, cursor: "pointer",
+              }}>Back</button>
+            </div>
+          )}
+
+          {/* Back to Menu (after completed flows) */}
+          {flowStep === 99 && !typing && (
+            <button onClick={resetToMenu} style={{
+              alignSelf: "flex-start", background: T.white, border: "1px solid " + T.div,
+              borderRadius: 20, padding: "8px 16px", fontSize: 12, fontWeight: 500,
+              color: T.blue, cursor: "pointer", marginTop: 4,
+            }}>
+              Back to menu
+            </button>
+          )}
+
           <div ref={messagesEndRef} />
         </div>
 
-        {/* Input */}
+        {/* Voice Input Bar (replacing text input) */}
         <div style={{
           padding: "12px 16px", borderTop: "1px solid " + T.div,
-          display: "flex", gap: 10, alignItems: "center",
+          display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
         }}>
-          <input
-            value={inputVal}
-            onChange={function (e) { setInputVal(e.target.value); }}
-            onKeyDown={handleKeyDown}
-            placeholder="Ask Abby anything..."
-            style={{
-              flex: 1, background: T.bg, border: "none", borderRadius: 20,
-              padding: "10px 16px", fontSize: 14, color: T.text, outline: "none",
-              fontFamily: T.font,
-            }}
-          />
-          {inputVal.trim() && (
-            <div
-              onClick={function () { sendMessage(inputVal); }}
-              style={{
-                width: 32, height: 32, borderRadius: 16, background: T.blue,
-                display: "flex", alignItems: "center", justifyContent: "center",
-                cursor: "pointer", flexShrink: 0,
-              }}
-            >
-              <IconSend size={14} color="#fff" />
-            </div>
-          )}
+          <IconMic size={14} color={T.t3} />
+          <span style={{ fontSize: 12, color: T.t3 }}>Voice input</span>
+          <span style={{ fontSize: 11, color: T.t3, opacity: 0.6 }}>(coming soon)</span>
         </div>
       </div>
     </>
