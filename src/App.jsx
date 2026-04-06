@@ -962,6 +962,12 @@ function Home({ onNav }) {
             </div>
 
             {/* At Risk List */}
+            {queueTab === "risk" && (
+              <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 12, padding: "8px 12px", background: T.blueS, borderRadius: 8 }}>
+                <IconSend size={12} color={T.blue} />
+                <span style={{ fontSize: 11, fontWeight: 600, color: T.blue }}>AI sends texts automatically</span>
+              </div>
+            )}
             {queueTab === "risk" && priorityContacts.filter(c => !c.tier).map((c, i) => (
               <div
                 key={c.id}
@@ -980,6 +986,7 @@ function Home({ onNav }) {
                 <Pill color={c.risk === "high" ? T.red : c.risk === "medium" ? T.orange : T.green}>
                   {c.risk === "high" ? "High" : c.risk === "medium" ? "Med" : "Low"}
                 </Pill>
+                <span style={{ fontSize: 10, fontWeight: 600, color: T.blue }}>Auto</span>
                 <span style={{ color: T.t3, fontSize: 16 }}>{"›"}</span>
               </div>
             ))}
@@ -987,6 +994,10 @@ function Home({ onNav }) {
             {/* Platinum List */}
             {queueTab === "platinum" && (
               <div>
+                <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 12, padding: "8px 12px", background: T.orangeS, borderRadius: 8 }}>
+                  <IconMic size={12} color={T.orange} />
+                  <span style={{ fontSize: 11, fontWeight: 600, color: T.orange }}>Needs a personal call or visit</span>
+                </div>
                 {/* Platinum summary bar */}
                 <div style={{
                   display: "flex", flexDirection: mob ? "column" : "row", justifyContent: "space-between", alignItems: mob ? "flex-start" : "center", gap: mob ? 4 : 0,
