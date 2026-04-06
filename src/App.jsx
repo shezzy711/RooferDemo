@@ -1443,7 +1443,7 @@ function InspectionPage({ onBack }) {
                 <div
                   onClick={function () { setExpandedItem(expandedItem === i ? null : i); }}
                   style={{
-                    display: "flex", alignItems: "center", gap: 10, padding: "10px 0",
+                    display: "flex", alignItems: "center", gap: 10, padding: mob ? "14px 0" : "10px 0",
                     cursor: "pointer",
                   }}
                 >
@@ -1471,7 +1471,7 @@ function InspectionPage({ onBack }) {
                 <span style={{ fontSize: 13, color: T.blue, fontWeight: 500, flex: 1 }}>6 photos attached</span>
                 <button style={{
                   background: T.blue, color: "#fff", border: "none", borderRadius: 980,
-                  padding: "4px 12px", fontSize: 11, fontWeight: 600, cursor: "pointer",
+                  padding: mob ? "8px 14px" : "4px 12px", fontSize: 11, fontWeight: 600, cursor: "pointer",
                 }}>
                   + Attach Photo
                 </button>
@@ -1481,7 +1481,7 @@ function InspectionPage({ onBack }) {
                 <span style={{ fontSize: 13, color: T.blue, fontWeight: 500, flex: 1 }}>1 video attached</span>
                 <button style={{
                   background: T.blue, color: "#fff", border: "none", borderRadius: 980,
-                  padding: "4px 12px", fontSize: 11, fontWeight: 600, cursor: "pointer",
+                  padding: mob ? "8px 14px" : "4px 12px", fontSize: 11, fontWeight: 600, cursor: "pointer",
                 }}>
                   + Attach Video
                 </button>
@@ -1489,7 +1489,7 @@ function InspectionPage({ onBack }) {
             </div>
 
             <div style={{ marginTop: 12, fontSize: 12, color: T.t3, textAlign: "center" }}>
-              Syncs with GAF QuickMeasure · CompanyCam · EagleView
+              {mob ? "Syncs with AccuLynx + more" : "Syncs with GAF QuickMeasure · CompanyCam · EagleView"}
             </div>
           </Card>
         </FadeIn>
@@ -1503,7 +1503,7 @@ function InspectionPage({ onBack }) {
 
             {step === "input" && (
               <div>
-                <div style={{ textAlign: "center", padding: "24px 0 20px" }}>
+                <div style={{ textAlign: "center", padding: mob ? "12px 0" : "24px 0 20px" }}>
                   <button onClick={handleGenerate} style={{
                     width: "100%", background: T.blue, color: "#fff", border: "none",
                     borderRadius: 980, padding: "13px 0", fontSize: 15, fontWeight: 600, cursor: "pointer",
