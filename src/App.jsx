@@ -1389,7 +1389,7 @@ function InspectionPage({ onBack }) {
 
   function handleGenerate() {
     setReportPopup("generating");
-    setTimeout(function () { setReportPopup("ready"); }, 2200);
+    setTimeout(function () { setReportPopup("ready"); }, 800);
   }
 
   return (
@@ -1513,20 +1513,18 @@ function InspectionPage({ onBack }) {
               </div>
             )}
 
-            {(reportPopup === "ready" || reportPopup === "sent" || reportPopup === "done") && (
+            {reportPopup === "done" && (
               <div style={{ textAlign: "center", padding: "16px 0" }}>
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 6, marginBottom: 8 }}>
                   <IconCheck size={16} color={T.green} />
-                  <span style={{ fontSize: 15, fontWeight: 600, color: T.green }}>{reportPopup === "ready" ? "Report generated" : "Report sent"}</span>
+                  <span style={{ fontSize: 15, fontWeight: 600, color: T.green }}>Report sent</span>
                 </div>
-                {(reportPopup === "sent" || reportPopup === "done") && (
-                  <button onClick={function () { setShowFullReport(true); }} style={{
-                    background: "transparent", border: "none", color: T.blue,
-                    fontSize: 13, fontWeight: 500, cursor: "pointer", padding: 0,
-                  }}>
-                    View full report
-                  </button>
-                )}
+                <button onClick={function () { setShowFullReport(true); }} style={{
+                  background: "transparent", border: "none", color: T.blue,
+                  fontSize: 13, fontWeight: 500, cursor: "pointer", padding: 0,
+                }}>
+                  View full report
+                </button>
               </div>
             )}
           </Card>
