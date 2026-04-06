@@ -994,10 +994,6 @@ function Home({ onNav }) {
             {/* Platinum List */}
             {queueTab === "platinum" && (
               <div>
-                <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 12, padding: "8px 12px", background: T.orangeS, borderRadius: 8 }}>
-                  <IconMic size={12} color={T.orange} />
-                  <span style={{ fontSize: 11, fontWeight: 600, color: T.orange }}>Needs a personal call or visit</span>
-                </div>
                 {/* Platinum summary bar */}
                 <div style={{
                   display: "flex", flexDirection: mob ? "column" : "row", justifyContent: "space-between", alignItems: mob ? "flex-start" : "center", gap: mob ? 4 : 0,
