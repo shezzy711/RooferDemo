@@ -2427,55 +2427,56 @@ export default function App() {
             var currentRef = tourRefOrder[tourStep - 1];
             if (!currentRef || !currentRef.current) return null;
             var rect = currentRef.current.getBoundingClientRect();
-            var tipH = 140; // approximate tooltip height
+            var tipH = 150;
             var tipW = 240;
-            var pad = 12;
+            var M = 16; // minimum margin from any edge
+            var winW = window.innerWidth;
+            var winH = window.innerHeight;
+
+            // Decide: place below or above the element
+            var placeBelow = (rect.bottom + M + tipH < winH - M);
+            // Step 6 (priority queue) always above, step 7 (abby) always above
+            if (tourStep === 6 || tourStep === 7) placeBelow = false;
+
+            var tipTop, tipLeft, arrowDir;
+
+            if (placeBelow) {
+              tipTop = rect.bottom + 10;
+              arrowDir = "up";
+            } else {
+              tipTop = rect.top - tipH - 10;
+              arrowDir = "down";
+            }
+
+            // Horizontal: try to center on element, but clamp
+            tipLeft = rect.left + rect.width / 2 - tipW / 2;
+
+            // CLAMP to viewport
+            tipTop = Math.max(M, Math.min(tipTop, winH - tipH - M));
+            tipLeft = Math.max(M, Math.min(tipLeft, winW - tipW - M));
 
             var tipStyle = {
               position: "fixed", zIndex: 300,
-              width: tipW, maxWidth: "calc(100vw - 32px)",
+              width: tipW, maxWidth: winW - M * 2,
+              top: tipTop, left: tipLeft,
               background: T.white, borderRadius: 14, padding: "14px 16px",
               boxShadow: "0 8px 40px rgba(0,0,0,0.2)",
             };
-            var arrowStyle = { position: "absolute", width: 0, height: 0 };
 
-            if (tourStep === 7) {
-              // Abby: left of button
-              tipStyle.bottom = Math.max(pad, window.innerHeight - rect.top + pad);
-              tipStyle.right = Math.max(pad, window.innerWidth - rect.left + pad);
-              arrowStyle.right = -8; arrowStyle.bottom = 16;
-              arrowStyle.borderTop = "8px solid transparent";
-              arrowStyle.borderBottom = "8px solid transparent";
-              arrowStyle.borderLeft = "8px solid #fff";
-            } else if (tourStep === 6) {
-              // Priority queue: ABOVE
-              tipStyle.bottom = Math.max(pad, window.innerHeight - rect.top + pad);
-              tipStyle.left = Math.max(pad, Math.min(rect.left, window.innerWidth - tipW - pad));
-              arrowStyle.bottom = -8; arrowStyle.left = Math.min(20, rect.left + rect.width / 2 - (typeof tipStyle.left === "number" ? tipStyle.left : pad));
+            // Arrow: point at center of target element
+            var arrowX = Math.max(12, Math.min(rect.left + rect.width / 2 - tipLeft - 8, tipW - 28));
+            var arrowStyle = { position: "absolute", width: 0, height: 0, left: arrowX };
+
+            if (arrowDir === "up") {
+              arrowStyle.top = -8;
+              arrowStyle.borderLeft = "8px solid transparent";
+              arrowStyle.borderRight = "8px solid transparent";
+              arrowStyle.borderBottom = "8px solid #fff";
+            } else {
+              arrowStyle.bottom = -8;
               arrowStyle.borderLeft = "8px solid transparent";
               arrowStyle.borderRight = "8px solid transparent";
               arrowStyle.borderTop = "8px solid #fff";
-            } else {
-              // Default: below element
-              var proposedTop = rect.bottom + pad;
-              // If it would clip below viewport, place above instead
-              if (proposedTop + tipH > window.innerHeight - pad) {
-                tipStyle.bottom = Math.max(pad, window.innerHeight - rect.top + pad);
-                tipStyle.left = Math.max(pad, Math.min(rect.left, window.innerWidth - tipW - pad));
-                arrowStyle.bottom = -8; arrowStyle.left = 20;
-                arrowStyle.borderLeft = "8px solid transparent";
-                arrowStyle.borderRight = "8px solid transparent";
-                arrowStyle.borderTop = "8px solid #fff";
-              } else {
-                tipStyle.top = proposedTop;
-                tipStyle.left = Math.max(pad, Math.min(rect.left, window.innerWidth - tipW - pad));
-                // Arrow points up, centered on the target
-                var arrowLeft = rect.left + rect.width / 2 - (typeof tipStyle.left === "number" ? tipStyle.left : pad) - 8;
-                arrowStyle.top = -8; arrowStyle.left = Math.max(8, Math.min(arrowLeft, tipW - 24));
-                arrowStyle.borderLeft = "8px solid transparent";
-                arrowStyle.borderRight = "8px solid transparent";
-                arrowStyle.borderBottom = "8px solid #fff";
-              }
             }
 
             return (
