@@ -2365,11 +2365,11 @@ export default function App() {
           {/* Steps 1-5: Pointed tooltips */}
           {tourStep >= 1 && tourStep <= 5 && (function () {
             var steps = [
-              { text: "Your key numbers. Roofs that need attention and revenue from plans.", pos: { top: mob ? 110 : 100, left: mob ? 20 : "50%", ml: mob ? 0 : -140 }, arrow: "top" },
-              { text: "I handle follow-ups automatically. Green = sent, orange = needs your call.", pos: { top: mob ? 250 : 220, left: mob ? 20 : "50%", ml: mob ? 0 : -140 }, arrow: "top" },
-              { text: "Tap any contact to see their roof and send them a message.", pos: { top: mob ? 440 : 370, left: mob ? 20 : 60 }, arrow: "top" },
-              { text: "Storm alerts. One tap sends texts to all affected customers.", pos: { top: 58, left: mob ? "30%" : "40%", ml: mob ? -100 : -140 }, arrow: "top" },
-              { text: "That's me! Tap here to look up a roof, draft a message, or check revenue.", pos: { bottom: mob ? 74 : 94, right: mob ? 74 : 94 }, arrow: "right" },
+              { text: "Your key numbers. Roofs that need attention and revenue from plans.", pos: { top: mob ? 160 : 200, left: mob ? 20 : "50%", ml: mob ? 0 : -130 }, arrow: "top" },
+              { text: "I handle follow-ups automatically. Green = sent, orange = needs your call.", pos: { top: mob ? 280 : 300, left: mob ? 20 : "50%", ml: mob ? 0 : -130 }, arrow: "top" },
+              { text: "Tap any contact to see their roof and send them a message.", pos: { top: mob ? 500 : 460, left: mob ? 20 : "50%", ml: mob ? 0 : -130 }, arrow: "top" },
+              { text: "Storm alerts. One tap sends texts to all affected customers.", pos: { top: 56, left: mob ? "50%" : "50%", ml: mob ? -130 : -130 }, arrow: "top" },
+              { text: "That's me! Tap here to look up a roof, draft a message, or check revenue.", pos: { bottom: mob ? 72 : 92, right: mob ? 72 : 92 }, arrow: "right" },
             ];
             var s = steps[tourStep - 1];
             var tipStyle = {
