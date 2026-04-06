@@ -1880,30 +1880,46 @@ function AbbyChat() {
 
   return (
     <>
-      {/* Floating Button */}
+      {/* Click-outside overlay */}
+      {open && (
+        <div
+          onClick={function () { setOpen(false); }}
+          style={{
+            position: "fixed", inset: 0, zIndex: 149,
+          }}
+        />
+      )}
+
+      {/* Floating Button - Abby Avatar */}
       <div
-        onClick={function () { if (open) { setOpen(false); } else { handleOpen(); } }}
+        onClick={function (e) { e.stopPropagation(); if (open) { setOpen(false); } else { handleOpen(); } }}
         style={{
-          position: "fixed", bottom: mob ? 16 : 28, right: mob ? 16 : 28, zIndex: 150,
-          width: mob ? 48 : 56, height: mob ? 48 : 56, borderRadius: mob ? 24 : 28,
-          background: T.blue, cursor: "pointer",
-          display: "flex", alignItems: "center", justifyContent: "center",
-          boxShadow: "0 4px 20px rgba(0,113,227,0.4)",
-          transition: "transform 0.2s ease",
+          position: "fixed", bottom: mob ? 16 : 28, right: mob ? 16 : 28, zIndex: 151,
+          cursor: "pointer", display: "flex", flexDirection: "column", alignItems: "center", gap: 4,
         }}
       >
-        {open ? (
-          <span style={{ color: "#fff", fontSize: 20, fontWeight: 300, lineHeight: 1 }}>x</span>
-        ) : (
-          <>
-            <IconChat size={22} color="#fff" />
-            <div style={{
-              position: "absolute", top: -2, right: -2, width: 12, height: 12, borderRadius: 6,
-              background: T.green, border: "2px solid #fff",
-              animation: "lifelinepulse 2s ease-in-out infinite",
-            }} />
-          </>
-        )}
+        <div style={{
+          width: mob ? 48 : 56, height: mob ? 48 : 56, borderRadius: mob ? 24 : 28,
+          background: open ? T.t3 : "linear-gradient(135deg, " + T.blue + ", #34C759)",
+          display: "flex", alignItems: "center", justifyContent: "center",
+          boxShadow: "0 4px 20px rgba(0,113,227,0.35)",
+          transition: "all 0.2s ease",
+          position: "relative",
+        }}>
+          {open ? (
+            <span style={{ color: "#fff", fontSize: 20, fontWeight: 300, lineHeight: 1 }}>x</span>
+          ) : (
+            <>
+              <span style={{ color: "#fff", fontSize: mob ? 18 : 22, fontWeight: 700 }}>A</span>
+              <div style={{
+                position: "absolute", top: -2, right: -2, width: 12, height: 12, borderRadius: 6,
+                background: T.green, border: "2px solid #fff",
+                animation: "lifelinepulse 2s ease-in-out infinite",
+              }} />
+            </>
+          )}
+        </div>
+        {!open && !mob && <span style={{ fontSize: 10, fontWeight: 600, color: T.t2 }}>Abby</span>}
       </div>
 
       {/* Chat Panel */}
