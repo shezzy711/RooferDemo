@@ -2287,7 +2287,7 @@ export default function App() {
           {!mob && <span style={{ fontSize: 12, color: T.t3, fontWeight: 500 }}>Lifeline AI</span>}
         </div>
 
-        <div style={{ display: "flex", gap: 2 }}>
+        <div style={{ display: "flex", gap: 2, flex: mob ? 1 : "none", justifyContent: mob ? "center" : "flex-start" }}>
           {tabs.map(t => (
             <button
               key={t.id}
