@@ -1513,15 +1513,13 @@ function InspectionPage({ onBack }) {
               </div>
             )}
 
-            {reportPopup === "sent" && !reportPopup && null}
-
-            {(reportPopup === "ready" || reportPopup === "sent") && (
+            {(reportPopup === "ready" || reportPopup === "sent" || reportPopup === "done") && (
               <div style={{ textAlign: "center", padding: "16px 0" }}>
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 6, marginBottom: 8 }}>
                   <IconCheck size={16} color={T.green} />
-                  <span style={{ fontSize: 15, fontWeight: 600, color: T.green }}>Report {reportPopup === "sent" ? "sent" : "generated"}</span>
+                  <span style={{ fontSize: 15, fontWeight: 600, color: T.green }}>{reportPopup === "ready" ? "Report generated" : "Report sent"}</span>
                 </div>
-                {reportPopup === "sent" && !showFullReport && (
+                {(reportPopup === "sent" || reportPopup === "done") && (
                   <button onClick={function () { setShowFullReport(true); }} style={{
                     background: "transparent", border: "none", color: T.blue,
                     fontSize: 13, fontWeight: 500, cursor: "pointer", padding: 0,
@@ -1535,7 +1533,7 @@ function InspectionPage({ onBack }) {
         </FadeIn>
 
         {/* Report Popup */}
-        {reportPopup && reportPopup !== "sent" && (
+        {(reportPopup === "generating" || reportPopup === "ready") && (
           <div style={{
             position: "fixed", inset: 0, background: "rgba(0,0,0,0.3)",
             backdropFilter: "blur(6px)", WebkitBackdropFilter: "blur(6px)",
@@ -1609,9 +1607,9 @@ function InspectionPage({ onBack }) {
             backdropFilter: "blur(6px)", WebkitBackdropFilter: "blur(6px)",
             display: "flex", alignItems: "center", justifyContent: "center", zIndex: 200,
           }}
-          onClick={function () { /* close on outside tap */ }}
+          onClick={function () { setReportPopup("done"); }}
           >
-            <div style={{
+            <div onClick={function (e) { e.stopPropagation(); }} style={{
               background: T.white, borderRadius: 20, padding: mob ? 24 : 32, width: mob ? "calc(100vw - 32px)" : 360,
               boxShadow: "0 24px 80px rgba(0,0,0,0.15)", textAlign: "center",
             }}>
@@ -1646,7 +1644,7 @@ function InspectionPage({ onBack }) {
       {/* Homeowner Report Preview - Modal */}
       {showFullReport && (
         <div
-          onClick={function () { setShowFullReport(false); }}
+          onClick={function () { setShowFullReport(false); setReportPopup("done"); }}
           style={{
             position: "fixed", inset: 0, background: "rgba(0,0,0,0.35)",
             backdropFilter: "blur(6px)", WebkitBackdropFilter: "blur(6px)",
@@ -1664,7 +1662,7 @@ function InspectionPage({ onBack }) {
           >
             {/* Close button */}
             <button
-              onClick={function () { setShowFullReport(false); }}
+              onClick={function () { setShowFullReport(false); setReportPopup("done"); }}
               style={{
                 position: "sticky", top: 12, float: "right", marginRight: 12, zIndex: 10,
                 width: 32, height: 32, borderRadius: 16, background: T.bg, border: "none",
