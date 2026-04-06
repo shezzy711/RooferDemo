@@ -2236,6 +2236,7 @@ export default function App() {
   const [page, setPage] = useState("home");
   const [detailContact, setDetailContact] = useState(null);
   const [tourStep, setTourStep] = useState(null);
+  const [tourReady, setTourReady] = useState(false);
   const tourStartedRef = useRef(false);
   const tourRef1 = useRef(null);
   const tourRef2 = useRef(null);
@@ -2265,6 +2266,25 @@ export default function App() {
       return function () { clearTimeout(t); };
     }
   }, [started]);
+
+  // Auto-scroll to tour target and re-render for correct position
+  useEffect(function () {
+    if (tourStep === null || tourStep === 0) { setTourReady(tourStep === 0); return; }
+    setTourReady(false);
+    var allRefs = [tourRef1, tourRef2, tourRef3, tourRef4, tourRef5];
+    var ref = allRefs[tourStep - 1];
+    if (ref && ref.current) {
+      // Steps 1-3 need scrolling (in content area). Steps 4-5 are fixed/sticky.
+      if (tourStep <= 3) {
+        ref.current.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+      // Wait for scroll to settle, then mark ready so tooltip reads correct position
+      var t = setTimeout(function () { setTourReady(true); }, 400);
+      return function () { clearTimeout(t); };
+    } else {
+      setTourReady(true);
+    }
+  }, [tourStep]);
 
   if (!started) {
     return (
@@ -2389,8 +2409,8 @@ export default function App() {
             </div>
           )}
 
-          {/* Steps 1-5: Positioned via refs */}
-          {tourStep >= 1 && tourStep <= 5 && (function () {
+          {/* Steps 1-5: Positioned via refs (only render when scroll is settled) */}
+          {tourStep >= 1 && tourStep <= 5 && tourReady && (function () {
             var allRefs = [tourRef1, tourRef2, tourRef3, tourRef4, tourRef5];
             var texts = [
               "Your key numbers. Roofs that need attention and revenue from plans.",
