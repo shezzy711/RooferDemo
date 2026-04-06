@@ -1369,8 +1369,8 @@ function Weather({ onBack }) {
 
 function InspectionPage({ onBack }) {
   const mob = useIsMobile();
-  const [step, setStep] = useState("input"); // input, generating, done
-  const [reportSent, setReportSent] = useState(false);
+  const [reportPopup, setReportPopup] = useState(null); // null | "generating" | "ready" | "sent"
+  const [showFullReport, setShowFullReport] = useState(false);
   const [expandedItem, setExpandedItem] = useState(null);
   const [showVoiceDemo, setShowVoiceDemo] = useState(false);
 
@@ -1388,8 +1388,8 @@ function InspectionPage({ onBack }) {
   ];
 
   function handleGenerate() {
-    setStep("generating");
-    setTimeout(() => setStep("done"), 2200);
+    setReportPopup("generating");
+    setTimeout(function () { setReportPopup("ready"); }, 2200);
   }
 
   return (
@@ -1498,82 +1498,153 @@ function InspectionPage({ onBack }) {
           <Card>
             <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 16 }}>
               <div style={{ width: 8, height: 8, borderRadius: 4, background: T.blue }} />
-              <span style={{ fontSize: 13, fontWeight: 600, color: T.t2 }}>AI Report Preview</span>
+              <span style={{ fontSize: 13, fontWeight: 600, color: T.t2 }}>AI Report</span>
             </div>
 
-            {step === "input" && (
-              <div>
-                <div style={{ textAlign: "center", padding: mob ? "12px 0" : "24px 0 20px" }}>
-                  <button onClick={handleGenerate} style={{
-                    width: "100%", background: T.blue, color: "#fff", border: "none",
-                    borderRadius: 980, padding: "13px 0", fontSize: 15, fontWeight: 600, cursor: "pointer",
-                    boxShadow: "0 2px 12px rgba(0,113,227,0.3)",
-                  }}>
-                    Generate Report
-                  </button>
-                </div>
+            {!reportPopup && (
+              <div style={{ textAlign: "center", padding: mob ? "12px 0" : "24px 0 20px" }}>
+                <button onClick={handleGenerate} style={{
+                  width: "100%", background: T.blue, color: "#fff", border: "none",
+                  borderRadius: 980, padding: "13px 0", fontSize: 15, fontWeight: 600, cursor: "pointer",
+                  boxShadow: "0 2px 12px rgba(0,113,227,0.3)",
+                }}>
+                  Generate Report
+                </button>
               </div>
             )}
 
-            {step === "generating" && (
-              <div style={{ textAlign: "center", padding: "48px 0" }}>
-                <div style={{
-                  width: 36, height: 36, border: "3px solid " + T.div,
-                  borderTopColor: T.blue, borderRadius: "50%",
-                  animation: "lifelinespin 0.8s linear infinite",
-                  margin: "0 auto 20px",
-                }} />
-                <style>{`@keyframes lifelinespin { to { transform: rotate(360deg); } }`}</style>
-                <div style={{ fontSize: 15, fontWeight: 600, color: T.text, marginBottom: 6 }}>Generating report...</div>
-                <div style={{ fontSize: 13, color: T.t3 }}>Calculating health score, estimating costs,<br />formatting for homeowner</div>
-              </div>
-            )}
+            {reportPopup === "sent" && !reportPopup && null}
 
-            {step === "done" && (
-              <div>
-                {PHOTO_FINDINGS.map((r, i) => (
-                  <div key={i} style={{ padding: "14px 0", borderTop: i > 0 ? `1px solid ${T.div}` : "none" }}>
-                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 4 }}>
-                      <span style={{ fontSize: 15, fontWeight: 600, color: T.text }}>{r.label}</span>
-                      <Pill color={r.sev === "high" ? T.red : T.orange}>{r.sev} · {r.cost}</Pill>
-                    </div>
-                    <div style={{ fontSize: 12, color: T.t3, marginBottom: 3 }}>{r.loc}</div>
-                    <div style={{ fontSize: 14, color: T.t2, lineHeight: 1.6 }}>{r.note}</div>
-                  </div>
-                ))}
-
-                <div style={{ marginTop: 14, padding: "14px 18px", background: T.blueL, borderRadius: T.rs }}>
-                  <div style={{ fontSize: 13, fontWeight: 600, color: T.blue, marginBottom: 4 }}>AI Summary</div>
-                  <div style={{ fontSize: 14, color: T.t2, lineHeight: 1.6 }}>
-                    Total repair: $275-$550. Fix now and the roof lasts 3-5 more years. Skip it and you are looking at $15K-$20K job within 18 months.
-                  </div>
+            {(reportPopup === "ready" || reportPopup === "sent") && (
+              <div style={{ textAlign: "center", padding: "16px 0" }}>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 6, marginBottom: 8 }}>
+                  <IconCheck size={16} color={T.green} />
+                  <span style={{ fontSize: 15, fontWeight: 600, color: T.green }}>Report {reportPopup === "sent" ? "sent" : "generated"}</span>
                 </div>
-
-                {!reportSent ? (
-                  <button onClick={() => setReportSent(true)} style={{
-                    width: "100%", background: T.blue, color: "#fff", border: "none",
-                    borderRadius: 980, padding: "13px 0", fontSize: 15, fontWeight: 600,
-                    cursor: "pointer", marginTop: 14,
-                    boxShadow: "0 2px 12px rgba(0,113,227,0.3)",
+                {reportPopup === "sent" && !showFullReport && (
+                  <button onClick={function () { setShowFullReport(true); }} style={{
+                    background: "transparent", border: "none", color: T.blue,
+                    fontSize: 13, fontWeight: 500, cursor: "pointer", padding: 0,
                   }}>
-                    Send Report to Sandra
+                    View full report
                   </button>
-                ) : (
-                  <div style={{ marginTop: 14, padding: "14px 18px", background: T.greenL, borderRadius: T.rs, textAlign: "center" }}>
-                    <div style={{ color: T.green, fontWeight: 600, fontSize: 15, display: "flex", alignItems: "center", justifyContent: "center", gap: 4 }}><IconCheck size={16} color={T.green} />Report emailed to Sandra Collins</div>
-                    <div style={{ color: T.t2, fontSize: 13, marginTop: 4 }}>
-                      Scroll down to see what Sandra received
-                    </div>
-                  </div>
                 )}
               </div>
             )}
           </Card>
         </FadeIn>
+
+        {/* Report Popup */}
+        {reportPopup && reportPopup !== "sent" && (
+          <div style={{
+            position: "fixed", inset: 0, background: "rgba(0,0,0,0.3)",
+            backdropFilter: "blur(6px)", WebkitBackdropFilter: "blur(6px)",
+            display: "flex", alignItems: "center", justifyContent: "center", zIndex: 200,
+          }}>
+            <div style={{
+              background: T.white, borderRadius: 20, padding: mob ? 20 : 32, width: mob ? "calc(100vw - 32px)" : 420,
+              boxShadow: "0 24px 80px rgba(0,0,0,0.15)", maxHeight: "80vh", overflowY: "auto",
+            }}>
+              {reportPopup === "generating" && (
+                <div style={{ textAlign: "center", padding: "24px 0" }}>
+                  <div style={{
+                    width: 36, height: 36, border: "3px solid " + T.div,
+                    borderTopColor: T.blue, borderRadius: "50%",
+                    animation: "lifelinespin 0.8s linear infinite",
+                    margin: "0 auto 20px",
+                  }} />
+                  <style>{`@keyframes lifelinespin { to { transform: rotate(360deg); } }`}</style>
+                  <div style={{ fontSize: 15, fontWeight: 600, color: T.text }}>Generating report...</div>
+                </div>
+              )}
+
+              {reportPopup === "ready" && (
+                <div>
+                  <div style={{ fontSize: 18, fontWeight: 700, color: T.text, marginBottom: 16 }}>Report Ready</div>
+
+                  {PHOTO_FINDINGS.map(function (r, i) {
+                    return (
+                      <div key={i} style={{
+                        display: "flex", alignItems: "center", gap: 10, padding: "10px 0",
+                        borderTop: i > 0 ? "1px solid " + T.div : "none",
+                      }}>
+                        <div style={{ width: 8, height: 8, borderRadius: 4, background: r.sev === "high" ? T.red : T.orange, flexShrink: 0 }} />
+                        <span style={{ fontSize: 14, fontWeight: 600, color: T.text, flex: 1 }}>{r.label}</span>
+                        <span style={{ fontSize: 13, fontWeight: 600, color: T.t2 }}>{r.cost}</span>
+                      </div>
+                    );
+                  })}
+
+                  <div style={{ marginTop: 12, padding: "12px 16px", background: T.blueL, borderRadius: 10, textAlign: "center" }}>
+                    <span style={{ fontSize: 14, fontWeight: 600, color: T.blue }}>$275-$550 total repairs</span>
+                  </div>
+
+                  <button onClick={function () { setReportPopup("sent"); }} style={{
+                    width: "100%", background: T.blue, color: "#fff", border: "none",
+                    borderRadius: 980, padding: "14px 0", fontSize: 15, fontWeight: 600,
+                    cursor: "pointer", marginTop: 16,
+                    boxShadow: "0 2px 12px rgba(0,113,227,0.3)",
+                  }}>
+                    Send to Sandra
+                  </button>
+
+                  <div style={{ textAlign: "center", marginTop: 10 }}>
+                    <button onClick={function () { setReportPopup("sent"); setShowFullReport(true); }} style={{
+                      background: "transparent", border: "none", color: T.t3,
+                      fontSize: 12, cursor: "pointer", padding: 0,
+                    }}>
+                      View full report
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
+        {/* Sent confirmation popup */}
+        {reportPopup === "sent" && !showFullReport && (
+          <div style={{
+            position: "fixed", inset: 0, background: "rgba(0,0,0,0.3)",
+            backdropFilter: "blur(6px)", WebkitBackdropFilter: "blur(6px)",
+            display: "flex", alignItems: "center", justifyContent: "center", zIndex: 200,
+          }}
+          onClick={function () { /* close on outside tap */ }}
+          >
+            <div style={{
+              background: T.white, borderRadius: 20, padding: mob ? 24 : 32, width: mob ? "calc(100vw - 32px)" : 360,
+              boxShadow: "0 24px 80px rgba(0,0,0,0.15)", textAlign: "center",
+            }}>
+              <div style={{
+                width: 48, height: 48, borderRadius: 24, background: T.greenL,
+                display: "flex", alignItems: "center", justifyContent: "center",
+                margin: "0 auto 16px",
+              }}>
+                <IconCheck size={24} color={T.green} />
+              </div>
+              <div style={{ fontSize: 18, fontWeight: 700, color: T.text, marginBottom: 6 }}>Report Sent</div>
+              <div style={{ fontSize: 14, color: T.t2, marginBottom: 20 }}>Emailed to Sandra Collins</div>
+
+              <button onClick={function () { setShowFullReport(true); }} style={{
+                width: "100%", background: T.blue, color: "#fff", border: "none",
+                borderRadius: 980, padding: "12px 0", fontSize: 15, fontWeight: 600, cursor: "pointer",
+                marginBottom: 10,
+              }}>
+                View Full Report
+              </button>
+              <button onClick={function () { setReportPopup("done"); }} style={{
+                background: "transparent", border: "none", color: T.t3,
+                fontSize: 13, cursor: "pointer", padding: 0,
+              }}>
+                Close
+              </button>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Homeowner Report Preview */}
-      {reportSent && (
+      {showFullReport && (
         <FadeIn delay={200}>
           <div style={{ marginTop: 28 }}>
             <Card style={{ padding: 0, overflow: "hidden", boxShadow: T.shL }}>
