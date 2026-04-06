@@ -810,7 +810,7 @@ function NewContactModal({ onClose, onNav }) {
 
 /* ─── Command Center ─── */
 
-function Home({ onNav }) {
+function Home({ onNav, tourRefs }) {
   const [pct, setPct] = useState(15);
   const [queueTab, setQueueTab] = useState("risk");
   const [showNewContact, setShowNewContact] = useState(false);
@@ -884,7 +884,7 @@ function Home({ onNav }) {
 
       {/* Stats Row */}
       <FadeIn delay={160}>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginBottom: 20 }}>
+        <div ref={tourRefs && tourRefs[0]} style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginBottom: 20 }}>
           {stats.map((s, i) => (
             <div key={i} style={{ background: T.white, borderRadius: 14, padding: "16px 14px",
               boxShadow: "0 0 0 0.5px rgba(0,0,0,0.04), 0 1px 3px rgba(0,0,0,0.03), 0 4px 12px rgba(0,0,0,0.025)",
@@ -901,7 +901,7 @@ function Home({ onNav }) {
 
       {/* Automated Follow-Up Queue */}
       <FadeIn delay={200}>
-        <Card style={{ marginBottom: 16, padding: 22 }}>
+        <div ref={tourRefs && tourRefs[1]}><Card style={{ marginBottom: 16, padding: 22 }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
             <div style={{ fontSize: 16, fontWeight: 600, color: T.text }}>Follow-Ups</div>
             <Pill color={T.blue}>This Week</Pill>
@@ -928,12 +928,12 @@ function Home({ onNav }) {
               </span>
             </div>
           ))}
-        </Card>
+        </Card></div>
       </FadeIn>
 
       <div style={{ display: "grid", gridTemplateColumns: mob ? "1fr" : "1fr 1fr", gap: 20 }}>
         {/* Priority Queue with Segmented Toggle */}
-        <FadeIn delay={280}>
+        <div ref={tourRefs && tourRefs[2]}><FadeIn delay={280}>
           <Card>
 
             {/* Segmented Control */}
@@ -1036,7 +1036,7 @@ function Home({ onNav }) {
               </div>
             )}
           </Card>
-        </FadeIn>
+        </FadeIn></div>
 
         {/* ROI Calculator */}
         <FadeIn delay={360}>
@@ -1847,7 +1847,7 @@ function AbbyDots() {
   );
 }
 
-function AbbyChat() {
+function AbbyChat({ abbyRef }) {
   const mob = useIsMobile();
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState([]);
@@ -2017,6 +2017,7 @@ function AbbyChat() {
 
       {/* Floating Button - Abby Avatar */}
       <div
+        ref={abbyRef}
         onClick={function (e) { e.stopPropagation(); if (open) { setOpen(false); } else { handleOpen(); } }}
         style={{
           position: "fixed", bottom: mob ? 16 : 28, right: mob ? 16 : 28, zIndex: 151,
@@ -2236,6 +2237,11 @@ export default function App() {
   const [detailContact, setDetailContact] = useState(null);
   const [tourStep, setTourStep] = useState(null);
   const tourStartedRef = useRef(false);
+  const tourRef1 = useRef(null);
+  const tourRef2 = useRef(null);
+  const tourRef3 = useRef(null);
+  const tourRef4 = useRef(null);
+  const tourRef5 = useRef(null);
   const mob = useIsMobile();
 
   function nav(target, data) {
@@ -2252,8 +2258,13 @@ export default function App() {
     setPage("home");
   }
 
-  // Tour auto-start disabled for now - kept for later
-  useEffect(function () {}, [started]);
+  useEffect(function () {
+    if (started && !tourStartedRef.current) {
+      tourStartedRef.current = true;
+      var t = setTimeout(function () { setTourStep(0); }, 800);
+      return function () { clearTimeout(t); };
+    }
+  }, [started]);
 
   if (!started) {
     return (
@@ -2285,7 +2296,7 @@ export default function App() {
     if (page === "inspection") {
       return <InspectionPage onBack={goBack} />;
     }
-    return <Home onNav={nav} />;
+    return <Home onNav={nav} tourRefs={[tourRef1, tourRef2, tourRef3]} />;
   }
 
   return (
@@ -2317,6 +2328,7 @@ export default function App() {
           {tabs.map(t => (
             <button
               key={t.id}
+              ref={t.id === "weather" ? tourRef4 : null}
               onClick={() => nav(t.id)}
               style={{
                 display: "flex", alignItems: "center", gap: mob ? 4 : 6,
@@ -2340,7 +2352,7 @@ export default function App() {
       </div>
 
       {/* Abby Chat Assistant */}
-      <AbbyChat />
+      <AbbyChat abbyRef={tourRef5} />
 
       {/* Abby Tooltip Tour */}
       {tourStep !== null && tourStep >= 0 && tourStep <= 5 && (
@@ -2377,39 +2389,49 @@ export default function App() {
             </div>
           )}
 
-          {/* Steps 1-5: Pointed tooltips */}
+          {/* Steps 1-5: Positioned via refs */}
           {tourStep >= 1 && tourStep <= 5 && (function () {
-            var steps = [
-              { text: "Your key numbers. Roofs that need attention and revenue from plans.", pos: { top: mob ? 160 : 200, left: mob ? 20 : "50%", ml: mob ? 0 : -130 }, arrow: "top" },
-              { text: "I handle follow-ups automatically. Green = sent, orange = needs your call.", pos: { top: mob ? 280 : 300, left: mob ? 20 : "50%", ml: mob ? 0 : -130 }, arrow: "top" },
-              { text: "Tap any contact to see their roof and send them a message.", pos: { top: mob ? 500 : 460, left: mob ? 20 : "50%", ml: mob ? 0 : -130 }, arrow: "top" },
-              { text: "Storm alerts. One tap sends texts to all affected customers.", pos: { top: 56, left: mob ? "50%" : "50%", ml: mob ? -130 : -130 }, arrow: "top" },
-              { text: "That's me! Tap here to look up a roof, draft a message, or check revenue.", pos: { bottom: mob ? 72 : 92, right: mob ? 72 : 92 }, arrow: "right" },
+            var allRefs = [tourRef1, tourRef2, tourRef3, tourRef4, tourRef5];
+            var texts = [
+              "Your key numbers. Roofs that need attention and revenue from plans.",
+              "I handle follow-ups automatically. Green = sent, orange = needs your call.",
+              "Tap any contact to see their roof and send them a message.",
+              "Campaigns tab. One tap sends texts to all affected customers.",
+              "That's me! Tap here to look up a roof, draft a message, or check revenue.",
             ];
-            var s = steps[tourStep - 1];
+            var currentRef = allRefs[tourStep - 1];
+            if (!currentRef || !currentRef.current) return null;
+            var rect = currentRef.current.getBoundingClientRect();
+
             var tipStyle = {
               position: "fixed", zIndex: 300,
-              width: 260, maxWidth: "calc(100vw - 40px)",
+              width: 260, maxWidth: "calc(100vw - 32px)",
               background: T.white, borderRadius: 14, padding: "16px 18px",
               boxShadow: "0 8px 40px rgba(0,0,0,0.2)",
             };
-            if (s.pos.top !== undefined) tipStyle.top = s.pos.top;
-            if (s.pos.bottom !== undefined) tipStyle.bottom = s.pos.bottom;
-            if (s.pos.left !== undefined) tipStyle.left = s.pos.left;
-            if (s.pos.right !== undefined) tipStyle.right = s.pos.right;
-            if (s.pos.ml) tipStyle.marginLeft = s.pos.ml;
-
             var arrowStyle = { position: "absolute", width: 0, height: 0 };
-            if (s.arrow === "top") {
-              arrowStyle.top = -8; arrowStyle.left = 24;
-              arrowStyle.borderLeft = "8px solid transparent";
-              arrowStyle.borderRight = "8px solid transparent";
-              arrowStyle.borderBottom = "8px solid " + T.white;
-            } else if (s.arrow === "right") {
-              arrowStyle.right = -8; arrowStyle.bottom = 20;
+
+            if (tourStep === 5) {
+              tipStyle.bottom = Math.max(16, window.innerHeight - rect.top + 10);
+              tipStyle.right = Math.max(16, window.innerWidth - rect.left + 10);
+              arrowStyle.right = -8; arrowStyle.bottom = 16;
               arrowStyle.borderTop = "8px solid transparent";
               arrowStyle.borderBottom = "8px solid transparent";
-              arrowStyle.borderLeft = "8px solid " + T.white;
+              arrowStyle.borderLeft = "8px solid #fff";
+            } else if (tourStep === 4) {
+              tipStyle.top = rect.bottom + 10;
+              tipStyle.left = Math.max(16, Math.min(rect.left, window.innerWidth - 280));
+              arrowStyle.top = -8; arrowStyle.left = Math.max(16, rect.left + rect.width / 2 - tipStyle.left - 8);
+              arrowStyle.borderLeft = "8px solid transparent";
+              arrowStyle.borderRight = "8px solid transparent";
+              arrowStyle.borderBottom = "8px solid #fff";
+            } else {
+              tipStyle.top = rect.bottom + 10;
+              tipStyle.left = Math.max(16, Math.min(rect.left, window.innerWidth - 280));
+              arrowStyle.top = -8; arrowStyle.left = 20;
+              arrowStyle.borderLeft = "8px solid transparent";
+              arrowStyle.borderRight = "8px solid transparent";
+              arrowStyle.borderBottom = "8px solid #fff";
             }
 
             return (
@@ -2426,7 +2448,7 @@ export default function App() {
                   <span style={{ fontSize: 12, fontWeight: 700, color: T.text }}>Abby</span>
                   <span style={{ fontSize: 10, color: T.t3, marginLeft: "auto" }}>{tourStep + " of 5"}</span>
                 </div>
-                <div style={{ fontSize: 13, color: T.t2, lineHeight: 1.5, marginBottom: 14 }}>{s.text}</div>
+                <div style={{ fontSize: 13, color: T.t2, lineHeight: 1.5, marginBottom: 14 }}>{texts[tourStep - 1]}</div>
                 <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
                   <button onClick={function () {
                     if (tourStep < 5) { setTourStep(tourStep + 1); }
