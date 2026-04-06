@@ -2213,6 +2213,8 @@ export default function App() {
   const [started, setStarted] = useState(false);
   const [page, setPage] = useState("home");
   const [detailContact, setDetailContact] = useState(null);
+  const [tourStep, setTourStep] = useState(null);
+  const tourStartedRef = useRef(false);
   const mob = useIsMobile();
 
   function nav(target, data) {
@@ -2242,6 +2244,15 @@ export default function App() {
       </div>
     );
   }
+
+  // Auto-start tour when dashboard first loads
+  useEffect(function () {
+    if (started && !tourStartedRef.current) {
+      tourStartedRef.current = true;
+      var t = setTimeout(function () { setTourStep(0); }, 800);
+      return function () { clearTimeout(t); };
+    }
+  }, [started]);
 
   const tabs = [
     { id: "home", label: "Home", icon: <IconHome size={15} /> },
@@ -2315,6 +2326,74 @@ export default function App() {
 
       {/* Abby Chat Assistant */}
       <AbbyChat />
+
+      {/* Abby Tooltip Tour */}
+      {tourStep !== null && (function () {
+        var steps = [
+          { text: "These are your key numbers. Roofs that need attention and how much revenue from maintenance plans.", top: mob ? 140 : 130, left: mob ? 14 : "50%", transform: mob ? "none" : "translateX(-50%)", arrow: "up" },
+          { text: "I handle follow-ups automatically. Green = sent, blue = sending soon, orange = needs your call.", top: mob ? 320 : 270, left: mob ? 14 : "50%", transform: mob ? "none" : "translateX(-50%)", arrow: "up" },
+          { text: "Tap any contact to see their roof health and send them a message.", top: mob ? 520 : 420, left: mob ? 14 : "30%", transform: mob ? "none" : "translateX(-50%)", arrow: "up" },
+          { text: "Check the Weather tab for storm alerts. One tap sends texts to all affected customers.", top: 60, left: mob ? "40%" : "45%", transform: "translateX(-50%)", arrow: "up" },
+          { text: "That's me! Tap here anytime to look up a roof, draft a message, or check your revenue.", top: "auto", bottom: mob ? 76 : 96, right: mob ? 76 : 96, left: "auto", transform: "none", arrow: "right" },
+        ];
+        var s = steps[tourStep];
+        if (!s) return null;
+
+        var tooltipStyle = {
+          position: "fixed", zIndex: 300,
+          width: mob ? "calc(100vw - 28px)" : 300,
+          background: T.white, borderRadius: 16, padding: "18px 20px",
+          boxShadow: "0 8px 40px rgba(0,0,0,0.15)",
+        };
+        if (s.top !== "auto") tooltipStyle.top = s.top;
+        if (s.bottom) tooltipStyle.bottom = s.bottom;
+        if (s.left !== "auto") tooltipStyle.left = s.left;
+        if (s.right) tooltipStyle.right = s.right;
+        if (s.transform !== "none") tooltipStyle.transform = s.transform;
+
+        return (
+          <div style={{ position: "fixed", inset: 0, zIndex: 299, background: "rgba(0,0,0,0.35)" }}
+            onClick={function () { setTourStep(null); }}
+          >
+            <div onClick={function (e) { e.stopPropagation(); }} style={tooltipStyle}>
+              {/* Abby avatar + name */}
+              <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 10 }}>
+                <div style={{
+                  width: 24, height: 24, borderRadius: 12,
+                  background: "linear-gradient(135deg, " + T.blue + ", #34C759)",
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                }}>
+                  <IconAgent size={12} color="#fff" />
+                </div>
+                <span style={{ fontSize: 13, fontWeight: 700, color: T.text }}>Abby</span>
+                <span style={{ fontSize: 11, color: T.t3, marginLeft: "auto" }}>{(tourStep + 1) + " of " + steps.length}</span>
+              </div>
+
+              {/* Text */}
+              <div style={{ fontSize: 14, color: T.t2, lineHeight: 1.55, marginBottom: 16 }}>{s.text}</div>
+
+              {/* Buttons */}
+              <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                <button onClick={function () {
+                  if (tourStep < steps.length - 1) { setTourStep(tourStep + 1); }
+                  else { setTourStep(null); }
+                }} style={{
+                  background: T.blue, color: "#fff", border: "none", borderRadius: 980,
+                  padding: "8px 24px", fontSize: 13, fontWeight: 600, cursor: "pointer",
+                }}>
+                  {tourStep < steps.length - 1 ? "Next" : "Got it"}
+                </button>
+                <button onClick={function () { setTourStep(null); }} style={{
+                  background: "transparent", border: "none", color: T.t3,
+                  fontSize: 12, cursor: "pointer", padding: 0,
+                }}>
+                  Skip tour
+                </button>
+              </div>
+            </div>
+          </div>
+        );
+      })()}
     </div>
   );
 }
