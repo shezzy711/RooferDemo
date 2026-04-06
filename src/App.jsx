@@ -846,6 +846,7 @@ function Home({ onNav, tourRefs }) {
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 32 }}>
           <h1 style={{ fontSize: 28, fontWeight: 700, color: T.text, margin: 0, letterSpacing: -0.5 }}>Command Center</h1>
           <button
+            ref={tourRefs && tourRefs[3]}
             onClick={function () { setShowNewContact(true); }}
             style={{
               background: T.blue, color: "#fff", border: "none", borderRadius: 980,
@@ -2243,6 +2244,8 @@ export default function App() {
   const tourRef3 = useRef(null);
   const tourRef4 = useRef(null);
   const tourRef5 = useRef(null);
+  const tourRef6 = useRef(null);
+  const tourRef7 = useRef(null);
   const mob = useIsMobile();
 
   function nav(target, data) {
@@ -2271,14 +2274,13 @@ export default function App() {
   useEffect(function () {
     if (tourStep === null || tourStep === 0) { setTourReady(tourStep === 0); return; }
     setTourReady(false);
-    var allRefs = [tourRef1, tourRef2, tourRef3, tourRef4, tourRef5];
+    var allRefs = [tourRef1, tourRef2, tourRef3, tourRef7, tourRef4, tourRef6, tourRef5];
     var ref = allRefs[tourStep - 1];
     if (ref && ref.current) {
-      // Steps 1-3 need scrolling (in content area). Steps 4-5 are fixed/sticky.
-      if (tourStep <= 3) {
+      // Steps 1-4 need scrolling (content area elements). Steps 5-7 are fixed/sticky.
+      if (tourStep <= 4) {
         ref.current.scrollIntoView({ behavior: "smooth", block: "center" });
       }
-      // Wait for scroll to settle, then mark ready so tooltip reads correct position
       var t = setTimeout(function () { setTourReady(true); }, 400);
       return function () { clearTimeout(t); };
     } else {
@@ -2316,7 +2318,7 @@ export default function App() {
     if (page === "inspection") {
       return <InspectionPage onBack={goBack} />;
     }
-    return <Home onNav={nav} tourRefs={[tourRef1, tourRef2, tourRef3]} />;
+    return <Home onNav={nav} tourRefs={[tourRef1, tourRef2, tourRef3, tourRef7]} />;
   }
 
   return (
@@ -2348,7 +2350,7 @@ export default function App() {
           {tabs.map(t => (
             <button
               key={t.id}
-              ref={t.id === "weather" ? tourRef4 : null}
+              ref={t.id === "weather" ? tourRef4 : t.id === "inspection" ? tourRef6 : null}
               onClick={() => nav(t.id)}
               style={{
                 display: "flex", alignItems: "center", gap: mob ? 4 : 6,
@@ -2375,7 +2377,7 @@ export default function App() {
       <AbbyChat abbyRef={tourRef5} />
 
       {/* Abby Tooltip Tour */}
-      {tourStep !== null && tourStep >= 0 && tourStep <= 5 && (
+      {tourStep !== null && tourStep >= 0 && tourStep <= 7 && (
         <div
           onClick={function () { setTourStep(null); }}
           style={{ position: "fixed", inset: 0, zIndex: 299, background: "rgba(0,0,0,0.4)" }}
@@ -2409,16 +2411,19 @@ export default function App() {
             </div>
           )}
 
-          {/* Steps 1-5: Positioned via refs (only render when scroll is settled) */}
-          {tourStep >= 1 && tourStep <= 5 && tourReady && (function () {
-            var allRefs = [tourRef1, tourRef2, tourRef3, tourRef4, tourRef5];
+          {/* Steps 1-7: Positioned via refs */}
+          {tourStep >= 1 && tourStep <= 7 && tourReady && (function () {
+            var allRefs = [tourRef1, tourRef2, tourRef3, tourRef7, tourRef4, tourRef6, tourRef5];
             var texts = [
-              "Your key numbers. Roofs that need attention and revenue from plans.",
-              "I handle follow-ups automatically. Green = sent, orange = needs your call.",
-              "Tap any contact to see their roof and send them a message.",
-              "Campaigns tab. One tap sends texts to all affected customers.",
-              "That's me! Tap here to look up a roof, draft a message, or check revenue.",
+              "Your key numbers at a glance. Roofs needing attention and revenue from plans.",
+              "AI handles follow-ups for you. Green = sent, orange = needs your call.",
+              "Switch between at-risk roofs and high-value platinum contacts.",
+              "Add a new customer. The AI scores their roof instantly.",
+              "Send storm alerts, seasonal checkups, and warranty reminders to thousands of customers.",
+              "Run inspections on site and generate professional reports for customers.",
+              "That's me! Tap here anytime to look up a roof, draft a message, or check revenue.",
             ];
+            var totalSteps = 7;
             var currentRef = allRefs[tourStep - 1];
             if (!currentRef || !currentRef.current) return null;
             var rect = currentRef.current.getBoundingClientRect();
@@ -2431,21 +2436,33 @@ export default function App() {
             };
             var arrowStyle = { position: "absolute", width: 0, height: 0 };
 
-            if (tourStep === 5) {
+            if (tourStep === 7) {
+              // Abby button: tooltip to the left
               tipStyle.bottom = Math.max(16, window.innerHeight - rect.top + 10);
               tipStyle.right = Math.max(16, window.innerWidth - rect.left + 10);
               arrowStyle.right = -8; arrowStyle.bottom = 16;
               arrowStyle.borderTop = "8px solid transparent";
               arrowStyle.borderBottom = "8px solid transparent";
               arrowStyle.borderLeft = "8px solid #fff";
-            } else if (tourStep === 4) {
+            } else if (tourStep === 3) {
+              // Priority queue: tooltip ABOVE with arrow pointing down
+              tipStyle.bottom = Math.max(16, window.innerHeight - rect.top + 10);
+              tipStyle.left = Math.max(16, Math.min(rect.left, window.innerWidth - 280));
+              arrowStyle.bottom = -8; arrowStyle.left = 20;
+              arrowStyle.borderLeft = "8px solid transparent";
+              arrowStyle.borderRight = "8px solid transparent";
+              arrowStyle.borderTop = "8px solid #fff";
+            } else if (tourStep === 5 || tourStep === 6) {
+              // Nav tabs: tooltip below
               tipStyle.top = rect.bottom + 10;
               tipStyle.left = Math.max(16, Math.min(rect.left, window.innerWidth - 280));
-              arrowStyle.top = -8; arrowStyle.left = Math.max(16, rect.left + rect.width / 2 - tipStyle.left - 8);
+              var arrowLeft = rect.left + rect.width / 2 - (typeof tipStyle.left === "number" ? tipStyle.left : 16) - 8;
+              arrowStyle.top = -8; arrowStyle.left = Math.max(8, Math.min(arrowLeft, 240));
               arrowStyle.borderLeft = "8px solid transparent";
               arrowStyle.borderRight = "8px solid transparent";
               arrowStyle.borderBottom = "8px solid #fff";
             } else {
+              // Default: tooltip below element
               tipStyle.top = rect.bottom + 10;
               tipStyle.left = Math.max(16, Math.min(rect.left, window.innerWidth - 280));
               arrowStyle.top = -8; arrowStyle.left = 20;
@@ -2466,18 +2483,18 @@ export default function App() {
                     <IconAgent size={10} color="#fff" />
                   </div>
                   <span style={{ fontSize: 12, fontWeight: 700, color: T.text }}>Abby</span>
-                  <span style={{ fontSize: 10, color: T.t3, marginLeft: "auto" }}>{tourStep + " of 5"}</span>
+                  <span style={{ fontSize: 10, color: T.t3, marginLeft: "auto" }}>{tourStep + " of " + totalSteps}</span>
                 </div>
                 <div style={{ fontSize: 13, color: T.t2, lineHeight: 1.5, marginBottom: 14 }}>{texts[tourStep - 1]}</div>
                 <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
                   <button onClick={function () {
-                    if (tourStep < 5) { setTourStep(tourStep + 1); }
+                    if (tourStep < totalSteps) { setTourStep(tourStep + 1); }
                     else { setTourStep(null); }
                   }} style={{
                     background: T.blue, color: "#fff", border: "none", borderRadius: 980,
                     padding: "7px 20px", fontSize: 12, fontWeight: 600, cursor: "pointer",
                   }}>
-                    {tourStep < 5 ? "Next" : "Got it"}
+                    {tourStep < totalSteps ? "Next" : "Got it"}
                   </button>
                   <button onClick={function () { setTourStep(null); }} style={{
                     background: "transparent", border: "none", color: T.t3,
