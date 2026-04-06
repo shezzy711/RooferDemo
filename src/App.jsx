@@ -63,13 +63,19 @@ function IconCalendar({ size = 16, color = "currentColor" }) {
 
 function IconAgent({ size = 22, color = "currentColor" }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round">
-      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-      <circle cx="12" cy="7" r="4" />
-      <path d="M2 11c0-1.5 1.5-2 3-2" />
-      <path d="M19 9c1.5 0 3 .5 3 2" />
-      <path d="M5 9V7" />
-      <path d="M19 9V7" />
+    <svg width={size} height={size} viewBox="0 0 24 24" fill={color}>
+      {/* Head */}
+      <circle cx="12" cy="9" r="4.5" />
+      {/* Body/shoulders */}
+      <path d="M4 22c0-4.4 3.6-8 8-8s8 3.6 8 8" />
+      {/* Headset band */}
+      <path d="M5.5 9a6.5 6.5 0 0 1 13 0" fill="none" stroke={color} strokeWidth="2" />
+      {/* Headset earpiece left */}
+      <rect x="3.5" y="7.5" width="3" height="4" rx="1.5" />
+      {/* Mic boom */}
+      <path d="M3.5 11.5c0 2 1.5 3.5 3.5 3.5" fill="none" stroke={color} strokeWidth="1.5" strokeLinecap="round" />
+      {/* Mic dot */}
+      <circle cx="7" cy="15" r="1.2" />
     </svg>
   );
 }
