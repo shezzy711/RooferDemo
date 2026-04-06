@@ -884,7 +884,7 @@ function Home({ onNav }) {
 
       {/* Stats Row */}
       <FadeIn delay={160}>
-        <div style={{ display: "grid", gridTemplateColumns: mob ? "1fr" : "repeat(2, 1fr)", gap: 10, marginBottom: 20 }}>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginBottom: 20 }}>
           {stats.map((s, i) => (
             <div key={i} style={{ background: T.white, borderRadius: 14, padding: "16px 14px",
               boxShadow: "0 0 0 0.5px rgba(0,0,0,0.04), 0 1px 3px rgba(0,0,0,0.03), 0 4px 12px rgba(0,0,0,0.025)",
@@ -1270,20 +1270,42 @@ function Detail({ contact, onBack }) {
   );
 }
 
-/* ─── Weather Intel ─── */
+/* ─── Campaigns ─── */
 
 function Weather({ onBack }) {
   const mob = useIsMobile();
-  const [deploying, setDeploying] = useState(false);
-  const [deployed, setDeployed] = useState(false);
+  const [sent, setSent] = useState({});
 
-  function handleDeploy() {
-    setDeploying(true);
-    setTimeout(() => {
-      setDeploying(false);
-      setDeployed(true);
-    }, 2200);
+  function handleSend(id) {
+    setSent(function (prev) { var n = {}; for (var k in prev) n[k] = prev[k]; n[id] = "sending"; return n; });
+    setTimeout(function () {
+      setSent(function (prev) { var n = {}; for (var k in prev) n[k] = prev[k]; n[id] = "done"; return n; });
+    }, 1500);
   }
+
+  var campaigns = [
+    {
+      id: "storm", icon: <IconStorm size={mob ? 18 : 22} color={T.orange} />,
+      iconBg: T.orangeL, borderColor: T.orange,
+      title: "Storm Watch", sub: mob ? "Montgomery Co. · Tonight" : "Montgomery and Walker Counties · Hail 1.5in · Tonight",
+      count: "1,247", label: "customers in storm path",
+      btnText: "Send Storm Alerts", sendingText: "Sending 1,247 texts...", doneText: "Storm alerts sent",
+    },
+    {
+      id: "spring", icon: <IconSearch size={mob ? 18 : 22} color={T.green} />,
+      iconBg: T.greenL, borderColor: T.green,
+      title: "Spring Checkup", sub: "Seasonal maintenance reminder",
+      count: "2,100", label: "customers due for checkup",
+      btnText: "Send Campaign", sendingText: "Sending 2,100 texts...", doneText: "Spring checkup sent",
+    },
+    {
+      id: "warranty", icon: <IconCalendar size={mob ? 18 : 22} color={T.orange} />,
+      iconBg: T.orangeL, borderColor: T.orange,
+      title: "Warranty Expiring", sub: "Warranties expiring within 90 days",
+      count: "312", label: "customers to notify",
+      btnText: "Send Reminders", sendingText: "Sending 312 texts...", doneText: "Warranty reminders sent",
+    },
+  ];
 
   return (
     <div style={{ maxWidth: 960, margin: "0 auto" }}>
@@ -1295,72 +1317,64 @@ function Weather({ onBack }) {
       </button>
 
       <FadeIn>
-        <Card style={{ marginBottom: 20, padding: mob ? 16 : "26px 30px" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: mob ? 12 : 16 }}>
-            <div style={{
-              width: mob ? 40 : 52, height: mob ? 40 : 52, borderRadius: mob ? 12 : 16, background: T.orangeL,
-              display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0,
-            }}>
-              <IconStorm size={mob ? 20 : 24} color={T.orange} />
-            </div>
-            <div>
-              <h2 style={{ fontSize: mob ? 20 : 24, fontWeight: 700, color: T.text, margin: 0 }}>Severe Storm Watch</h2>
-              <p style={{ fontSize: mob ? 13 : 15, color: T.t2, margin: "2px 0 0" }}>{mob ? "Montgomery Co. · Hail 1.5in · Tonight" : "Montgomery and Walker Counties · Hail up to 1.5 inches · Tonight"}</p>
-            </div>
-          </div>
-        </Card>
+        <h2 style={{ fontSize: mob ? 22 : 28, fontWeight: 700, color: T.text, margin: "0 0 20px", letterSpacing: -0.5 }}>Campaigns</h2>
       </FadeIn>
 
-      <FadeIn delay={80}>
-        <div style={{ display: "grid", gridTemplateColumns: mob ? "1fr" : "1fr 1fr", gap: 20, marginBottom: 24 }}>
-          <Card style={{ borderLeft: `3px solid ${T.red}` }}>
-            <Pill color={T.red}>Immediate · 312 contacts</Pill>
-            <div style={{ fontSize: 13, color: T.t2, margin: "10px 0 14px" }}>
-              Highest risk roofs
-            </div>
-            <div style={{
-              background: T.bg, borderRadius: T.rs, padding: "14px 16px",
-              fontSize: 14, color: T.t2, lineHeight: 1.65, fontStyle: "italic",
-            }}>
-              "Storm alert tonight. Call us if you see damage: 936-701-2242"
-            </div>
-          </Card>
+      {campaigns.map(function (c, i) {
+        var status = sent[c.id];
+        return (
+          <FadeIn key={c.id} delay={i * 80}>
+            <Card style={{ marginBottom: 16, borderLeft: "3px solid " + c.borderColor, padding: mob ? 16 : "22px 26px" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: mob ? 12 : 16, marginBottom: 14 }}>
+                <div style={{
+                  width: mob ? 36 : 44, height: mob ? 36 : 44, borderRadius: mob ? 10 : 12, background: c.iconBg,
+                  display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0,
+                }}>
+                  {c.icon}
+                </div>
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontSize: mob ? 16 : 18, fontWeight: 700, color: T.text }}>{c.title}</div>
+                  <div style={{ fontSize: mob ? 12 : 13, color: T.t3, marginTop: 2 }}>{c.sub}</div>
+                </div>
+                <div style={{ textAlign: "right", flexShrink: 0 }}>
+                  <div style={{ fontSize: mob ? 20 : 24, fontWeight: 700, color: T.text }}>{c.count}</div>
+                  <div style={{ fontSize: 11, color: T.t3 }}>{c.label}</div>
+                </div>
+              </div>
 
-          <Card style={{ borderLeft: `3px solid ${T.orange}` }}>
-            <Pill color={T.orange}>8:00 AM · 935 contacts</Pill>
-            <div style={{ fontSize: 13, color: T.t2, margin: "10px 0 14px" }}>
-              All other customers
-            </div>
-            <div style={{
-              background: T.bg, borderRadius: T.rs, padding: "14px 16px",
-              fontSize: 14, color: T.t2, lineHeight: 1.65, fontStyle: "italic",
-            }}>
-              "Storms last night. Lifeline is here if your roof took a hit."
-            </div>
-          </Card>
-        </div>
-      </FadeIn>
+              {!status && (
+                <button onClick={function () { handleSend(c.id); }} style={{
+                  width: "100%", padding: mob ? "12px 0" : "14px 0",
+                  background: T.blue, color: "#fff", border: "none", borderRadius: 980,
+                  fontSize: mob ? 14 : 15, fontWeight: 600, cursor: "pointer",
+                  boxShadow: "0 2px 12px rgba(0,113,227,0.3)",
+                }}>
+                  {c.btnText} · {c.count}
+                </button>
+              )}
 
-      <FadeIn delay={160}>
-        {!deployed ? (
-          <button onClick={handleDeploy} disabled={deploying} style={{
-            width: "100%", padding: "16px 0",
-            background: deploying ? T.t3 : T.blue, color: "#fff",
-            border: "none", borderRadius: 980, fontSize: mob ? 15 : 17, fontWeight: 600,
-            cursor: deploying ? "wait" : "pointer",
-            boxShadow: deploying ? "none" : "0 2px 14px rgba(0,113,227,0.3)",
-          }}>
-            {deploying ? "Sending 1,247 texts..." : "Send Storm Alerts · 1,247 Customers"}
-          </button>
-        ) : (
-          <div style={{ padding: mob ? 16 : "20px 28px", background: T.greenL, borderRadius: T.r, textAlign: "center" }}>
-            <div style={{ fontSize: mob ? 17 : 20, fontWeight: 700, color: T.green, display: "flex", alignItems: "center", justifyContent: "center", gap: 6 }}><IconCheck size={mob ? 17 : 20} color={T.green} />Storm Alerts Sent</div>
-            <div style={{ fontSize: mob ? 13 : 14, color: T.t2, marginTop: 6 }}>
-              {mob ? "312 sent now · 935 at 8 AM" : "312 sent immediately · 935 queued for 8 AM · Each personalized to the customer's roof"}
-            </div>
-          </div>
-        )}
-      </FadeIn>
+              {status === "sending" && (
+                <button disabled style={{
+                  width: "100%", padding: mob ? "12px 0" : "14px 0",
+                  background: T.t3, color: "#fff", border: "none", borderRadius: 980,
+                  fontSize: mob ? 14 : 15, fontWeight: 600, cursor: "wait",
+                }}>
+                  {c.sendingText}
+                </button>
+              )}
+
+              {status === "done" && (
+                <div style={{ padding: "12px 16px", background: T.greenL, borderRadius: 12, textAlign: "center",
+                  display: "flex", alignItems: "center", justifyContent: "center", gap: 6,
+                }}>
+                  <IconCheck size={16} color={T.green} />
+                  <span style={{ fontSize: 14, fontWeight: 600, color: T.green }}>{c.doneText}</span>
+                </div>
+              )}
+            </Card>
+          </FadeIn>
+        );
+      })}
     </div>
   );
 }
@@ -2231,14 +2245,8 @@ export default function App() {
     setPage("home");
   }
 
-  // Auto-start tour when dashboard first loads (must be before early return)
-  useEffect(function () {
-    if (started && !tourStartedRef.current) {
-      tourStartedRef.current = true;
-      var t = setTimeout(function () { setTourStep(0); }, 800);
-      return function () { clearTimeout(t); };
-    }
-  }, [started]);
+  // Tour auto-start disabled for now - kept for later
+  useEffect(function () {}, [started]);
 
   if (!started) {
     return (
@@ -2256,7 +2264,7 @@ export default function App() {
 
   const tabs = [
     { id: "home", label: "Home", icon: <IconHome size={15} /> },
-    { id: "weather", label: "Weather", icon: <IconStorm size={15} /> },
+    { id: "weather", label: "Campaigns", icon: <IconSend size={15} color="currentColor" /> },
     { id: "inspection", label: "Inspect", icon: <IconSearch size={15} /> },
   ];
 
