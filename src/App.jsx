@@ -1301,6 +1301,7 @@ function InspectionPage({ onBack }) {
   const [step, setStep] = useState("input"); // input, generating, done
   const [reportSent, setReportSent] = useState(false);
   const [expandedItem, setExpandedItem] = useState(null);
+  const [voiceDemo, setVoiceDemo] = useState(null); // null, "listening", "unavailable"
 
   const inspectionInputs = [
     { label: "1. Shingles", question: "Shingle surface condition?", value: "UV-driven granule loss on south-facing slope, center section. Below critical threshold but progressing." },
@@ -1349,14 +1350,68 @@ function InspectionPage({ onBack }) {
             <div style={{ fontSize: 12, color: T.t3, marginBottom: 12 }}>3301 Magnolia Bend, Conroe · GAF Timberline HDZ</div>
 
             {/* Voice indicator */}
-            <div style={{
-              display: "flex", alignItems: "center", gap: 8,
-              padding: "8px 14px", background: T.greenS, borderRadius: 10, marginBottom: 18,
-            }}>
+            <div
+              onClick={function () {
+                setVoiceDemo("listening");
+                setTimeout(function () { setVoiceDemo("unavailable"); }, 1500);
+              }}
+              style={{
+                display: "flex", alignItems: "center", gap: 8,
+                padding: "8px 14px", background: T.greenS, borderRadius: 10, marginBottom: 18,
+                cursor: "pointer",
+              }}
+            >
               <IconMic size={14} color={T.green} />
               <span style={{ fontSize: 12, fontWeight: 600, color: T.green }}>Voice enabled</span>
-              <span style={{ fontSize: 11, color: T.t3 }}>Tap to dictate instead of type</span>
+              <span style={{ fontSize: 11, color: T.t3 }}>Tap to dictate</span>
             </div>
+
+            {/* Voice Demo Popup */}
+            {voiceDemo && (
+              <div style={{
+                position: "fixed", inset: 0, background: "rgba(0,0,0,0.3)",
+                backdropFilter: "blur(6px)", WebkitBackdropFilter: "blur(6px)",
+                display: "flex", alignItems: "center", justifyContent: "center", zIndex: 200,
+              }}>
+                <div style={{
+                  background: T.white, borderRadius: 20, padding: "32px 36px", width: 320,
+                  textAlign: "center", boxShadow: "0 24px 80px rgba(0,0,0,0.15)",
+                }}>
+                  {voiceDemo === "listening" ? (
+                    <div>
+                      <div style={{
+                        width: 56, height: 56, borderRadius: 28, background: T.redS,
+                        display: "flex", alignItems: "center", justifyContent: "center",
+                        margin: "0 auto 16px", animation: "lifelinepulse 1s ease-in-out infinite",
+                      }}>
+                        <IconMic size={24} color={T.red} />
+                      </div>
+                      <div style={{ fontSize: 17, fontWeight: 600, color: T.text }}>Listening...</div>
+                    </div>
+                  ) : (
+                    <div>
+                      <div style={{
+                        width: 56, height: 56, borderRadius: 28, background: T.bg,
+                        display: "flex", alignItems: "center", justifyContent: "center",
+                        margin: "0 auto 16px",
+                      }}>
+                        <IconMic size={24} color={T.t3} />
+                      </div>
+                      <div style={{ fontSize: 17, fontWeight: 600, color: T.text, marginBottom: 8 }}>Demo Mode</div>
+                      <div style={{ fontSize: 14, color: T.t2, lineHeight: 1.5, marginBottom: 20 }}>
+                        Voice recording is not available in this preview. In the live version, you speak and it fills in the checklist automatically.
+                      </div>
+                      <button onClick={function () { setVoiceDemo(null); }} style={{
+                        background: T.blue, color: "#fff", border: "none", borderRadius: 980,
+                        padding: "10px 32px", fontSize: 15, fontWeight: 600, cursor: "pointer",
+                      }}>
+                        Got it
+                      </button>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
 
             {inspectionInputs.map((item, i) => (
               <div key={i} style={{
@@ -1390,7 +1445,13 @@ function InspectionPage({ onBack }) {
             <div style={{ marginTop: 18, display: "flex", flexDirection: "column", gap: 8 }}>
               <div style={{ padding: "10px 14px", background: T.blueS, borderRadius: 10, display: "flex", alignItems: "center", gap: 10 }}>
                 <IconCamera size={15} color={T.blue} />
-                <span style={{ fontSize: 13, color: T.blue, fontWeight: 500 }}>6 photos attached</span>
+                <span style={{ fontSize: 13, color: T.blue, fontWeight: 500, flex: 1 }}>6 photos attached</span>
+                <button style={{
+                  background: T.blue, color: "#fff", border: "none", borderRadius: 980,
+                  padding: "4px 12px", fontSize: 11, fontWeight: 600, cursor: "pointer",
+                }}>
+                  + Attach Photo
+                </button>
               </div>
               <div style={{ padding: "10px 14px", background: T.blueS, borderRadius: 10, display: "flex", alignItems: "center", gap: 10 }}>
                 <IconVideo size={15} color={T.blue} />
