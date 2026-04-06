@@ -67,6 +67,15 @@ function IconSend({ size = 16, color = "currentColor" }) {
   );
 }
 
+function IconVideo({ size = 16, color = "currentColor" }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">
+      <polygon points="23 7 16 12 23 17 23 7" />
+      <rect x="1" y="5" width="15" height="14" rx="2" ry="2" />
+    </svg>
+  );
+}
+
 function IconMic({ size = 16, color = "currentColor" }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">
@@ -1378,9 +1387,21 @@ function InspectionPage({ onBack }) {
               </div>
             ))}
 
-            <div style={{ marginTop: 18, padding: "12px 16px", background: T.blueS, borderRadius: 10, display: "flex", alignItems: "center", gap: 10 }}>
-              <IconCamera size={16} color={T.blue} />
-              <span style={{ fontSize: 13, color: T.blue, fontWeight: 500 }}>6 photos attached</span>
+            <div style={{ marginTop: 18, display: "flex", flexDirection: "column", gap: 8 }}>
+              <div style={{ padding: "10px 14px", background: T.blueS, borderRadius: 10, display: "flex", alignItems: "center", gap: 10 }}>
+                <IconCamera size={15} color={T.blue} />
+                <span style={{ fontSize: 13, color: T.blue, fontWeight: 500 }}>6 photos attached</span>
+              </div>
+              <div style={{ padding: "10px 14px", background: T.blueS, borderRadius: 10, display: "flex", alignItems: "center", gap: 10 }}>
+                <IconVideo size={15} color={T.blue} />
+                <span style={{ fontSize: 13, color: T.blue, fontWeight: 500, flex: 1 }}>1 video attached</span>
+                <button style={{
+                  background: T.blue, color: "#fff", border: "none", borderRadius: 980,
+                  padding: "4px 12px", fontSize: 11, fontWeight: 600, cursor: "pointer",
+                }}>
+                  + Attach Video
+                </button>
+              </div>
             </div>
 
             <div style={{ marginTop: 12, fontSize: 12, color: T.t3, textAlign: "center" }}>
