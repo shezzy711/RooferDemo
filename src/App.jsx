@@ -1643,11 +1643,35 @@ function InspectionPage({ onBack }) {
         )}
       </div>
 
-      {/* Homeowner Report Preview */}
+      {/* Homeowner Report Preview - Modal */}
       {showFullReport && (
-        <FadeIn delay={200}>
-          <div style={{ marginTop: 28 }}>
-            <Card style={{ padding: 0, overflow: "hidden", boxShadow: T.shL }}>
+        <div
+          onClick={function () { setShowFullReport(false); }}
+          style={{
+            position: "fixed", inset: 0, background: "rgba(0,0,0,0.35)",
+            backdropFilter: "blur(6px)", WebkitBackdropFilter: "blur(6px)",
+            display: "flex", alignItems: "center", justifyContent: "center", zIndex: 200,
+            padding: mob ? 16 : 40,
+          }}
+        >
+          <div
+            onClick={function (e) { e.stopPropagation(); }}
+            style={{
+              background: T.white, borderRadius: 20, overflow: "hidden",
+              boxShadow: T.shL, maxHeight: "90vh", overflowY: "auto",
+              width: mob ? "100%" : 640, position: "relative",
+            }}
+          >
+            {/* Close button */}
+            <button
+              onClick={function () { setShowFullReport(false); }}
+              style={{
+                position: "sticky", top: 12, float: "right", marginRight: 12, zIndex: 10,
+                width: 32, height: 32, borderRadius: 16, background: T.bg, border: "none",
+                fontSize: 16, color: T.t3, cursor: "pointer",
+                display: "flex", alignItems: "center", justifyContent: "center",
+              }}
+            >x</button>
 
               {/* Clean white header */}
               <div style={{ padding: mob ? "20px 16px 16px" : "36px 40px 28px" }}>
@@ -1788,9 +1812,8 @@ function InspectionPage({ onBack }) {
                   Lifeline Roofing Systems · Conroe, TX · lifelineroofingsystems.com
                 </div>
               </div>
-            </Card>
           </div>
-        </FadeIn>
+        </div>
       )}
     </div>
   );
