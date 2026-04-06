@@ -830,7 +830,7 @@ function Home({ onNav }) {
             onClick={function () { setShowNewContact(true); }}
             style={{
               background: T.blue, color: "#fff", border: "none", borderRadius: 980,
-              padding: "8px 20px", fontSize: 13, fontWeight: 600, cursor: "pointer",
+              padding: mob ? "10px 16px" : "8px 20px", fontSize: mob ? 12 : 13, fontWeight: 600, cursor: "pointer",
               display: "flex", alignItems: "center", gap: 4,
             }}
           >
@@ -856,8 +856,8 @@ function Home({ onNav }) {
             <IconStorm size={20} color={T.orange} />
           </div>
           <div style={{ flex: 1 }}>
-            <div style={{ fontSize: 15, fontWeight: 600, color: T.text }}>Storm Watch: Montgomery and Walker Counties</div>
-            <div style={{ fontSize: 13, color: T.t3, marginTop: 3 }}>1,247 personalized messages ready to deploy</div>
+            <div style={{ fontSize: mob ? 14 : 15, fontWeight: 600, color: T.text }}>{mob ? "Storm Watch: Montgomery Co." : "Storm Watch: Montgomery and Walker Counties"}</div>
+            <div style={{ fontSize: mob ? 12 : 13, color: T.t3, marginTop: 3 }}>{mob ? "1,247 texts ready" : "1,247 personalized messages ready to deploy"}</div>
           </div>
           <span style={{ color: T.blue, fontSize: 14, fontWeight: 500, whiteSpace: "nowrap" }}>Review {"›"}</span>
         </div>
@@ -889,13 +889,13 @@ function Home({ onNav }) {
           </div>
           {[
             { name: "Tony Russo", phrase: "Sending intro", status: "queued" },
-            { name: "David Chen", phrase: "Sending follow-up", status: "queued" },
             { name: "Charles Washington", phrase: "Call him", status: "flagged" },
             { name: "James Patterson", phrase: "Sent renewal", status: "sent" },
+            { name: "David Chen", phrase: "Sending follow-up", status: "queued" },
             { name: "Sandra Collins", phrase: "Sent storm text", status: "sent" },
-          ].map((item, i) => (
+          ].slice(0, mob ? 3 : 5).map((item, i) => (
             <div key={i} style={{
-              padding: "10px 0",
+              padding: mob ? "14px 0" : "10px 0",
               borderTop: i > 0 ? `1px solid ${T.div}` : "none",
               display: "flex", alignItems: "center", gap: 10,
             }}>
@@ -929,7 +929,7 @@ function Home({ onNav }) {
                   key={tab.id}
                   onClick={() => setQueueTab(tab.id)}
                   style={{
-                    padding: "7px 18px", borderRadius: 8, border: "none", cursor: "pointer",
+                    padding: mob ? "10px 20px" : "7px 18px", borderRadius: 8, border: "none", cursor: "pointer",
                     fontSize: 13, fontWeight: 600,
                     background: queueTab === tab.id ? T.white : "transparent",
                     color: queueTab === tab.id ? (tab.id === "risk" ? T.red : T.blue) : T.t3,
@@ -948,15 +948,15 @@ function Home({ onNav }) {
                 key={c.id}
                 onClick={() => onNav("detail", c)}
                 style={{
-                  display: "flex", alignItems: "center", gap: 14,
-                  padding: "13px 0", cursor: "pointer",
+                  display: "flex", alignItems: "center", gap: mob ? 10 : 14,
+                  padding: mob ? "16px 0" : "13px 0", cursor: "pointer",
                   borderTop: i > 0 ? `1px solid ${T.div}` : "none",
                 }}
               >
-                <HealthRing score={c.health} size={40} />
-                <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: 15, fontWeight: 600, color: T.text }}>{c.name}</div>
-                  <div style={{ fontSize: 12, color: T.t3 }}>{c.addr.split(",")[0]} · {c.hail} hail events</div>
+                <HealthRing score={c.health} size={mob ? 36 : 40} />
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{ fontSize: mob ? 14 : 15, fontWeight: 600, color: T.text }}>{c.name}</div>
+                  <div style={{ fontSize: 12, color: T.t3, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{mob ? (c.addr.split(" ").slice(1, 3).join(" ") + " · " + c.hail + " hail") : (c.addr.split(",")[0] + " · " + c.hail + " hail events")}</div>
                 </div>
                 <Pill color={c.risk === "high" ? T.red : c.risk === "medium" ? T.orange : T.green}>
                   {c.risk === "high" ? "High" : c.risk === "medium" ? "Med" : "Low"}
@@ -970,7 +970,7 @@ function Home({ onNav }) {
               <div>
                 {/* Platinum summary bar */}
                 <div style={{
-                  display: "flex", justifyContent: "space-between", alignItems: "center",
+                  display: "flex", flexDirection: mob ? "column" : "row", justifyContent: "space-between", alignItems: mob ? "flex-start" : "center", gap: mob ? 4 : 0,
                   padding: "12px 16px", background: "linear-gradient(135deg, rgba(0,113,227,0.06), rgba(52,199,89,0.06))",
                   borderRadius: 12, marginBottom: 14,
                 }}>
@@ -985,22 +985,22 @@ function Home({ onNav }) {
                       key={c.id}
                       onClick={() => onNav("detail", c)}
                       style={{
-                        display: "flex", alignItems: "center", gap: 14,
-                        padding: "14px 0", cursor: "pointer",
+                        display: "flex", alignItems: "center", gap: mob ? 10 : 14,
+                        padding: mob ? "16px 0" : "14px 0", cursor: "pointer",
                         borderTop: i > 0 ? `1px solid ${T.div}` : "none",
                       }}
                     >
                       <div style={{
-                        width: 40, height: 40, borderRadius: 10, flexShrink: 0,
+                        width: mob ? 36 : 40, height: mob ? 36 : 40, borderRadius: 10, flexShrink: 0,
                         background: "linear-gradient(135deg, " + T.blueS + ", " + T.greenS + ")",
                         display: "flex", alignItems: "center", justifyContent: "center",
                         fontSize: 14, fontWeight: 700, color: T.blue,
                       }}>
                         ${estValue}K
                       </div>
-                      <div style={{ flex: 1 }}>
-                        <div style={{ fontSize: 15, fontWeight: 600, color: T.text }}>{c.name}</div>
-                        <div style={{ fontSize: 12, color: T.t3 }}>{c.addr.split(",")[0]} · {c.sqft.toLocaleString()} sq ft</div>
+                      <div style={{ flex: 1, minWidth: 0 }}>
+                        <div style={{ fontSize: mob ? 14 : 15, fontWeight: 600, color: T.text }}>{c.name}</div>
+                        <div style={{ fontSize: 12, color: T.t3, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{mob ? (c.addr.split(",")[0].split(" ").slice(1).join(" ") + " · " + c.sqft.toLocaleString() + " sqft") : (c.addr.split(",")[0] + " · " + c.sqft.toLocaleString() + " sq ft")}</div>
                       </div>
                       <Pill color={T.blue} bg="rgba(0,113,227,0.08)">Call</Pill>
                       <span style={{ color: T.t3, fontSize: 16 }}>{"›"}</span>
@@ -1025,7 +1025,7 @@ function Home({ onNav }) {
               <input
                 type="range" min={5} max={40} value={pct}
                 onChange={e => setPct(Number(e.target.value))}
-                style={{ width: "100%", accentColor: T.blue, height: 6 }}
+                style={{ width: "100%", accentColor: T.blue, height: mob ? 10 : 6 }}
               />
             </div>
 
