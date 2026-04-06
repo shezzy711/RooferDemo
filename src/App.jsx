@@ -364,6 +364,59 @@ function Typer({ text, speed = 12, onDone }) {
 
 
 
+function VoiceDemoPopup({ onClose }) {
+  const [phase, setPhase] = useState("listening");
+  useEffect(function () {
+    var t = setTimeout(function () { setPhase("demo"); }, 1500);
+    return function () { clearTimeout(t); };
+  }, []);
+  return (
+    <div style={{
+      position: "fixed", inset: 0, background: "rgba(0,0,0,0.3)",
+      backdropFilter: "blur(6px)", WebkitBackdropFilter: "blur(6px)",
+      display: "flex", alignItems: "center", justifyContent: "center", zIndex: 250,
+    }}>
+      <div style={{
+        background: T.white, borderRadius: 20, padding: "32px 36px", width: 320,
+        textAlign: "center", boxShadow: "0 24px 80px rgba(0,0,0,0.15)",
+      }}>
+        {phase === "listening" ? (
+          <div>
+            <div style={{
+              width: 56, height: 56, borderRadius: 28, background: T.redS,
+              display: "flex", alignItems: "center", justifyContent: "center",
+              margin: "0 auto 16px", animation: "lifelinepulse 1s ease-in-out infinite",
+            }}>
+              <IconMic size={24} color={T.red} />
+            </div>
+            <div style={{ fontSize: 17, fontWeight: 600, color: T.text }}>Listening...</div>
+          </div>
+        ) : (
+          <div>
+            <div style={{
+              width: 56, height: 56, borderRadius: 28, background: T.bg,
+              display: "flex", alignItems: "center", justifyContent: "center",
+              margin: "0 auto 16px",
+            }}>
+              <IconMic size={24} color={T.t3} />
+            </div>
+            <div style={{ fontSize: 17, fontWeight: 600, color: T.text, marginBottom: 8 }}>Demo Mode</div>
+            <div style={{ fontSize: 14, color: T.t2, lineHeight: 1.5, marginBottom: 20 }}>
+              Voice recording is not available in this preview. In the live version, you speak and it fills in automatically.
+            </div>
+            <button onClick={onClose} style={{
+              background: T.blue, color: "#fff", border: "none", borderRadius: 980,
+              padding: "10px 32px", fontSize: 15, fontWeight: 600, cursor: "pointer",
+            }}>
+              Got it
+            </button>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
 function Card({ children, style: extraStyle, onClick }) {
   return (
     <div onClick={onClick} style={{
@@ -1003,6 +1056,7 @@ function Detail({ contact, onBack }) {
   const [showSms, setShowSms] = useState(false);
   const [smsDone, setSmsDone] = useState(false);
   const [sent, setSent] = useState(false);
+  const [showVoiceDemo, setShowVoiceDemo] = useState(false);
   const c = contact;
   const age = ((Date.now() - new Date(c.installed).getTime()) / (365.25 * 24 * 3600000)).toFixed(1);
 
@@ -1143,7 +1197,7 @@ function Detail({ contact, onBack }) {
                     }}>
                       Send SMS
                     </button>
-                    <button style={{
+                    <button onClick={function () { setShowVoiceDemo(true); }} style={{
                       padding: "12px 20px", background: "transparent", color: T.t2,
                       border: `1px solid ${T.div}`, borderRadius: 980, fontSize: 14, fontWeight: 500, cursor: "pointer",
                       display: "flex", alignItems: "center", gap: 6,
@@ -1197,6 +1251,8 @@ function Detail({ contact, onBack }) {
           </Card>
         </FadeIn>
       )}
+
+      {showVoiceDemo && <VoiceDemoPopup onClose={function () { setShowVoiceDemo(false); }} />}
     </div>
   );
 }
@@ -1301,7 +1357,7 @@ function InspectionPage({ onBack }) {
   const [step, setStep] = useState("input"); // input, generating, done
   const [reportSent, setReportSent] = useState(false);
   const [expandedItem, setExpandedItem] = useState(null);
-  const [voiceDemo, setVoiceDemo] = useState(null); // null, "listening", "unavailable"
+  const [showVoiceDemo, setShowVoiceDemo] = useState(false);
 
   const inspectionInputs = [
     { label: "1. Shingles", question: "Shingle surface condition?", value: "UV-driven granule loss on south-facing slope, center section. Below critical threshold but progressing." },
@@ -1351,10 +1407,7 @@ function InspectionPage({ onBack }) {
 
             {/* Voice indicator */}
             <div
-              onClick={function () {
-                setVoiceDemo("listening");
-                setTimeout(function () { setVoiceDemo("unavailable"); }, 1500);
-              }}
+              onClick={function () { setShowVoiceDemo(true); }}
               style={{
                 display: "flex", alignItems: "center", gap: 8,
                 padding: "8px 14px", background: T.greenS, borderRadius: 10, marginBottom: 18,
@@ -1366,52 +1419,7 @@ function InspectionPage({ onBack }) {
               <span style={{ fontSize: 11, color: T.t3 }}>Tap to dictate</span>
             </div>
 
-            {/* Voice Demo Popup */}
-            {voiceDemo && (
-              <div style={{
-                position: "fixed", inset: 0, background: "rgba(0,0,0,0.3)",
-                backdropFilter: "blur(6px)", WebkitBackdropFilter: "blur(6px)",
-                display: "flex", alignItems: "center", justifyContent: "center", zIndex: 200,
-              }}>
-                <div style={{
-                  background: T.white, borderRadius: 20, padding: "32px 36px", width: 320,
-                  textAlign: "center", boxShadow: "0 24px 80px rgba(0,0,0,0.15)",
-                }}>
-                  {voiceDemo === "listening" ? (
-                    <div>
-                      <div style={{
-                        width: 56, height: 56, borderRadius: 28, background: T.redS,
-                        display: "flex", alignItems: "center", justifyContent: "center",
-                        margin: "0 auto 16px", animation: "lifelinepulse 1s ease-in-out infinite",
-                      }}>
-                        <IconMic size={24} color={T.red} />
-                      </div>
-                      <div style={{ fontSize: 17, fontWeight: 600, color: T.text }}>Listening...</div>
-                    </div>
-                  ) : (
-                    <div>
-                      <div style={{
-                        width: 56, height: 56, borderRadius: 28, background: T.bg,
-                        display: "flex", alignItems: "center", justifyContent: "center",
-                        margin: "0 auto 16px",
-                      }}>
-                        <IconMic size={24} color={T.t3} />
-                      </div>
-                      <div style={{ fontSize: 17, fontWeight: 600, color: T.text, marginBottom: 8 }}>Demo Mode</div>
-                      <div style={{ fontSize: 14, color: T.t2, lineHeight: 1.5, marginBottom: 20 }}>
-                        Voice recording is not available in this preview. In the live version, you speak and it fills in the checklist automatically.
-                      </div>
-                      <button onClick={function () { setVoiceDemo(null); }} style={{
-                        background: T.blue, color: "#fff", border: "none", borderRadius: 980,
-                        padding: "10px 32px", fontSize: 15, fontWeight: 600, cursor: "pointer",
-                      }}>
-                        Got it
-                      </button>
-                    </div>
-                  )}
-                </div>
-              </div>
-            )}
+            {showVoiceDemo && <VoiceDemoPopup onClose={function () { setShowVoiceDemo(false); }} />}
 
             {inspectionInputs.map((item, i) => (
               <div key={i} style={{
@@ -1722,7 +1730,8 @@ function AbbyChat() {
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState([]);
   const [typing, setTyping] = useState(false);
-  const [flow, setFlow] = useState(null); // null = menu, "lookup" | "draft" | "revenue" | "inspect"
+  const [flow, setFlow] = useState(null);
+  const [showVoiceDemo, setShowVoiceDemo] = useState(false); // null = menu, "lookup" | "draft" | "revenue" | "inspect"
   const [flowStep, setFlowStep] = useState(0); // step within a flow
   const messagesEndRef = useRef(null);
   const deliveryRef = useRef([]);
@@ -2063,14 +2072,19 @@ function AbbyChat() {
           <div ref={messagesEndRef} />
         </div>
 
-        {/* Voice Input Bar (replacing text input) */}
-        <div style={{
-          padding: "12px 16px", borderTop: "1px solid " + T.div,
-          display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
-        }}>
+        {/* Voice Input Bar */}
+        <div
+          onClick={function () { setShowVoiceDemo(true); }}
+          style={{
+            padding: "12px 16px", borderTop: "1px solid " + T.div,
+            display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
+            cursor: "pointer",
+          }}
+        >
           <IconMic size={14} color={T.green} />
           <span style={{ fontSize: 12, color: T.green, fontWeight: 500 }}>Voice input</span>
         </div>
+        {showVoiceDemo && <VoiceDemoPopup onClose={function () { setShowVoiceDemo(false); }} />}
       </div>
     </>
   );
@@ -2153,10 +2167,6 @@ export default function App() {
         >
           <img src="/logo.png" alt="Lifeline Roofing" style={{ height: 28, objectFit: "contain" }} />
           <span style={{ fontSize: 12, color: T.t3, fontWeight: 500 }}>Lifeline AI</span>
-          <div style={{ display: "flex", alignItems: "center", gap: 4, marginLeft: 6, padding: "3px 8px", background: T.greenS, borderRadius: 6 }}>
-            <IconMic size={10} color={T.green} />
-            <span style={{ fontSize: 10, fontWeight: 600, color: T.green }}>Voice</span>
-          </div>
         </div>
 
         <div style={{ display: "flex", gap: 2 }}>
