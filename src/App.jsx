@@ -1295,17 +1295,17 @@ function Weather({ onBack }) {
       </button>
 
       <FadeIn>
-        <Card style={{ marginBottom: 20, padding: "26px 30px" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+        <Card style={{ marginBottom: 20, padding: mob ? 16 : "26px 30px" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: mob ? 12 : 16 }}>
             <div style={{
-              width: 52, height: 52, borderRadius: 16, background: T.orangeL,
-              display: "flex", alignItems: "center", justifyContent: "center",
+              width: mob ? 40 : 52, height: mob ? 40 : 52, borderRadius: mob ? 12 : 16, background: T.orangeL,
+              display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0,
             }}>
-              <IconStorm size={24} color={T.orange} />
+              <IconStorm size={mob ? 20 : 24} color={T.orange} />
             </div>
             <div>
-              <h2 style={{ fontSize: 24, fontWeight: 700, color: T.text, margin: 0 }}>Severe Storm Watch</h2>
-              <p style={{ fontSize: 15, color: T.t2, margin: "2px 0 0" }}>Montgomery and Walker Counties · Hail up to 1.5 inches · Tonight</p>
+              <h2 style={{ fontSize: mob ? 20 : 24, fontWeight: 700, color: T.text, margin: 0 }}>Severe Storm Watch</h2>
+              <p style={{ fontSize: mob ? 13 : 15, color: T.t2, margin: "2px 0 0" }}>{mob ? "Montgomery Co. · Hail 1.5in · Tonight" : "Montgomery and Walker Counties · Hail up to 1.5 inches · Tonight"}</p>
             </div>
           </div>
         </Card>
@@ -1346,17 +1346,17 @@ function Weather({ onBack }) {
           <button onClick={handleDeploy} disabled={deploying} style={{
             width: "100%", padding: "16px 0",
             background: deploying ? T.t3 : T.blue, color: "#fff",
-            border: "none", borderRadius: 980, fontSize: 17, fontWeight: 600,
+            border: "none", borderRadius: 980, fontSize: mob ? 15 : 17, fontWeight: 600,
             cursor: deploying ? "wait" : "pointer",
             boxShadow: deploying ? "none" : "0 2px 14px rgba(0,113,227,0.3)",
           }}>
             {deploying ? "Sending 1,247 texts..." : "Send Storm Alerts · 1,247 Customers"}
           </button>
         ) : (
-          <div style={{ padding: "20px 28px", background: T.greenL, borderRadius: T.r, textAlign: "center" }}>
-            <div style={{ fontSize: 20, fontWeight: 700, color: T.green, display: "flex", alignItems: "center", justifyContent: "center", gap: 6 }}><IconCheck size={20} color={T.green} />Storm Response Deployed</div>
-            <div style={{ fontSize: 14, color: T.t2, marginTop: 6 }}>
-              312 sent immediately · 935 queued for 8 AM · Each personalized to the customer's roof
+          <div style={{ padding: mob ? 16 : "20px 28px", background: T.greenL, borderRadius: T.r, textAlign: "center" }}>
+            <div style={{ fontSize: mob ? 17 : 20, fontWeight: 700, color: T.green, display: "flex", alignItems: "center", justifyContent: "center", gap: 6 }}><IconCheck size={mob ? 17 : 20} color={T.green} />Storm Alerts Sent</div>
+            <div style={{ fontSize: mob ? 13 : 14, color: T.t2, marginTop: 6 }}>
+              {mob ? "312 sent now · 935 at 8 AM" : "312 sent immediately · 935 queued for 8 AM · Each personalized to the customer's roof"}
             </div>
           </div>
         )}
