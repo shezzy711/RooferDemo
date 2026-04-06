@@ -2231,6 +2231,15 @@ export default function App() {
     setPage("home");
   }
 
+  // Auto-start tour when dashboard first loads (must be before early return)
+  useEffect(function () {
+    if (started && !tourStartedRef.current) {
+      tourStartedRef.current = true;
+      var t = setTimeout(function () { setTourStep(0); }, 800);
+      return function () { clearTimeout(t); };
+    }
+  }, [started]);
+
   if (!started) {
     return (
       <div style={{
@@ -2244,15 +2253,6 @@ export default function App() {
       </div>
     );
   }
-
-  // Auto-start tour when dashboard first loads
-  useEffect(function () {
-    if (started && !tourStartedRef.current) {
-      tourStartedRef.current = true;
-      var t = setTimeout(function () { setTourStep(0); }, 800);
-      return function () { clearTimeout(t); };
-    }
-  }, [started]);
 
   const tabs = [
     { id: "home", label: "Home", icon: <IconHome size={15} /> },
