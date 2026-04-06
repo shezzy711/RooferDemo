@@ -2270,16 +2270,17 @@ export default function App() {
     }
   }, [started]);
 
-  // Auto-scroll to tour target and re-render for correct position
+  // Tour ref order: stats, campaigns tab, inspect tab, add contact, follow-ups, priority queue, abby
+  var tourRefOrder = [tourRef1, tourRef4, tourRef6, tourRef7, tourRef2, tourRef3, tourRef5];
+  var tourScrollSteps = [1, 4, 5, 6]; // steps that need scrolling (content area elements)
+
   useEffect(function () {
     if (tourStep === null || tourStep === 0) { setTourReady(tourStep === 0); return; }
     setTourReady(false);
-    var allRefs = [tourRef1, tourRef2, tourRef3, tourRef7, tourRef4, tourRef6, tourRef5];
-    var ref = allRefs[tourStep - 1];
+    var ref = tourRefOrder[tourStep - 1];
     if (ref && ref.current) {
-      // Steps 1-4 need scrolling (content area elements). Steps 5-7 are fixed/sticky.
-      if (tourStep <= 4) {
-        ref.current.scrollIntoView({ behavior: "smooth", block: "center" });
+      if (tourScrollSteps.indexOf(tourStep) >= 0) {
+        ref.current.scrollIntoView({ behavior: "smooth", block: "nearest" });
       }
       var t = setTimeout(function () { setTourReady(true); }, 400);
       return function () { clearTimeout(t); };
@@ -2413,62 +2414,68 @@ export default function App() {
 
           {/* Steps 1-7: Positioned via refs */}
           {tourStep >= 1 && tourStep <= 7 && tourReady && (function () {
-            var allRefs = [tourRef1, tourRef2, tourRef3, tourRef7, tourRef4, tourRef6, tourRef5];
             var texts = [
-              "Your key numbers at a glance. Roofs needing attention and revenue from plans.",
-              "AI handles follow-ups for you. Green = sent, orange = needs your call.",
-              "Switch between at-risk roofs and high-value platinum contacts.",
-              "Add a new customer. The AI scores their roof instantly.",
-              "Send storm alerts, seasonal checkups, and warranty reminders to thousands of customers.",
-              "Run inspections on site and generate professional reports for customers.",
-              "That's me! Tap here anytime to look up a roof, draft a message, or check revenue.",
+              "Your key numbers. Roofs needing attention and revenue from plans.",
+              "Send storm alerts, checkups, and warranty reminders.",
+              "Run inspections and generate reports.",
+              "Add a new customer. AI scores their roof instantly.",
+              "AI handles follow-ups. Green = sent, orange = needs you.",
+              "Switch between at-risk roofs and high-value contacts.",
+              "That's me! Tap here anytime for help.",
             ];
             var totalSteps = 7;
-            var currentRef = allRefs[tourStep - 1];
+            var currentRef = tourRefOrder[tourStep - 1];
             if (!currentRef || !currentRef.current) return null;
             var rect = currentRef.current.getBoundingClientRect();
+            var tipH = 140; // approximate tooltip height
+            var tipW = 240;
+            var pad = 12;
 
             var tipStyle = {
               position: "fixed", zIndex: 300,
-              width: 260, maxWidth: "calc(100vw - 32px)",
-              background: T.white, borderRadius: 14, padding: "16px 18px",
+              width: tipW, maxWidth: "calc(100vw - 32px)",
+              background: T.white, borderRadius: 14, padding: "14px 16px",
               boxShadow: "0 8px 40px rgba(0,0,0,0.2)",
             };
             var arrowStyle = { position: "absolute", width: 0, height: 0 };
 
             if (tourStep === 7) {
-              // Abby button: tooltip to the left
-              tipStyle.bottom = Math.max(16, window.innerHeight - rect.top + 10);
-              tipStyle.right = Math.max(16, window.innerWidth - rect.left + 10);
+              // Abby: left of button
+              tipStyle.bottom = Math.max(pad, window.innerHeight - rect.top + pad);
+              tipStyle.right = Math.max(pad, window.innerWidth - rect.left + pad);
               arrowStyle.right = -8; arrowStyle.bottom = 16;
               arrowStyle.borderTop = "8px solid transparent";
               arrowStyle.borderBottom = "8px solid transparent";
               arrowStyle.borderLeft = "8px solid #fff";
-            } else if (tourStep === 3) {
-              // Priority queue: tooltip ABOVE with arrow pointing down
-              tipStyle.bottom = Math.max(16, window.innerHeight - rect.top + 10);
-              tipStyle.left = Math.max(16, Math.min(rect.left, window.innerWidth - 280));
-              arrowStyle.bottom = -8; arrowStyle.left = 20;
+            } else if (tourStep === 6) {
+              // Priority queue: ABOVE
+              tipStyle.bottom = Math.max(pad, window.innerHeight - rect.top + pad);
+              tipStyle.left = Math.max(pad, Math.min(rect.left, window.innerWidth - tipW - pad));
+              arrowStyle.bottom = -8; arrowStyle.left = Math.min(20, rect.left + rect.width / 2 - (typeof tipStyle.left === "number" ? tipStyle.left : pad));
               arrowStyle.borderLeft = "8px solid transparent";
               arrowStyle.borderRight = "8px solid transparent";
               arrowStyle.borderTop = "8px solid #fff";
-            } else if (tourStep === 5 || tourStep === 6) {
-              // Nav tabs: tooltip below
-              tipStyle.top = rect.bottom + 10;
-              tipStyle.left = Math.max(16, Math.min(rect.left, window.innerWidth - 280));
-              var arrowLeft = rect.left + rect.width / 2 - (typeof tipStyle.left === "number" ? tipStyle.left : 16) - 8;
-              arrowStyle.top = -8; arrowStyle.left = Math.max(8, Math.min(arrowLeft, 240));
-              arrowStyle.borderLeft = "8px solid transparent";
-              arrowStyle.borderRight = "8px solid transparent";
-              arrowStyle.borderBottom = "8px solid #fff";
             } else {
-              // Default: tooltip below element
-              tipStyle.top = rect.bottom + 10;
-              tipStyle.left = Math.max(16, Math.min(rect.left, window.innerWidth - 280));
-              arrowStyle.top = -8; arrowStyle.left = 20;
-              arrowStyle.borderLeft = "8px solid transparent";
-              arrowStyle.borderRight = "8px solid transparent";
-              arrowStyle.borderBottom = "8px solid #fff";
+              // Default: below element
+              var proposedTop = rect.bottom + pad;
+              // If it would clip below viewport, place above instead
+              if (proposedTop + tipH > window.innerHeight - pad) {
+                tipStyle.bottom = Math.max(pad, window.innerHeight - rect.top + pad);
+                tipStyle.left = Math.max(pad, Math.min(rect.left, window.innerWidth - tipW - pad));
+                arrowStyle.bottom = -8; arrowStyle.left = 20;
+                arrowStyle.borderLeft = "8px solid transparent";
+                arrowStyle.borderRight = "8px solid transparent";
+                arrowStyle.borderTop = "8px solid #fff";
+              } else {
+                tipStyle.top = proposedTop;
+                tipStyle.left = Math.max(pad, Math.min(rect.left, window.innerWidth - tipW - pad));
+                // Arrow points up, centered on the target
+                var arrowLeft = rect.left + rect.width / 2 - (typeof tipStyle.left === "number" ? tipStyle.left : pad) - 8;
+                arrowStyle.top = -8; arrowStyle.left = Math.max(8, Math.min(arrowLeft, tipW - 24));
+                arrowStyle.borderLeft = "8px solid transparent";
+                arrowStyle.borderRight = "8px solid transparent";
+                arrowStyle.borderBottom = "8px solid #fff";
+              }
             }
 
             return (
