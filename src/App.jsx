@@ -2328,63 +2328,108 @@ export default function App() {
       <AbbyChat />
 
       {/* Abby Tooltip Tour */}
-      {tourStep !== null && tourStep >= 0 && tourStep <= 4 && (
+      {tourStep !== null && tourStep >= 0 && tourStep <= 5 && (
         <div
           onClick={function () { setTourStep(null); }}
           style={{ position: "fixed", inset: 0, zIndex: 299, background: "rgba(0,0,0,0.4)" }}
         >
-          <div
-            onClick={function (e) { e.stopPropagation(); }}
-            style={{
-              position: "fixed", zIndex: 300,
-              width: 280, maxWidth: "calc(100vw - 40px)",
-              background: T.white, borderRadius: 16, padding: "18px 20px",
+          {/* Step 0: Welcome - centered */}
+          {tourStep === 0 && (
+            <div onClick={function (e) { e.stopPropagation(); }} style={{
+              position: "fixed", top: "50%", left: "50%", transform: "translate(-50%, -50%)",
+              zIndex: 300, width: 300, maxWidth: "calc(100vw - 40px)",
+              background: T.white, borderRadius: 20, padding: "28px 24px", textAlign: "center",
               boxShadow: "0 8px 40px rgba(0,0,0,0.2)",
-              left: "50%", transform: "translateX(-50%)",
-              top: tourStep === 4 ? "auto" : (tourStep === 3 ? 64 : "50%"),
-              bottom: tourStep === 4 ? (mob ? 80 : 100) : "auto",
-            }}
-          >
-            <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 10 }}>
+            }}>
               <div style={{
-                width: 24, height: 24, borderRadius: 12,
+                width: 48, height: 48, borderRadius: 24, margin: "0 auto 16px",
                 background: "linear-gradient(135deg, " + T.blue + ", #34C759)",
                 display: "flex", alignItems: "center", justifyContent: "center",
               }}>
-                <IconAgent size={12} color="#fff" />
+                <IconAgent size={24} color="#fff" />
               </div>
-              <span style={{ fontSize: 13, fontWeight: 700, color: T.text }}>Abby</span>
-              <span style={{ fontSize: 11, color: T.t3, marginLeft: "auto" }}>{(tourStep + 1) + " of 5"}</span>
-            </div>
-
-            <div style={{ fontSize: 14, color: T.t2, lineHeight: 1.55, marginBottom: 16 }}>
-              {[
-                "These are your key numbers. Roofs that need attention and revenue from maintenance plans.",
-                "I handle follow-ups automatically. Green = sent, blue = sending soon, orange = needs your call.",
-                "Tap any contact to see their roof health and send them a message.",
-                "Check the Weather tab up top for storm alerts. One tap sends texts to all affected customers.",
-                "That's me! Tap here anytime to look up a roof, draft a message, or check your revenue.",
-              ][tourStep]}
-            </div>
-
-            <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-              <button onClick={function () {
-                if (tourStep < 4) { setTourStep(tourStep + 1); }
-                else { setTourStep(null); }
-              }} style={{
+              <div style={{ fontSize: 18, fontWeight: 700, color: T.text, marginBottom: 6 }}>Hi, I'm Abby!</div>
+              <div style={{ fontSize: 14, color: T.t2, lineHeight: 1.55, marginBottom: 20 }}>Let me give you a quick tour of your dashboard.</div>
+              <button onClick={function () { setTourStep(1); }} style={{
                 background: T.blue, color: "#fff", border: "none", borderRadius: 980,
-                padding: "8px 24px", fontSize: 13, fontWeight: 600, cursor: "pointer",
-              }}>
-                {tourStep < 4 ? "Next" : "Got it"}
-              </button>
-              <button onClick={function () { setTourStep(null); }} style={{
+                padding: "10px 32px", fontSize: 14, fontWeight: 600, cursor: "pointer",
+                marginBottom: 10, width: "100%",
+              }}>Start Tour</button>
+              <div><button onClick={function () { setTourStep(null); }} style={{
                 background: "transparent", border: "none", color: T.t3,
                 fontSize: 12, cursor: "pointer", padding: 0,
-              }}>
-                Skip tour
-              </button>
+              }}>Skip</button></div>
             </div>
-          </div>
+          )}
+
+          {/* Steps 1-5: Pointed tooltips */}
+          {tourStep >= 1 && tourStep <= 5 && (function () {
+            var steps = [
+              { text: "Your key numbers. Roofs that need attention and revenue from plans.", pos: { top: mob ? 110 : 100, left: mob ? 20 : "50%", ml: mob ? 0 : -140 }, arrow: "top" },
+              { text: "I handle follow-ups automatically. Green = sent, orange = needs your call.", pos: { top: mob ? 250 : 220, left: mob ? 20 : "50%", ml: mob ? 0 : -140 }, arrow: "top" },
+              { text: "Tap any contact to see their roof and send them a message.", pos: { top: mob ? 440 : 370, left: mob ? 20 : 60 }, arrow: "top" },
+              { text: "Storm alerts. One tap sends texts to all affected customers.", pos: { top: 58, left: mob ? "30%" : "40%", ml: mob ? -100 : -140 }, arrow: "top" },
+              { text: "That's me! Tap here to look up a roof, draft a message, or check revenue.", pos: { bottom: mob ? 74 : 94, right: mob ? 74 : 94 }, arrow: "right" },
+            ];
+            var s = steps[tourStep - 1];
+            var tipStyle = {
+              position: "fixed", zIndex: 300,
+              width: 260, maxWidth: "calc(100vw - 40px)",
+              background: T.white, borderRadius: 14, padding: "16px 18px",
+              boxShadow: "0 8px 40px rgba(0,0,0,0.2)",
+            };
+            if (s.pos.top !== undefined) tipStyle.top = s.pos.top;
+            if (s.pos.bottom !== undefined) tipStyle.bottom = s.pos.bottom;
+            if (s.pos.left !== undefined) tipStyle.left = s.pos.left;
+            if (s.pos.right !== undefined) tipStyle.right = s.pos.right;
+            if (s.pos.ml) tipStyle.marginLeft = s.pos.ml;
+
+            var arrowStyle = { position: "absolute", width: 0, height: 0 };
+            if (s.arrow === "top") {
+              arrowStyle.top = -8; arrowStyle.left = 24;
+              arrowStyle.borderLeft = "8px solid transparent";
+              arrowStyle.borderRight = "8px solid transparent";
+              arrowStyle.borderBottom = "8px solid " + T.white;
+            } else if (s.arrow === "right") {
+              arrowStyle.right = -8; arrowStyle.bottom = 20;
+              arrowStyle.borderTop = "8px solid transparent";
+              arrowStyle.borderBottom = "8px solid transparent";
+              arrowStyle.borderLeft = "8px solid " + T.white;
+            }
+
+            return (
+              <div onClick={function (e) { e.stopPropagation(); }} style={tipStyle}>
+                <div style={arrowStyle} />
+                <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 8 }}>
+                  <div style={{
+                    width: 20, height: 20, borderRadius: 10,
+                    background: "linear-gradient(135deg, " + T.blue + ", #34C759)",
+                    display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0,
+                  }}>
+                    <IconAgent size={10} color="#fff" />
+                  </div>
+                  <span style={{ fontSize: 12, fontWeight: 700, color: T.text }}>Abby</span>
+                  <span style={{ fontSize: 10, color: T.t3, marginLeft: "auto" }}>{tourStep + " of 5"}</span>
+                </div>
+                <div style={{ fontSize: 13, color: T.t2, lineHeight: 1.5, marginBottom: 14 }}>{s.text}</div>
+                <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                  <button onClick={function () {
+                    if (tourStep < 5) { setTourStep(tourStep + 1); }
+                    else { setTourStep(null); }
+                  }} style={{
+                    background: T.blue, color: "#fff", border: "none", borderRadius: 980,
+                    padding: "7px 20px", fontSize: 12, fontWeight: 600, cursor: "pointer",
+                  }}>
+                    {tourStep < 5 ? "Next" : "Got it"}
+                  </button>
+                  <button onClick={function () { setTourStep(null); }} style={{
+                    background: "transparent", border: "none", color: T.t3,
+                    fontSize: 11, cursor: "pointer", padding: 0,
+                  }}>Skip</button>
+                </div>
+              </div>
+            );
+          })()}
         </div>
       )}
     </div>
