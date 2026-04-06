@@ -61,6 +61,19 @@ function IconCalendar({ size = 16, color = "currentColor" }) {
   );
 }
 
+function IconAgent({ size = 22, color = "currentColor" }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round">
+      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+      <circle cx="12" cy="7" r="4" />
+      <path d="M2 11c0-1.5 1.5-2 3-2" />
+      <path d="M19 9c1.5 0 3 .5 3 2" />
+      <path d="M5 9V7" />
+      <path d="M19 9V7" />
+    </svg>
+  );
+}
+
 function IconChat({ size = 22, color = "currentColor" }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill={color} stroke="none">
@@ -1910,7 +1923,7 @@ function AbbyChat() {
             <span style={{ color: "#fff", fontSize: 20, fontWeight: 300, lineHeight: 1 }}>x</span>
           ) : (
             <>
-              <span style={{ color: "#fff", fontSize: mob ? 18 : 22, fontWeight: 700 }}>A</span>
+              <IconAgent size={mob ? 22 : 26} color="#fff" />
               <div style={{
                 position: "absolute", top: -2, right: -2, width: 12, height: 12, borderRadius: 6,
                 background: T.green, border: "2px solid #fff",
@@ -1944,8 +1957,8 @@ function AbbyChat() {
             width: 36, height: 36, borderRadius: 18,
             background: "linear-gradient(135deg, " + T.blue + ", #34C759)",
             display: "flex", alignItems: "center", justifyContent: "center",
-            fontSize: 16, fontWeight: 700, color: "#fff", flexShrink: 0,
-          }}>A</div>
+            flexShrink: 0,
+          }}><IconAgent size={18} color="#fff" /></div>
           <div style={{ flex: 1 }}>
             <div style={{ fontSize: 15, fontWeight: 700, color: T.text }}>Abby</div>
             <div style={{ fontSize: 11, color: T.t3 }}>Lifeline AI Assistant</div>
