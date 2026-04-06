@@ -365,11 +365,6 @@ function Typer({ text, speed = 12, onDone }) {
 
 
 function VoiceDemoPopup({ onClose }) {
-  const [phase, setPhase] = useState("listening");
-  useEffect(function () {
-    var t = setTimeout(function () { setPhase("demo"); }, 1500);
-    return function () { clearTimeout(t); };
-  }, []);
   return (
     <div style={{
       position: "fixed", inset: 0, background: "rgba(0,0,0,0.3)",
@@ -380,38 +375,23 @@ function VoiceDemoPopup({ onClose }) {
         background: T.white, borderRadius: 20, padding: "32px 36px", width: 320,
         textAlign: "center", boxShadow: "0 24px 80px rgba(0,0,0,0.15)",
       }}>
-        {phase === "listening" ? (
-          <div>
-            <div style={{
-              width: 56, height: 56, borderRadius: 28, background: T.redS,
-              display: "flex", alignItems: "center", justifyContent: "center",
-              margin: "0 auto 16px", animation: "lifelinepulse 1s ease-in-out infinite",
-            }}>
-              <IconMic size={24} color={T.red} />
-            </div>
-            <div style={{ fontSize: 17, fontWeight: 600, color: T.text }}>Listening...</div>
-          </div>
-        ) : (
-          <div>
-            <div style={{
-              width: 56, height: 56, borderRadius: 28, background: T.bg,
-              display: "flex", alignItems: "center", justifyContent: "center",
-              margin: "0 auto 16px",
-            }}>
-              <IconMic size={24} color={T.t3} />
-            </div>
-            <div style={{ fontSize: 17, fontWeight: 600, color: T.text, marginBottom: 8 }}>Demo Mode</div>
-            <div style={{ fontSize: 14, color: T.t2, lineHeight: 1.5, marginBottom: 20 }}>
-              Voice recording is not available in this preview. In the live version, you speak and it fills in automatically.
-            </div>
-            <button onClick={onClose} style={{
-              background: T.blue, color: "#fff", border: "none", borderRadius: 980,
-              padding: "10px 32px", fontSize: 15, fontWeight: 600, cursor: "pointer",
-            }}>
-              Got it
-            </button>
-          </div>
-        )}
+        <div style={{
+          width: 56, height: 56, borderRadius: 28, background: T.bg,
+          display: "flex", alignItems: "center", justifyContent: "center",
+          margin: "0 auto 16px",
+        }}>
+          <IconMic size={24} color={T.t3} />
+        </div>
+        <div style={{ fontSize: 17, fontWeight: 600, color: T.text, marginBottom: 8 }}>Demo Mode</div>
+        <div style={{ fontSize: 14, color: T.t2, lineHeight: 1.5, marginBottom: 20 }}>
+          Voice recording is not available in this preview. In the live version, you speak and it fills in automatically.
+        </div>
+        <button onClick={onClose} style={{
+          background: T.blue, color: "#fff", border: "none", borderRadius: 980,
+          padding: "10px 32px", fontSize: 15, fontWeight: 600, cursor: "pointer",
+        }}>
+          Got it
+        </button>
       </div>
     </div>
   );
