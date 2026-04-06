@@ -1,5 +1,15 @@
 import { useState, useEffect, useRef } from "react";
 
+function useIsMobile() {
+  const [mobile, setMobile] = useState(typeof window !== "undefined" && window.innerWidth <= 640);
+  useEffect(function () {
+    function handle() { setMobile(window.innerWidth <= 640); }
+    window.addEventListener("resize", handle);
+    return function () { window.removeEventListener("resize", handle); };
+  }, []);
+  return mobile;
+}
+
 /* ─── Clean SVG Icons ─── */
 
 function IconStorm({ size = 20, color = "currentColor" }) {
@@ -413,6 +423,7 @@ function Card({ children, style: extraStyle, onClick }) {
 
 function Opener({ onStart }) {
   const [phase, setPhase] = useState(0);
+  const mob = useIsMobile();
 
   useEffect(() => {
     const t1 = setTimeout(() => setPhase(1), 3000);
@@ -427,19 +438,19 @@ function Opener({ onStart }) {
           <div style={{ fontSize: 14, fontWeight: 600, color: T.red, textTransform: "uppercase", letterSpacing: 2, marginBottom: 20 }}>
             The Problem
           </div>
-          <div style={{ fontSize: 48, fontWeight: 700, color: T.text, letterSpacing: -1.5, lineHeight: 1.2 }}>
+          <div style={{ fontSize: mob ? 26 : 48, fontWeight: 700, color: T.text, letterSpacing: -1.5, lineHeight: 1.2 }}>
             Roofing is tight right now.
           </div>
-          <div style={{ fontSize: 48, fontWeight: 700, color: T.t3, letterSpacing: -1.5, lineHeight: 1.2, marginTop: 8 }}>
+          <div style={{ fontSize: mob ? 26 : 48, fontWeight: 700, color: T.t3, letterSpacing: -1.5, lineHeight: 1.2, marginTop: 8 }}>
             No storms. Insurance is tightening.
           </div>
-          <div style={{ fontSize: 48, fontWeight: 700, color: T.t3, letterSpacing: -1.5, lineHeight: 1.2, marginTop: 8 }}>
+          <div style={{ fontSize: mob ? 26 : 48, fontWeight: 700, color: T.t3, letterSpacing: -1.5, lineHeight: 1.2, marginTop: 8 }}>
             You need cash flow every day.
           </div>
           <div style={{ marginTop: 40 }}>
             <button onClick={onStart} style={{
               background: T.blue, color: "#fff", border: "none", borderRadius: 980,
-              padding: "14px 40px", fontSize: 17, fontWeight: 600, cursor: "pointer",
+              padding: mob ? "12px 24px" : "14px 40px", fontSize: mob ? 15 : 17, fontWeight: 600, cursor: "pointer",
               boxShadow: "0 2px 12px rgba(0,113,227,0.35)",
             }}>
               See How It Works
@@ -457,19 +468,19 @@ function Opener({ onStart }) {
           <div style={{ fontSize: 14, fontWeight: 600, color: T.orange, textTransform: "uppercase", letterSpacing: 2, marginBottom: 20 }}>
             Right Now
           </div>
-          <div style={{ fontSize: 48, fontWeight: 700, color: T.text, letterSpacing: -1.5, lineHeight: 1.2 }}>
+          <div style={{ fontSize: mob ? 26 : 48, fontWeight: 700, color: T.text, letterSpacing: -1.5, lineHeight: 1.2 }}>
             4,000+ past customers in AccuLynx.
           </div>
-          <div style={{ fontSize: 48, fontWeight: 700, color: T.t3, letterSpacing: -1.5, lineHeight: 1.2, marginTop: 8 }}>
+          <div style={{ fontSize: mob ? 26 : 48, fontWeight: 700, color: T.t3, letterSpacing: -1.5, lineHeight: 1.2, marginTop: 8 }}>
             Nobody is following up.
           </div>
-          <div style={{ fontSize: 48, fontWeight: 700, color: T.t3, letterSpacing: -1.5, lineHeight: 1.2, marginTop: 8 }}>
+          <div style={{ fontSize: mob ? 26 : 48, fontWeight: 700, color: T.t3, letterSpacing: -1.5, lineHeight: 1.2, marginTop: 8 }}>
             That's money sitting on the table.
           </div>
           <div style={{ marginTop: 40 }}>
             <button onClick={onStart} style={{
               background: T.blue, color: "#fff", border: "none", borderRadius: 980,
-              padding: "14px 40px", fontSize: 17, fontWeight: 600, cursor: "pointer",
+              padding: mob ? "12px 24px" : "14px 40px", fontSize: mob ? 15 : 17, fontWeight: 600, cursor: "pointer",
               boxShadow: "0 2px 12px rgba(0,113,227,0.35)",
             }}>
               See How It Works
@@ -486,16 +497,16 @@ function Opener({ onStart }) {
         <div style={{ marginBottom: 24 }}>
           <img src="/logo.png" alt="Lifeline Roofing" style={{ height: 40, objectFit: "contain" }} />
         </div>
-        <div style={{ fontSize: 52, fontWeight: 700, color: T.text, letterSpacing: -1.5, lineHeight: 1.15 }}>
+        <div style={{ fontSize: mob ? 28 : 52, fontWeight: 700, color: T.text, letterSpacing: -1.5, lineHeight: 1.15 }}>
           Turn maintenance into recurring revenue.
         </div>
-        <div style={{ fontSize: 52, fontWeight: 700, color: T.blue, letterSpacing: -1.5, lineHeight: 1.15, marginTop: 4 }}>
+        <div style={{ fontSize: mob ? 28 : 52, fontWeight: 700, color: T.blue, letterSpacing: -1.5, lineHeight: 1.15, marginTop: 4 }}>
           Automated by AI.
         </div>
         <div style={{ marginTop: 40 }}>
           <button onClick={onStart} style={{
             background: T.blue, color: "#fff", border: "none", borderRadius: 980,
-            padding: "14px 40px", fontSize: 17, fontWeight: 600, cursor: "pointer",
+            padding: mob ? "12px 24px" : "14px 40px", fontSize: mob ? 15 : 17, fontWeight: 600, cursor: "pointer",
             boxShadow: "0 2px 12px rgba(0,113,227,0.35)",
           }}>
             See How It Works
@@ -509,6 +520,7 @@ function Opener({ onStart }) {
 /* ─── New Contact Modal (Magic Moment) ─── */
 
 function NewContactModal({ onClose, onNav }) {
+  const mob = useIsMobile();
   const [formData, setFormData] = useState({
     name: "", addr: "", installed: "", shingle: "CertainTeed Landmark",
   });
@@ -609,7 +621,7 @@ function NewContactModal({ onClose, onNav }) {
       display: "flex", alignItems: "center", justifyContent: "center", zIndex: 200,
     }}>
       <div style={{
-        background: T.white, borderRadius: 24, padding: 36, width: 520,
+        background: T.white, borderRadius: mob ? 16 : 24, padding: mob ? 20 : 36, width: mob ? "calc(100vw - 32px)" : 520,
         boxShadow: "0 24px 80px rgba(0,0,0,0.15)", maxHeight: "90vh", overflowY: "auto",
       }}>
         {step === "form" && (
@@ -647,7 +659,7 @@ function NewContactModal({ onClose, onNav }) {
               />
             </div>
 
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14, marginBottom: 24 }}>
+            <div style={{ display: "grid", gridTemplateColumns: mob ? "1fr" : "1fr 1fr", gap: 14, marginBottom: 24 }}>
               <div>
                 <label style={labelStyle}>Install Date</label>
                 <input
@@ -783,6 +795,7 @@ function Home({ onNav }) {
   const [pct, setPct] = useState(15);
   const [queueTab, setQueueTab] = useState("risk");
   const [showNewContact, setShowNewContact] = useState(false);
+  const mob = useIsMobile();
   const avgH = Math.round(CONTACTS.reduce((a, c) => a + c.health, 0) / CONTACTS.length);
   const highR = CONTACTS.filter(c => c.risk === "high").length;
   const enrolled = CONTACTS.filter(c => c.status === "enrolled").length;
@@ -852,7 +865,7 @@ function Home({ onNav }) {
 
       {/* Stats Row */}
       <FadeIn delay={160}>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 10, marginBottom: 20 }}>
+        <div style={{ display: "grid", gridTemplateColumns: mob ? "1fr" : "repeat(2, 1fr)", gap: 10, marginBottom: 20 }}>
           {stats.map((s, i) => (
             <div key={i} style={{ background: T.white, borderRadius: 14, padding: "16px 14px",
               boxShadow: "0 0 0 0.5px rgba(0,0,0,0.04), 0 1px 3px rgba(0,0,0,0.03), 0 4px 12px rgba(0,0,0,0.025)",
@@ -899,7 +912,7 @@ function Home({ onNav }) {
         </Card>
       </FadeIn>
 
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
+      <div style={{ display: "grid", gridTemplateColumns: mob ? "1fr" : "1fr 1fr", gap: 20 }}>
         {/* Priority Queue with Segmented Toggle */}
         <FadeIn delay={280}>
           <Card>
@@ -1032,6 +1045,7 @@ function Home({ onNav }) {
 /* ─── Contact Detail ─── */
 
 function Detail({ contact, onBack }) {
+  const mob = useIsMobile();
   const [showAI, setShowAI] = useState(false);
   const [showSms, setShowSms] = useState(false);
   const [smsDone, setSmsDone] = useState(false);
@@ -1062,7 +1076,7 @@ function Detail({ contact, onBack }) {
 
       {/* Hero Card */}
       <FadeIn>
-        <Card style={{ marginBottom: 20, display: "flex", justifyContent: "space-between", alignItems: "flex-start", padding: "26px 30px" }}>
+        <Card style={{ marginBottom: 20, display: "flex", flexDirection: mob ? "column" : "row", justifyContent: "space-between", alignItems: mob ? "flex-start" : "flex-start", gap: mob ? 16 : 0, padding: mob ? "20px 16px" : "26px 30px" }}>
           <div>
             <h2 style={{ fontSize: 28, fontWeight: 700, color: T.text, margin: 0, letterSpacing: -0.5 }}>{c.name}</h2>
             <p style={{ fontSize: 15, color: T.t2, margin: "4px 0" }}>{c.addr} · {c.phone}</p>
@@ -1124,7 +1138,7 @@ function Detail({ contact, onBack }) {
       )}
 
       {/* AI Analysis + Outreach */}
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
+      <div style={{ display: "grid", gridTemplateColumns: mob ? "1fr" : "1fr 1fr", gap: 20 }}>
         <FadeIn delay={160}>
           <Card>
             <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 6 }}>
@@ -1240,6 +1254,7 @@ function Detail({ contact, onBack }) {
 /* ─── Weather Intel ─── */
 
 function Weather({ onBack }) {
+  const mob = useIsMobile();
   const [deploying, setDeploying] = useState(false);
   const [deployed, setDeployed] = useState(false);
 
@@ -1278,7 +1293,7 @@ function Weather({ onBack }) {
       </FadeIn>
 
       <FadeIn delay={80}>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20, marginBottom: 24 }}>
+        <div style={{ display: "grid", gridTemplateColumns: mob ? "1fr" : "1fr 1fr", gap: 20, marginBottom: 24 }}>
           <Card style={{ borderLeft: `3px solid ${T.red}` }}>
             <Pill color={T.red}>Immediate · 312 contacts</Pill>
             <div style={{ fontSize: 13, color: T.t2, margin: "10px 0 14px" }}>
@@ -1334,6 +1349,7 @@ function Weather({ onBack }) {
 /* ─── Inspection AI ─── */
 
 function InspectionPage({ onBack }) {
+  const mob = useIsMobile();
   const [step, setStep] = useState("input"); // input, generating, done
   const [reportSent, setReportSent] = useState(false);
   const [expandedItem, setExpandedItem] = useState(null);
@@ -1373,7 +1389,7 @@ function InspectionPage({ onBack }) {
         </div>
       </FadeIn>
 
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
+      <div style={{ display: "grid", gridTemplateColumns: mob ? "1fr" : "1fr 1fr", gap: 20 }}>
         <FadeIn delay={160}>
           <Card>
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 6 }}>
@@ -1544,7 +1560,7 @@ function InspectionPage({ onBack }) {
             <Card style={{ padding: 0, overflow: "hidden", boxShadow: T.shL }}>
 
               {/* Clean white header */}
-              <div style={{ padding: "36px 40px 28px" }}>
+              <div style={{ padding: mob ? "20px 16px 16px" : "36px 40px 28px" }}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
                   <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
                     <img src="/logo.png" alt="Lifeline Roofing" style={{ height: 36, objectFit: "contain" }} />
@@ -1564,10 +1580,10 @@ function InspectionPage({ onBack }) {
                 </div>
               </div>
 
-              <div style={{ height: 1, background: T.div, margin: "0 40px" }} />
+              <div style={{ height: 1, background: T.div, margin: mob ? "0 16px" : "0 40px" }} />
 
               {/* Customer + Property */}
-              <div style={{ padding: "24px 40px" }}>
+              <div style={{ padding: mob ? "16px" : "24px 40px" }}>
                 <div style={{ fontSize: 20, fontWeight: 600, color: T.text }}>Sandra Collins</div>
                 <div style={{ fontSize: 15, color: T.t2, marginTop: 4 }}>3301 Magnolia Bend, Conroe, TX</div>
                 <div style={{ fontSize: 14, color: T.t3, marginTop: 2 }}>
@@ -1575,10 +1591,10 @@ function InspectionPage({ onBack }) {
                 </div>
               </div>
 
-              <div style={{ height: 1, background: T.div, margin: "0 40px" }} />
+              <div style={{ height: 1, background: T.div, margin: mob ? "0 16px" : "0 40px" }} />
 
               {/* Health Score - big and simple */}
-              <div style={{ padding: "32px 40px", textAlign: "center", display: "flex", flexDirection: "column", alignItems: "center" }}>
+              <div style={{ padding: mob ? "20px 16px" : "32px 40px", textAlign: "center", display: "flex", flexDirection: "column", alignItems: "center" }}>
                 <HealthRing score={54} size={88} />
                 <div style={{ fontSize: 14, fontWeight: 600, color: T.text, marginTop: 14 }}>
                   Roof Health Score
@@ -1588,10 +1604,10 @@ function InspectionPage({ onBack }) {
                 </div>
               </div>
 
-              <div style={{ height: 1, background: T.div, margin: "0 40px" }} />
+              <div style={{ height: 1, background: T.div, margin: mob ? "0 16px" : "0 40px" }} />
 
               {/* Findings - clean list */}
-              <div style={{ padding: "28px 40px" }}>
+              <div style={{ padding: mob ? "16px" : "28px 40px" }}>
                 <div style={{ fontSize: 11, fontWeight: 600, color: T.t3, textTransform: "uppercase", letterSpacing: 1.5, marginBottom: 20 }}>
                   What We Found
                 </div>
@@ -1630,10 +1646,10 @@ function InspectionPage({ onBack }) {
                 </div>
               </div>
 
-              <div style={{ height: 1, background: T.div, margin: "0 40px" }} />
+              <div style={{ height: 1, background: T.div, margin: mob ? "0 16px" : "0 40px" }} />
 
               {/* Maintenance CTA - minimal */}
-              <div style={{ padding: "32px 40px", textAlign: "center" }}>
+              <div style={{ padding: mob ? "20px 16px" : "32px 40px", textAlign: "center" }}>
                 <div style={{ fontSize: 20, fontWeight: 700, color: T.text, letterSpacing: -0.3 }}>
                   Keep your roof protected.
                 </div>
@@ -1641,7 +1657,7 @@ function InspectionPage({ onBack }) {
                   Lifeline members get annual inspections, priority repairs, and 10% off all service. Catch problems before they cost you.
                 </div>
 
-                <div style={{ display: "flex", gap: 16, justifyContent: "center", marginBottom: 28 }}>
+                <div style={{ display: "flex", flexDirection: mob ? "column" : "row", gap: 16, justifyContent: "center", alignItems: "center", marginBottom: 28 }}>
                   <div style={{ width: 200, textAlign: "center" }}>
                     <div style={{ fontSize: 36, fontWeight: 700, color: T.text, letterSpacing: -1 }}>
                       $45
@@ -1677,7 +1693,7 @@ function InspectionPage({ onBack }) {
 
               {/* Minimal footer */}
               <div style={{ height: 1, background: T.div }} />
-              <div style={{ padding: "18px 40px", textAlign: "center" }}>
+              <div style={{ padding: mob ? "12px 16px" : "18px 40px", textAlign: "center" }}>
                 <div style={{ fontSize: 12, color: T.t3 }}>
                   Lifeline Roofing Systems · Conroe, TX · lifelineroofingsystems.com
                 </div>
@@ -1707,6 +1723,7 @@ function AbbyDots() {
 }
 
 function AbbyChat() {
+  const mob = useIsMobile();
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState([]);
   const [typing, setTyping] = useState(false);
@@ -1867,8 +1884,8 @@ function AbbyChat() {
       <div
         onClick={function () { if (open) { setOpen(false); } else { handleOpen(); } }}
         style={{
-          position: "fixed", bottom: 28, right: 28, zIndex: 150,
-          width: 56, height: 56, borderRadius: 28,
+          position: "fixed", bottom: mob ? 16 : 28, right: mob ? 16 : 28, zIndex: 150,
+          width: mob ? 48 : 56, height: mob ? 48 : 56, borderRadius: mob ? 24 : 28,
           background: T.blue, cursor: "pointer",
           display: "flex", alignItems: "center", justifyContent: "center",
           boxShadow: "0 4px 20px rgba(0,113,227,0.4)",
@@ -1891,8 +1908,8 @@ function AbbyChat() {
 
       {/* Chat Panel */}
       <div style={{
-        position: "fixed", bottom: 96, right: 28, zIndex: 150,
-        width: 380, maxHeight: "calc(100vh - 140px)",
+        position: "fixed", bottom: mob ? 72 : 96, right: mob ? 0 : 28, zIndex: 150,
+        width: mob ? "100%" : 380, maxHeight: mob ? "calc(100vh - 80px)" : "calc(100vh - 140px)",
         background: T.white, borderRadius: 20,
         boxShadow: "0 2px 8px rgba(0,0,0,0.04), 0 12px 28px rgba(0,0,0,0.08)",
         border: "0.5px solid rgba(0,0,0,0.08)",
@@ -2076,6 +2093,7 @@ export default function App() {
   const [started, setStarted] = useState(false);
   const [page, setPage] = useState("home");
   const [detailContact, setDetailContact] = useState(null);
+  const mob = useIsMobile();
 
   function nav(target, data) {
     if (target === "detail") {
@@ -2098,7 +2116,7 @@ export default function App() {
         WebkitFontSmoothing: "antialiased",
         display: "flex", flexDirection: "column",
       }}>
-        <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", padding: 40 }}>
+        <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", padding: mob ? 16 : 40 }}>
           <Opener onStart={() => setStarted(true)} />
         </div>
       </div>
@@ -2128,7 +2146,7 @@ export default function App() {
     <div style={{
       minHeight: "100vh", background: T.bg, fontFamily: T.font,
       WebkitFontSmoothing: "antialiased",
-      display: "flex", flexDirection: "column",
+      display: "flex", flexDirection: "column", overflowX: "hidden",
     }}>
       {/* Top Navigation */}
       <div style={{
@@ -2138,15 +2156,15 @@ export default function App() {
         WebkitBackdropFilter: "blur(20px)",
         borderBottom: "0.5px solid rgba(0,0,0,0.08)",
         display: "flex", alignItems: "center", justifyContent: "space-between",
-        padding: "0 28px",
+        padding: mob ? "0 12px" : "0 28px",
         position: "sticky", top: 0, zIndex: 100,
       }}>
         <div
           onClick={goBack}
           style={{ display: "flex", alignItems: "center", gap: 10, cursor: "pointer" }}
         >
-          <img src="/logo.png" alt="Lifeline Roofing" style={{ height: 28, objectFit: "contain" }} />
-          <span style={{ fontSize: 12, color: T.t3, fontWeight: 500 }}>Lifeline AI</span>
+          <img src="/logo.png" alt="Lifeline Roofing" style={{ height: mob ? 24 : 28, objectFit: "contain" }} />
+          {!mob && <span style={{ fontSize: 12, color: T.t3, fontWeight: 500 }}>Lifeline AI</span>}
         </div>
 
         <div style={{ display: "flex", gap: 2 }}>
@@ -2155,9 +2173,9 @@ export default function App() {
               key={t.id}
               onClick={() => nav(t.id)}
               style={{
-                display: "flex", alignItems: "center", gap: 6,
-                padding: "6px 16px", borderRadius: 980, border: "none", cursor: "pointer",
-                fontSize: 13, fontWeight: 600,
+                display: "flex", alignItems: "center", gap: mob ? 4 : 6,
+                padding: mob ? "6px 10px" : "6px 16px", borderRadius: 980, border: "none", cursor: "pointer",
+                fontSize: mob ? 12 : 13, fontWeight: 600,
                 background: page === t.id && !detailContact ? "rgba(0,0,0,0.06)" : "transparent",
                 color: page === t.id && !detailContact ? T.text : T.t2,
               }}
@@ -2167,11 +2185,11 @@ export default function App() {
           ))}
         </div>
 
-        <div style={{ fontSize: 12, color: T.blue, fontWeight: 600 }}>Powered by Evios</div>
+        {!mob && <div style={{ fontSize: 12, color: T.blue, fontWeight: 600 }}>Powered by Evios</div>}
       </div>
 
       {/* Content Area */}
-      <div style={{ flex: 1, overflowY: "auto", padding: "32px 40px 60px" }}>
+      <div style={{ flex: 1, overflowY: "auto", padding: mob ? "16px 14px 80px" : "32px 40px 60px" }}>
         {renderContent()}
       </div>
 
