@@ -1532,14 +1532,17 @@ function InspectionPage({ onBack }) {
           </Card>
         </FadeIn>
 
-        {/* Report Popup */}
+        {/* Report Popup - Generating or Ready */}
         {(reportPopup === "generating" || reportPopup === "ready") && (
-          <div style={{
-            position: "fixed", inset: 0, background: "rgba(0,0,0,0.3)",
-            backdropFilter: "blur(6px)", WebkitBackdropFilter: "blur(6px)",
-            display: "flex", alignItems: "center", justifyContent: "center", zIndex: 200,
-          }}>
-            <div style={{
+          <div
+            onClick={function () { if (reportPopup === "ready") setReportPopup("done"); }}
+            style={{
+              position: "fixed", inset: 0, background: "rgba(0,0,0,0.3)",
+              backdropFilter: "blur(6px)", WebkitBackdropFilter: "blur(6px)",
+              display: "flex", alignItems: "center", justifyContent: "center", zIndex: 200,
+            }}
+          >
+            <div onClick={function (e) { e.stopPropagation(); }} style={{
               background: T.white, borderRadius: 20, padding: mob ? 20 : 32, width: mob ? "calc(100vw - 32px)" : 420,
               boxShadow: "0 24px 80px rgba(0,0,0,0.15)", maxHeight: "80vh", overflowY: "auto",
             }}>
@@ -1585,15 +1588,6 @@ function InspectionPage({ onBack }) {
                   }}>
                     Send to Sandra
                   </button>
-
-                  <div style={{ textAlign: "center", marginTop: 10 }}>
-                    <button onClick={function () { setReportPopup("sent"); setShowFullReport(true); }} style={{
-                      background: "transparent", border: "none", color: T.t3,
-                      fontSize: 12, cursor: "pointer", padding: 0,
-                    }}>
-                      View full report
-                    </button>
-                  </div>
                 </div>
               )}
             </div>
@@ -1602,12 +1596,13 @@ function InspectionPage({ onBack }) {
 
         {/* Sent confirmation popup */}
         {reportPopup === "sent" && !showFullReport && (
-          <div style={{
-            position: "fixed", inset: 0, background: "rgba(0,0,0,0.3)",
-            backdropFilter: "blur(6px)", WebkitBackdropFilter: "blur(6px)",
-            display: "flex", alignItems: "center", justifyContent: "center", zIndex: 200,
-          }}
-          onClick={function () { setReportPopup("done"); }}
+          <div
+            onClick={function () { setReportPopup("done"); }}
+            style={{
+              position: "fixed", inset: 0, background: "rgba(0,0,0,0.3)",
+              backdropFilter: "blur(6px)", WebkitBackdropFilter: "blur(6px)",
+              display: "flex", alignItems: "center", justifyContent: "center", zIndex: 200,
+            }}
           >
             <div onClick={function (e) { e.stopPropagation(); }} style={{
               background: T.white, borderRadius: 20, padding: mob ? 24 : 32, width: mob ? "calc(100vw - 32px)" : 360,
@@ -1623,7 +1618,7 @@ function InspectionPage({ onBack }) {
               <div style={{ fontSize: 18, fontWeight: 700, color: T.text, marginBottom: 6 }}>Report Sent</div>
               <div style={{ fontSize: 14, color: T.t2, marginBottom: 20 }}>Emailed to Sandra Collins</div>
 
-              <button onClick={function () { setShowFullReport(true); }} style={{
+              <button onClick={function () { setReportPopup("done"); setShowFullReport(true); }} style={{
                 width: "100%", background: T.blue, color: "#fff", border: "none",
                 borderRadius: 980, padding: "12px 0", fontSize: 15, fontWeight: 600, cursor: "pointer",
                 marginBottom: 10,
@@ -1644,11 +1639,11 @@ function InspectionPage({ onBack }) {
       {/* Homeowner Report Preview - Modal */}
       {showFullReport && (
         <div
-          onClick={function () { setShowFullReport(false); setReportPopup("done"); }}
+          onClick={function () { setShowFullReport(false); }}
           style={{
             position: "fixed", inset: 0, background: "rgba(0,0,0,0.35)",
             backdropFilter: "blur(6px)", WebkitBackdropFilter: "blur(6px)",
-            display: "flex", alignItems: "center", justifyContent: "center", zIndex: 200,
+            display: "flex", alignItems: "center", justifyContent: "center", zIndex: 210,
             padding: mob ? 16 : 40,
           }}
         >
@@ -1660,12 +1655,12 @@ function InspectionPage({ onBack }) {
               width: mob ? "100%" : 640, position: "relative",
             }}
           >
-            {/* Close button */}
+            {/* Close button - absolute top right */}
             <button
-              onClick={function () { setShowFullReport(false); setReportPopup("done"); }}
+              onClick={function () { setShowFullReport(false); }}
               style={{
-                position: "sticky", top: 12, float: "right", marginRight: 12, zIndex: 10,
-                width: 32, height: 32, borderRadius: 16, background: T.bg, border: "none",
+                position: "absolute", top: 12, right: 12, zIndex: 10,
+                width: 32, height: 32, borderRadius: 16, background: "rgba(0,0,0,0.06)", border: "none",
                 fontSize: 16, color: T.t3, cursor: "pointer",
                 display: "flex", alignItems: "center", justifyContent: "center",
               }}
